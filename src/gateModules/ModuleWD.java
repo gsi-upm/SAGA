@@ -33,7 +33,7 @@ public class ModuleWD{
 		AnnotationDeletePR delete = new AnnotationDeletePR();
 		delete.setName("Delete PR");
 		delete.setKeepOriginalMarkupsAS(new Boolean(true));
-		ArrayList list = new ArrayList();
+		ArrayList<String> list = new ArrayList<String>();
 		list.add("Key");
 		delete.setSetsToKeep(list);
 		delete.init();
@@ -80,7 +80,7 @@ public class ModuleWD{
 	MainFrame.getInstance().setVisible(true);
 
 	// Example document to test the module
-	Document document = Factory.newDocument("El valor de BBVA cae en bolsa");
+	Document document = Factory.newDocument("El valor de BBVA cae en bolsa otra vez");
 	FeatureMap feats = Factory.newFeatureMap();
 	feats.put("Date", "19-12-3013");
 	document.setFeatures(feats);
@@ -89,7 +89,7 @@ public class ModuleWD{
 	//For using ANNIE PR's
 	// get the root plugins dir
 	File pluginsDir = Gate.getPluginsHome();
-	// Let’s load the Tools plugin
+	// Let's load the Tools plugin
 	File aPluginDir = new File(pluginsDir, "ANNIE");
 	// load the plugin.
 	Gate.getCreoleRegister().registerDirectories(aPluginDir.toURI().toURL());
