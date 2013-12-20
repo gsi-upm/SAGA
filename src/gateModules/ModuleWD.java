@@ -6,6 +6,7 @@ import gate.*;
 import gate.creole.SerialAnalyserController;
 import gate.creole.tokeniser.DefaultTokeniser;
 import gate.gui.*;
+import gate.util.ExtensionFileFilter;
 import gate.creole.annotdelete.AnnotationDeletePR;
 import gate.creole.gazetteer.DefaultGazetteer;
 import gate.creole.ANNIETransducer;
@@ -27,6 +28,14 @@ public class ModuleWD{
 	
 	public void setCorpus(Corpus corpus) throws Exception{
 		this.controller.setCorpus(corpus);
+	}
+	
+	
+	public Corpus createCorpusAndPupulateIt() throws Exception{
+		Corpus corpus = Factory.newCorpus("Tweets"); 
+		ExtensionFileFilter filter = new ExtensionFileFilter("XML files", "xml");
+		corpus.populate(this.getClass().getResource("/resources/data/input"), filter,"UTF-8", true);
+		return corpus;
 	}
 	
 	public AnnotationDeletePR getDeletePR() throws Exception{
@@ -80,11 +89,11 @@ public class ModuleWD{
 	MainFrame.getInstance().setVisible(true);
 
 	// Example document to test the module
-	Document document = Factory.newDocument("El valor de BBVA cae en bolsa otra vez");
-	FeatureMap feats = Factory.newFeatureMap();
-	feats.put("Date", "19-12-3013");
-	document.setFeatures(feats);
-	document.setName("Tweet de prueba");
+//	Document document = Factory.newDocument("El valor de BBVA cae en bolsa otra vez");
+//	FeatureMap feats = Factory.newFeatureMap();
+//	feats.put("Date", "19-12-3013");
+//	document.setFeatures(feats);
+//	document.setName("Tweet de prueba");
 	
 	//For using ANNIE PR's
 	// get the root plugins dir
@@ -108,8 +117,7 @@ public class ModuleWD{
 	module.add(tokeniser);
     module.add(gazetteer);
     module.add(transducer);
-    Corpus corpus = Factory.newCorpus("Tweets");
-    corpus.add(document); // add document to the corpus
+    Corpus corpus = module.createCorpusAndPupulateIt();
     module.setCorpus(corpus); // set corpus
     module.execute(); // execute the corpus
 	}
