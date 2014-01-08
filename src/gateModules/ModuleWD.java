@@ -1,4 +1,5 @@
 package gateModules;
+import pr.*;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -84,6 +85,16 @@ public class ModuleWD{
 		return transducer;
 	}
 	
+	public CountSentiment getCountTokens() throws Exception{
+		CountSentiment count = new CountSentiment();
+		count.setName("Count");
+		return count;
+	}
+	
+	public void registerPrPlugin() throws Exception{
+		Gate.getCreoleRegister().registerDirectories(this.getClass().getResource("/pr/"));
+	}
+	
 	public static void main(String[] args) throws Exception{
 	Gate.init(); // prepare the library
 	MainFrame.getInstance().setVisible(true);
@@ -98,12 +109,14 @@ public class ModuleWD{
 	//For using ANNIE PR's
 	// get the root plugins dir
 	File pluginsDir = Gate.getPluginsHome();
-	// Let's load the Tools plugin
+	// Let's load the Annie plugin
 	File aPluginDir = new File(pluginsDir, "ANNIE");
 	// load the plugin.
 	Gate.getCreoleRegister().registerDirectories(aPluginDir.toURI().toURL());
 	
 	ModuleWD module = new ModuleWD();
+	
+	module.registerPrPlugin();
 	//Delete PR
 	AnnotationDeletePR delete = module.getDeletePR(); 
 	//Annie Tokeniser 
@@ -112,11 +125,14 @@ public class ModuleWD{
 	DefaultGazetteer gazetteer = module.getGazetteerPR();
 	//Annie NE Transducer
 	ANNIETransducer transducer = module.getTransducerPR();
+	//Count PR
+	CountSentiment count = module.getCountTokens();
 	//Adding the different PR.
 	module.add(delete);
 	module.add(tokeniser);
     module.add(gazetteer);
     module.add(transducer);
+    module.add(count);
     Corpus corpus = module.createCorpusAndPupulateIt();
     module.setCorpus(corpus); // set corpus
     module.execute(); // execute the corpus
