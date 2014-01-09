@@ -13,16 +13,54 @@ import gate.creole.gazetteer.DefaultGazetteer;
 import gate.creole.ANNIETransducer;
 
 public class ModuleWD{
+	
+	/**
+	 * This is the analyser controler where we will add all the Processing Resources for this module. 
+	 */
 	private final SerialAnalyserController controller = (SerialAnalyserController) Factory.createResource("gate.creole.SerialAnalyserController");
 	
 	/**
+	 * Initialize the module giving it a name. 
 	 * @throws Exception
 	 */
 	public ModuleWD() throws Exception{
 		this.controller.setName("ModuleWD");
+		//For using ANNIE PR's
+		// get the root plugins dir
+		File pluginsDir = Gate.getPluginsHome();
+		// Let's load the Annie plugin
+		File aPluginDir = new File(pluginsDir, "ANNIE");
+		// load the plugin.
+		Gate.getCreoleRegister().registerDirectories(aPluginDir.toURI().toURL());
+		
+		
+		
+		this.registerPrPlugin();
+		//Delete PR
+		AnnotationDeletePR delete = this.getDeletePR(); 
+		//Annie Tokeniser 
+		DefaultTokeniser tokeniser = this.getTokeniserPR();
+		//Annie Gazetter
+		DefaultGazetteer gazetteer = this.getGazetteerPR();
+		//Annie NE Transducer
+		ANNIETransducer transducer = this.getTransducerPR();
+		//Count PR
+		CountSentiment count = this.getCountTokens();
+		//Adding the different PR.
+		this.add(delete);
+		this.add(tokeniser);
+		this.add(gazetteer);
+		this.add(transducer);
+		this.add(count);
+	    Corpus corpus = this.createCorpusAndPupulateIt();
+	    this.setCorpus(corpus); // set corpus
+	    
 	}
 	
 	/**
+	 * Add any Processing Resource designed 
+	 * or configured by the user to the controller.
+	 * 
 	 * @param pr
 	 * @throws Exception
 	 */
@@ -31,6 +69,8 @@ public class ModuleWD{
 	}
 	
 	/**
+	 * Execute all the PRs in the controller.
+	 * 
 	 * @throws Exception
 	 */
 	public void execute() throws Exception{
@@ -38,7 +78,8 @@ public class ModuleWD{
 	}
 	
 	/**
-	 * @param corpus
+	 * Set the corpus of documents over which the controller will work. 
+	 * @param corpus of xml documents to analyse.
 	 * @throws Exception
 	 */
 	public void setCorpus(Corpus corpus) throws Exception{
@@ -47,7 +88,10 @@ public class ModuleWD{
 	
 	
 	/**
-	 * @return
+	 * Create a corpus and populate it with the XML documents 
+	 * in the directory resources/data/input.
+	 * 
+	 * @return the populated corpus
 	 * @throws Exception
 	 */
 	public Corpus createCorpusAndPupulateIt() throws Exception{
@@ -58,7 +102,9 @@ public class ModuleWD{
 	}
 	
 	/**
-	 * @return
+	 * Get the configurated ANNIE Annotation Delete PR.
+	 * 
+	 * @return the initialized PR.
 	 * @throws Exception
 	 */
 	public AnnotationDeletePR getDeletePR() throws Exception{
@@ -73,7 +119,9 @@ public class ModuleWD{
 	}
 	
 	/**
-	 * @return
+	 * Get the configurated ANNIE Tokeniser PR.
+	 * 
+	 * @return the initialized PR.
 	 * @throws Exception
 	 */
 	public DefaultTokeniser getTokeniserPR() throws Exception{
@@ -88,7 +136,9 @@ public class ModuleWD{
 	}
 	
 	/**
-	 * @return
+	 * Get the configurated ANNIE Gazetteer PR.
+	 * 
+	 * @return the initialized PR.
 	 * @throws Exception
 	 */
 	public DefaultGazetteer getGazetteerPR() throws Exception{
@@ -105,7 +155,9 @@ public class ModuleWD{
 	}
 	
 	/**
-	 * @return
+	 * Get the configurated ANNIE Transducer PR.
+	 * 
+	 * @return the initialized PR.
 	 * @throws Exception
 	 */
 	public ANNIETransducer getTransducerPR() throws Exception{
@@ -120,7 +172,11 @@ public class ModuleWD{
 	}
 	
 	/**
-	 * @return
+	 * Get the configurated Count PR, 
+	 * which counts the number of times a sentiment word is said
+	 * in a document according with our dictionaries.
+	 * 
+	 * @return the initialized PR.
 	 * @throws Exception
 	 */
 	public CountSentiment getCountTokens() throws Exception{
@@ -130,6 +186,9 @@ public class ModuleWD{
 	}
 	
 	/**
+	 * Register our own plugin for Count Sentiment PR 
+	 * so we can use it in our controller.
+	 *  
 	 * @throws Exception
 	 */
 	public void registerPrPlugin() throws Exception{
@@ -137,49 +196,16 @@ public class ModuleWD{
 	}
 	
 	/**
+	 * 
 	 * @param args
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception{
+		
 	Gate.init(); // prepare the library
 	MainFrame.getInstance().setVisible(true);
 
-	// Example document to test the module
-//	Document document = Factory.newDocument("El valor de BBVA cae en bolsa otra vez");
-//	FeatureMap feats = Factory.newFeatureMap();
-//	feats.put("Date", "19-12-3013");
-//	document.setFeatures(feats);
-//	document.setName("Tweet de prueba");
-	
-	//For using ANNIE PR's
-	// get the root plugins dir
-	File pluginsDir = Gate.getPluginsHome();
-	// Let's load the Annie plugin
-	File aPluginDir = new File(pluginsDir, "ANNIE");
-	// load the plugin.
-	Gate.getCreoleRegister().registerDirectories(aPluginDir.toURI().toURL());
-	
 	ModuleWD module = new ModuleWD();
-	
-	module.registerPrPlugin();
-	//Delete PR
-	AnnotationDeletePR delete = module.getDeletePR(); 
-	//Annie Tokeniser 
-	DefaultTokeniser tokeniser = module.getTokeniserPR();
-	//Annie Gazetter
-	DefaultGazetteer gazetteer = module.getGazetteerPR();
-	//Annie NE Transducer
-	ANNIETransducer transducer = module.getTransducerPR();
-	//Count PR
-	CountSentiment count = module.getCountTokens();
-	//Adding the different PR.
-	module.add(delete);
-	module.add(tokeniser);
-    module.add(gazetteer);
-    module.add(transducer);
-    module.add(count);
-    Corpus corpus = module.createCorpusAndPupulateIt();
-    module.setCorpus(corpus); // set corpus
     module.execute(); // execute the corpus
 	}
 }
