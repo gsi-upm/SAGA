@@ -1,4 +1,5 @@
-package gateModules;
+package gateModules; //Package for the different modules
+
 import pr.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -24,27 +25,25 @@ public class ModuleWD{
 	 * @throws Exception
 	 */
 	public ModuleWD() throws Exception{
-		this.controller.setName("ModuleWD");
-		//For using ANNIE PR's
-		// get the root plugins dir
+		this.controller.setName("ModuleWD"); // Set the module name
+		// For using ANNIE PR's
+		// Get the root plugins dir
 		File pluginsDir = Gate.getPluginsHome();
 		// Let's load the Annie plugin
 		File aPluginDir = new File(pluginsDir, "ANNIE");
-		// load the plugin.
+		// Load the plugin.
 		Gate.getCreoleRegister().registerDirectories(aPluginDir.toURI().toURL());
-		
-		
-		
+		//Register our own plugig to use the count PR
 		this.registerPrPlugin();
-		//Delete PR
+		//Delete PR.
 		AnnotationDeletePR delete = this.getDeletePR(); 
-		//Annie Tokeniser 
+		//Annie Tokeniser. 
 		DefaultTokeniser tokeniser = this.getTokeniserPR();
-		//Annie Gazetter
+		//Annie Gazetter.
 		DefaultGazetteer gazetteer = this.getGazetteerPR();
-		//Annie NE Transducer
+		//Annie NE Transducer.
 		ANNIETransducer transducer = this.getTransducerPR();
-		//Count PR
+		//Count PR.
 		CountSentiment count = this.getCountTokens();
 		//Adding the different PR.
 		this.add(delete);
@@ -52,8 +51,9 @@ public class ModuleWD{
 		this.add(gazetteer);
 		this.add(transducer);
 		this.add(count);
+		//Create the corpus and populate it.
 	    Corpus corpus = this.createCorpusAndPupulateIt();
-	    this.setCorpus(corpus); // set corpus
+	    this.setCorpus(corpus); // Set corpus into the controller.
 	    
 	}
 	
@@ -95,9 +95,9 @@ public class ModuleWD{
 	 * @throws Exception
 	 */
 	public Corpus createCorpusAndPupulateIt() throws Exception{
-		Corpus corpus = Factory.newCorpus("Tweets"); 
-		ExtensionFileFilter filter = new ExtensionFileFilter("XML files", "xml");
-		corpus.populate(this.getClass().getResource("/resources/data/input"), filter,"UTF-8", true);
+		Corpus corpus = Factory.newCorpus("Tweets"); //Create a corpus name Tweets
+		ExtensionFileFilter filter = new ExtensionFileFilter("XML files", "xml"); //A filter to add XML documents
+		corpus.populate(this.getClass().getResource("/resources/data/input"), filter,"UTF-8", true); //Populate it from /resource/data/input directory
 		return corpus;
 	}
 	
@@ -196,16 +196,17 @@ public class ModuleWD{
 	}
 	
 	/**
+	 * Execute the module in GATE graphic mode.
 	 * 
-	 * @param args
+	 * @param args not used
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception{
 		
-	Gate.init(); // prepare the library
-	MainFrame.getInstance().setVisible(true);
+	Gate.init(); // Prepare the library
+	MainFrame.getInstance().setVisible(true); //Set GATE app visible
 
-	ModuleWD module = new ModuleWD();
-    module.execute(); // execute the corpus
+	ModuleWD module = new ModuleWD(); //Create the module with the controller, configurated PRs and populated corpus
+    module.execute(); // And execute it
 	}
 }
