@@ -15,23 +15,41 @@ import gate.creole.ANNIETransducer;
 public class ModuleWD{
 	private final SerialAnalyserController controller = (SerialAnalyserController) Factory.createResource("gate.creole.SerialAnalyserController");
 	
+	/**
+	 * @throws Exception
+	 */
 	public ModuleWD() throws Exception{
 		this.controller.setName("ModuleWD");
 	}
 	
+	/**
+	 * @param pr
+	 * @throws Exception
+	 */
 	public void add(ProcessingResource pr) throws Exception{
 		this.controller.add(pr);
 	}
 	
+	/**
+	 * @throws Exception
+	 */
 	public void execute() throws Exception{
 		this.controller.execute();
 	}
 	
+	/**
+	 * @param corpus
+	 * @throws Exception
+	 */
 	public void setCorpus(Corpus corpus) throws Exception{
 		this.controller.setCorpus(corpus);
 	}
 	
 	
+	/**
+	 * @return
+	 * @throws Exception
+	 */
 	public Corpus createCorpusAndPupulateIt() throws Exception{
 		Corpus corpus = Factory.newCorpus("Tweets"); 
 		ExtensionFileFilter filter = new ExtensionFileFilter("XML files", "xml");
@@ -39,6 +57,10 @@ public class ModuleWD{
 		return corpus;
 	}
 	
+	/**
+	 * @return
+	 * @throws Exception
+	 */
 	public AnnotationDeletePR getDeletePR() throws Exception{
 		AnnotationDeletePR delete = new AnnotationDeletePR();
 		delete.setName("Delete PR");
@@ -50,6 +72,10 @@ public class ModuleWD{
 		return delete;
 	}
 	
+	/**
+	 * @return
+	 * @throws Exception
+	 */
 	public DefaultTokeniser getTokeniserPR() throws Exception{
 		DefaultTokeniser tokeniser = new DefaultTokeniser();
 		tokeniser.setName("Tokenizator");
@@ -61,6 +87,10 @@ public class ModuleWD{
 		return tokeniser;
 	}
 	
+	/**
+	 * @return
+	 * @throws Exception
+	 */
 	public DefaultGazetteer getGazetteerPR() throws Exception{
 		DefaultGazetteer gazetteer = new DefaultGazetteer();
 		gazetteer.setName("Gazetter");
@@ -74,6 +104,10 @@ public class ModuleWD{
 		return gazetteer;
 	}
 	
+	/**
+	 * @return
+	 * @throws Exception
+	 */
 	public ANNIETransducer getTransducerPR() throws Exception{
 		ANNIETransducer transducer = new ANNIETransducer();
 		transducer.setName("NE Transducer");
@@ -85,16 +119,27 @@ public class ModuleWD{
 		return transducer;
 	}
 	
+	/**
+	 * @return
+	 * @throws Exception
+	 */
 	public CountSentiment getCountTokens() throws Exception{
 		CountSentiment count = new CountSentiment();
 		count.setName("Count");
 		return count;
 	}
 	
+	/**
+	 * @throws Exception
+	 */
 	public void registerPrPlugin() throws Exception{
 		Gate.getCreoleRegister().registerDirectories(this.getClass().getResource("/pr/"));
 	}
 	
+	/**
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception{
 	Gate.init(); // prepare the library
 	MainFrame.getInstance().setVisible(true);
