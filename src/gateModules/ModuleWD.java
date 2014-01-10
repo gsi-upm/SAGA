@@ -108,13 +108,13 @@ public class ModuleWD{
 	 * @throws Exception
 	 */
 	public AnnotationDeletePR getDeletePR() throws Exception{
-		AnnotationDeletePR delete = new AnnotationDeletePR();
-		delete.setName("Delete PR");
-		delete.setKeepOriginalMarkupsAS(new Boolean(true));
-		ArrayList<String> list = new ArrayList<String>();
-		list.add("Key");
+		AnnotationDeletePR delete = new AnnotationDeletePR(); //Create the PR
+		delete.setName("Delete PR"); //Set its name
+		delete.setKeepOriginalMarkupsAS(new Boolean(true)); //Keep the original XML markups of the documents in the corpus 
+		ArrayList<String> list = new ArrayList<String>(); //List of sets to keep
+		list.add("Key"); //Keeps Key set.
 		delete.setSetsToKeep(list);
-		delete.init();
+		delete.init(); // The PR is initialized.
 		return delete;
 	}
 	
@@ -125,13 +125,15 @@ public class ModuleWD{
 	 * @throws Exception
 	 */
 	public DefaultTokeniser getTokeniserPR() throws Exception{
-		DefaultTokeniser tokeniser = new DefaultTokeniser();
-		tokeniser.setName("Tokenizator");
-		tokeniser.setEncoding("UTF-8");
+		DefaultTokeniser tokeniser = new DefaultTokeniser(); //Create the PR
+		tokeniser.setName("Tokenizator"); //Set its name
+		tokeniser.setEncoding("UTF-8"); //Set encoding
+		//Set tonekiser rules from the file in /resources/tokeniser/DefaultTokeniser.rules
 		tokeniser.setTokeniserRulesURL(this.getClass().getResource("/resources/tokeniser/DefaultTokeniser.rules"));
+		//And the grammar from /resources/tokeniser/postprocess.jape
 		tokeniser.setTransducerGrammarURL(this.getClass().getResource("/resources/tokeniser/postprocess.jape"));
-		tokeniser.setAnnotationSetName("Entities");
-		tokeniser.init();
+		tokeniser.setAnnotationSetName("Entities"); //Set annotation set name for the token annotation.
+		tokeniser.init(); //The PR is initialized
 		return tokeniser;
 	}
 	
@@ -142,15 +144,17 @@ public class ModuleWD{
 	 * @throws Exception
 	 */
 	public DefaultGazetteer getGazetteerPR() throws Exception{
-		DefaultGazetteer gazetteer = new DefaultGazetteer();
-		gazetteer.setName("Gazetter");
-		gazetteer.setCaseSensitive(new Boolean(true));
+		DefaultGazetteer gazetteer = new DefaultGazetteer(); //Create the PR
+		gazetteer.setName("Gazetter"); //Set its name
+		gazetteer.setCaseSensitive(new Boolean(true)); 
 		gazetteer.setEncoding("UTF-8");
+		//Set the list of the dictionaries that are going to be used by the Gazetteer
 		gazetteer.setListsURL(this.getClass().getResource("/resources/gazetteer/lists.def"));
+		//Set annotation set name for the gazetteer features.
 		gazetteer.setAnnotationSetName("Entities");
 		gazetteer.setLongestMatchOnly(new Boolean(true));
 		gazetteer.setWholeWordsOnly(new Boolean(true));
-		gazetteer.init();
+		gazetteer.init(); //The PR is initialized
 		return gazetteer;
 	}
 	
@@ -161,13 +165,14 @@ public class ModuleWD{
 	 * @throws Exception
 	 */
 	public ANNIETransducer getTransducerPR() throws Exception{
-		ANNIETransducer transducer = new ANNIETransducer();
-		transducer.setName("NE Transducer");
+		ANNIETransducer transducer = new ANNIETransducer(); //Create the PR
+		transducer.setName("NE Transducer"); //Set its name
 		transducer.setEncoding("UTF-8");
+		//Set the grammar to transduce the features into annotations.
 		transducer.setGrammarURL(this.getClass().getResource("/resources/jape/main.jape"));
-		transducer.setInputASName("Entities");
-		transducer.setOutputASName("Sentiment");
-		transducer.init();
+		transducer.setInputASName("Entities"); //Input set of annotations to run the transducer
+		transducer.setOutputASName("Sentiment"); //Output annotation
+		transducer.init(); //The PR is initialized
 		return transducer;
 	}
 	
@@ -180,8 +185,8 @@ public class ModuleWD{
 	 * @throws Exception
 	 */
 	public CountSentiment getCountTokens() throws Exception{
-		CountSentiment count = new CountSentiment();
-		count.setName("Count");
+		CountSentiment count = new CountSentiment(); //Create the PR
+		count.setName("Count"); //Set its name
 		return count;
 	}
 	
@@ -205,8 +210,8 @@ public class ModuleWD{
 		
 	Gate.init(); // Prepare the library
 	MainFrame.getInstance().setVisible(true); //Set GATE app visible
-
-	ModuleWD module = new ModuleWD(); //Create the module with the controller, configurated PRs and populated corpus
+	//Create the module with the controller, configurated PRs and populated corpus
+	ModuleWD module = new ModuleWD(); 
     module.execute(); // And execute it
 	}
 }
