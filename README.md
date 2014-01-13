@@ -2,7 +2,8 @@
 =====
 
 ## Introduction
-
+GATE-modules is a set of Java modules to analyze text in XML format, which use [GATE](http://gate.ac.uk) APIs and environment.
+You should have GATE Developer installed on your system in order to execute each module.
 
 ## License
 
