@@ -1,17 +1,20 @@
 package gateModules; //Package for the different modules
 
-import pr.*;
 import java.io.File;
 import java.util.ArrayList;
 
 import gate.*;
 import gate.creole.SerialAnalyserController;
 import gate.creole.tokeniser.DefaultTokeniser;
-import gate.gui.*;
 import gate.util.ExtensionFileFilter;
 import gate.creole.annotdelete.AnnotationDeletePR;
 import gate.creole.gazetteer.DefaultGazetteer;
 import gate.creole.ANNIETransducer;
+/**
+ * This is the base module. It sets the corpus and the basics ANNIE's PR.
+ * @author David Moreno Briz
+ *
+ */
 
 public class ModuleWD{
 	
@@ -24,8 +27,8 @@ public class ModuleWD{
 	 * Initialize the module giving it a name. 
 	 * @throws Exception
 	 */
-	public ModuleWD() throws Exception{
-		this.controller.setName("ModuleWD"); // Set the module name
+	public ModuleWD(String name) throws Exception{
+		this.controller.setName(name); // Set the module name
 		// For using ANNIE PR's
 		// Get the root plugins dir
 		File pluginsDir = Gate.getPluginsHome();
@@ -43,14 +46,11 @@ public class ModuleWD{
 		DefaultGazetteer gazetteer = this.getGazetteerPR();
 		//Annie NE Transducer.
 		ANNIETransducer transducer = this.getTransducerPR();
-		//Count PR.
-		CountSentiment count = this.getCountTokens();
 		//Adding the different PR.
 		this.add(delete);
 		this.add(tokeniser);
 		this.add(gazetteer);
 		this.add(transducer);
-		this.add(count);
 		//Create the corpus and populate it.
 	    Corpus corpus = this.createCorpusAndPupulateIt();
 	    this.setCorpus(corpus); // Set corpus into the controller.
@@ -176,19 +176,6 @@ public class ModuleWD{
 		return transducer;
 	}
 	
-	/**
-	 * Get the configurated Count PR, 
-	 * which counts the number of times a sentiment word is said
-	 * in a document according with our dictionaries.
-	 * 
-	 * @return the initialized PR.
-	 * @throws Exception
-	 */
-	public CountSentiment getCountTokens() throws Exception{
-		CountSentiment count = new CountSentiment(); //Create the PR
-		count.setName("Count"); //Set its name
-		return count;
-	}
 	
 	/**
 	 * Register our own plugin for Count Sentiment PR 
@@ -199,19 +186,5 @@ public class ModuleWD{
 	public void registerPrPlugin() throws Exception{
 		Gate.getCreoleRegister().registerDirectories(this.getClass().getResource("/pr/"));
 	}
-	
-	/**
-	 * Execute the module in GATE graphic mode.
-	 * 
-	 * @param args not used
-	 * @throws Exception
-	 */
-	public static void main(String[] args) throws Exception{
-		
-	Gate.init(); // Prepare the library
-	MainFrame.getInstance().setVisible(true); //Set GATE app visible
-	//Create the module with the controller, configurated PRs and populated corpus
-	ModuleWD module = new ModuleWD(); 
-    module.execute(); // And execute it
-	}
+
 }

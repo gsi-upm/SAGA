@@ -1,9 +1,11 @@
 package pr; //Package for the Processing Resources made by us.
 
 import gate.Resource;
+import gate.corpora.DocumentContentImpl;
 import gate.creole.AbstractLanguageAnalyser;
 import gate.creole.ExecutionException;
 import gate.creole.ResourceInstantiationException;
+
 
 public class CountSentiment extends AbstractLanguageAnalyser {
 
@@ -22,6 +24,13 @@ public void execute() throws ExecutionException {
 	int negative = document.getAnnotations("Sentiment").get("negative").size();
 	System.out.println(document.getName() + " negative words " + negative); //Print them.
 	document.getFeatures().put("positive_count", negative); //Annotate the count as a feature.
+	double sentiment = 0; 
+	if((positive + negative) != 0){ //An easy count of the sent value (Goes from -1 to 1)
+	sentiment = (positive - negative)/(positive + negative);
+	}
+	//Sets the sent value at the end of the document
+	document.setContent(new DocumentContentImpl(document.getContent().toString() + " This text has a " + sentiment + " value"));
+		
 }
 
 /**
