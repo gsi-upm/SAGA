@@ -1,6 +1,7 @@
 package gateModules; //Package for the different modules
 
 import java.io.File;
+//import java.net.URL;
 import java.util.ArrayList;
 
 import gate.*;
@@ -185,6 +186,7 @@ public class ModuleWD{
 	 */
 	public void registerPrPlugin() throws Exception{
 		Gate.getCreoleRegister().registerDirectories(this.getClass().getResource("/pr/"));
+		//Gate.getCreoleRegister().registerDirectories(new URL("file://Users/David/Documents/workspace/GATE-modules/bin/pr/"));
 	}
 
 }
