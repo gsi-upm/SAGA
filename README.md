@@ -1,9 +1,12 @@
 [GATE-modules](https://github.com/gsi-upm/GATE-modules)
 =====
+![GSI Logo](http://gsi.dit.upm.es/templates/jgsi/images/logo.png)
 
 ## Introduction
 GATE-modules is a set of Java modules to analyze text in XML format, which use [GATE](http://gate.ac.uk) APIs and environment.
 You should have GATE Developer installed on your system in order to execute each module.
+
+Check out our [Wiki](https://github.com/gsi-upm/GATE-modules/wiki) for more information.
 
 ## License
 
@@ -17,7 +20,8 @@ applicable law or agreed to in writing, software distributed under the License i
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific 
 language governing permissions and limitations under the License.
 ```
-![GSI Logo](http://gsi.dit.upm.es/templates/jgsi/images/logo.png)
+
+
 In collaboration with Paradigma Tecnologico:
 ![Paradigma Logo](http://www.paradigmatecnologico.com/wp-content/themes/paradigma13/images/logos/logo_paradigma_2013_BIG.png)
 
