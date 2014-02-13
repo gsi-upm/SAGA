@@ -5,7 +5,7 @@ import pr.CountSentiment;
 public class ModuleCount {
 	
 	/**
-	 * Get the configurated Count PR, 
+	 * Get the configured Count PR, 
 	 * which counts the number of times a sentiment word is said
 	 * in a document according with our dictionaries.
 	 * 

@@ -37,7 +37,7 @@ public class ModuleWD{
 		File aPluginDir = new File(pluginsDir, "ANNIE");
 		// Load the plugin.
 		Gate.getCreoleRegister().registerDirectories(aPluginDir.toURI().toURL());
-		//Register our own plugig to use the count PR
+		//Register our own plugin to use our own PRs located in the package pr.
 		this.registerPrPlugin();
 		//Delete PR.
 		AnnotationDeletePR delete = this.getDeletePR(); 
@@ -186,7 +186,6 @@ public class ModuleWD{
 	 */
 	public void registerPrPlugin() throws Exception{
 		Gate.getCreoleRegister().registerDirectories(this.getClass().getResource("/pr/"));
-		//Gate.getCreoleRegister().registerDirectories(new URL("file://Users/David/Documents/workspace/GATE-modules/bin/pr/"));
 	}
 
 }

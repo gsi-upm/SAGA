@@ -7,7 +7,7 @@ import pr.CountSentiment;
 public class MainTest {
 	
 	/**
-	 * Execute the module in GATE graphic mode.
+	 * Execute the module in GATE graphic/local mode with the module we want.
 	 * 
 	 * @param args not used
 	 * @throws Exception
@@ -17,8 +17,9 @@ public class MainTest {
 		Gate.init(); // Prepare the library
 		MainFrame.getInstance().setVisible(true); //Set GATE app visible
 		ModuleWD module = new ModuleWD("Easy sentiment count");
+		//Create the PR we want to add to ModuleWD module.
 		CountSentiment count = new ModuleCount().getCountTokens();
-		module.add(count);
+		module.add(count); 
 		module.execute();
 	}
 }
