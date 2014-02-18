@@ -1,12 +1,12 @@
-[GATE-modules](https://github.com/gsi-upm/GATE-modules)
+[GATE-Sentiment-analysis-modules](https://github.com/gsi-upm/GATE-modules)
 =====
 ![GSI Logo](http://gsi.dit.upm.es/templates/jgsi/images/logo.png)
 
 ## Introduction
-GATE-modules is a set of Java modules to analyze text in XML format, which use [GATE](http://gate.ac.uk) APIs and environment.
+GATE-Sentiment-analysis-modules is a set of Java modules prepared to run sentiment analysis algorithms over text in XML format, which use [GATE](http://gate.ac.uk) APIs and environment.
 You should have GATE Developer installed on your system in order to execute each module.
 
-Check out our [Wiki](https://github.com/gsi-upm/GATE-modules/wiki) for more information.
+Check out our [Wiki](https://github.com/gsi-upm/GATE-modules/wiki) for more information about installation, configuration and the modules that are available.
 
 ## License
 
