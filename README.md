@@ -23,5 +23,5 @@ language governing permissions and limitations under the License.
 
 
 In collaboration with Paradigma Tecnologico:
-![Paradigma Logo](http://www.paradigmatecnologico.com/wp-content/themes/paradigma13/images/logos/logo_paradigma_2013_BIG.png)
+![Paradigma Logo](https://www.dropbox.com/s/5wsjlj091xq1krs/paradigma.png)
 
