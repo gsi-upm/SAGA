@@ -3,4 +3,8 @@
 <NAME>Counter</NAME>
 <CLASS>pr.CountSentiment</CLASS>
 </RESOURCE>
+<RESOURCE>
+<NAME>WordSent</NAME>
+<CLASS>pr.CountSentimentOfEachWord</CLASS>
+</RESOURCE>
 </CREOLE></CREOLE-DIRECTORY>

@@ -1,6 +1,5 @@
 package gateModules; //Package for the different modules
 
-import java.io.File;
 //import java.net.URL;
 import java.util.ArrayList;
 
@@ -30,15 +29,6 @@ public class ModuleWD{
 	 */
 	public ModuleWD(String name) throws Exception{
 		this.controller.setName(name); // Set the module name
-		// For using ANNIE PR's
-		// Get the root plugins dir
-		File pluginsDir = Gate.getPluginsHome();
-		// Let's load the Annie plugin
-		File aPluginDir = new File(pluginsDir, "ANNIE");
-		// Load the plugin.
-		Gate.getCreoleRegister().registerDirectories(aPluginDir.toURI().toURL());
-		//Register our own plugin to use our own PRs located in the package pr.
-		this.registerPrPlugin();
 		//Delete PR.
 		AnnotationDeletePR delete = this.getDeletePR(); 
 		//Annie Tokeniser. 
@@ -52,10 +42,6 @@ public class ModuleWD{
 		this.add(tokeniser);
 		this.add(gazetteer);
 		this.add(transducer);
-		//Create the corpus and populate it.
-	    Corpus corpus = this.createCorpusAndPupulateIt();
-	    this.setCorpus(corpus); // Set corpus into the controller.
-	    
 	}
 	
 	/**
