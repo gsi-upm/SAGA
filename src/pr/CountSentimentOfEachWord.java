@@ -1,3 +1,10 @@
+/**
+ * This is the base module. It sets the corpus and the basics ANNIE's PR.
+ * @author David Moreno Briz
+ *
+ */
+
+
 package pr; //Package for the Processing Resources made by us.
 
 import gate.Resource;
@@ -10,24 +17,35 @@ public class CountSentimentOfEachWord extends AbstractLanguageAnalyser {
 
 	private static final long serialVersionUID = 1L;
 	
-	private static String[][] wordAndValues; //Suponemos que las peticiones get manda las frases de una en una
-	
+	/**
+	 * Only used in the Web Service, 
+	 * because every GET petition will contain only one document (text) to analyze.
+	 * 
+	 * If at some point GET petitions include a set of documents,
+	 * this variable will be of the type String[numberOfDocuments][][].
+	 */
+	private static String[][] wordAndValues;
 
-/**
- * Save in resultadoAnalisis the value and the polarity of a given document.
- */
+	/**
+	 * In local mode: 
+	 * this PR is executed as invisible.
+	 * 
+	 * In web service mode:
+	 * it saves in wordAndValues the numeric sentiment value, polarity and position inside the document of each word.
+	 */
 @Override
 public void execute() throws ExecutionException {
-	String text = document.getContent().toString(); //SAco el texto del documento
-	String wordsInText[] = text.split(" "); //Extraigo las palabras del texto
-	wordAndValues = new String[wordsInText.length][5];
-	int position = 0; //Var auxiliar para ver donde empieza y acaba cada palabra dentro del texto
-	for(int i = 0; i < wordsInText.length; i++){ //Para cada palabra en el texto
-		wordAndValues[i][0] = wordsInText[i]; //Guardo la palabra
-		wordAndValues[i][1] = Integer.toString(position); //La posicion en la que empieza
-		position += (wordsInText[i].length() - 1); //La posicion en la que acaba
-		wordAndValues[i][2] = Integer.toString(position);
-		position += 2; //donde empieza la siguiente palabra
+	String text = document.getContent().toString(); //Take the content of the document
+	String wordsInText[] = text.split(" "); //and slit it into its words.
+	wordAndValues = new String[wordsInText.length][5]; //initialize the wordAndValues
+	int position = 0; //Aux variable to see the position of each word inside the document
+	for(int i = 0; i < wordsInText.length; i++){ //For each word
+		wordAndValues[i][0] = wordsInText[i]; //We save the word
+		wordAndValues[i][1] = Integer.toString(position); //add its initial 
+		position += (wordsInText[i].length() - 1);
+		wordAndValues[i][2] = Integer.toString(position);//and final position
+		position += 2; //This is where the next word starts
+		//We check if this word has a positive or negative annotation and set its value and polarity.
 		int positive = document.getAnnotations("Sentiment").get(new Long(wordAndValues[i][1]), new Long(wordAndValues[i][2])).get("positive").size();
 		int negative = document.getAnnotations("Sentiment").get(new Long(wordAndValues[i][2]), new Long(wordAndValues[i][2])).get("negative").size();
 		if(positive > 0){

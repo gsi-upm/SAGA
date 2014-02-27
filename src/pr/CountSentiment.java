@@ -1,3 +1,10 @@
+/**
+ * This is the base module. It sets the corpus and the basics ANNIE's PR.
+ * @author David Moreno Briz
+ *
+ */
+
+
 package pr; //Package for the Processing Resources made by us.
 
 import gate.Resource;
@@ -11,11 +18,22 @@ public class CountSentiment extends AbstractLanguageAnalyser {
 
 	private static final long serialVersionUID = 1L;
 	
-	private static String[] resultadoAnalisis; //Nos vale de una dimension porque mandadmos las frases de una en una en cada peticion get
+	/**
+	 * Only used in the Web Service, 
+	 * because every GET petition will contain only one document (text) to analyze.
+	 * 
+	 * If at some point GET petitions include a set of documents,
+	 * this variable will be of the type String[numberOfDocuments][2].
+	 */
+	private static String[] analysisResult;
 	
 
 /**
- * Save in resultadoAnalisis the value and the polarity of a given document.
+ * In local mode: 
+ * it adds to a given document its numeric sentiment value and polarity.
+ * 
+ * In web service mode:
+ * it saves in analysisResult the numeric sentiment value and the polarity of a given document.
  */
 @Override
 public void execute() throws ExecutionException {
@@ -23,21 +41,24 @@ public void execute() throws ExecutionException {
 	int positive = document.getAnnotations("Sentiment").get("positive").size(); 
 	//Count how many negative annotations are in the Sentiment set of annotations in each document in the corpus
 	int negative = document.getAnnotations("Sentiment").get("negative").size();
+	//Calculate the sentiment value (Goes from -1 to 1)
 	double sentiment = 0; 
-	if((positive + negative) != 0){ //An easy count of the sent value (Goes from -1 to 1)
+	if((positive + negative) != 0){ 
 	sentiment = (positive - negative)/(positive + negative);
 	}
-	//Sets the sent value at the end of the document
-	resultadoAnalisis = new String[2];
-	resultadoAnalisis[0] = Double.toString(sentiment);
+	//Add results to the array
+	analysisResult = new String[2];
+	analysisResult[0] = Double.toString(sentiment);
+	//Calculates polarity of the document
 	if(sentiment > 0){
-		resultadoAnalisis[1] = "Positive";
+		analysisResult[1] = "Positive";
 	} else if(sentiment < 0){
-		resultadoAnalisis[1] = "Negative";
+		analysisResult[1] = "Negative";
 	} else{
-	resultadoAnalisis[1] = "Neutral";
+		analysisResult[1] = "Neutral";
 	}
-	document.setContent(new DocumentContentImpl(document.getContent().toString() + " This text has a " + sentiment + " value"));
+	//Sets the sentiment value and polarity at the end of the document
+	document.setContent(new DocumentContentImpl(document.getContent().toString() + " This text has a " + sentiment + " value and " + analysisResult[1] + " polarity."));
 }
 
 /**
@@ -49,8 +70,11 @@ public Resource init() throws ResourceInstantiationException {
 	return this;
 	}
 
-public static String[] resultadoAnalisis(){
-	return resultadoAnalisis;
+/**
+ * @return analysisResult
+ */
+public static String[] getAnalysisResult(){
+	return analysisResult;
 }
 }
 

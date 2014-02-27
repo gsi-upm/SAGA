@@ -1,3 +1,9 @@
+/**
+ * This is the base module. It sets the corpus and the basics ANNIE's PR.
+ * @author David Moreno Briz
+ *
+ */
+
 package gateModules; //Package for the different modules
 
 //import java.net.URL;
@@ -10,11 +16,6 @@ import gate.util.ExtensionFileFilter;
 import gate.creole.annotdelete.AnnotationDeletePR;
 import gate.creole.gazetteer.DefaultGazetteer;
 import gate.creole.ANNIETransducer;
-/**
- * This is the base module. It sets the corpus and the basics ANNIE's PR.
- * @author David Moreno Briz
- *
- */
 
 public class ModuleWD{
 	
@@ -24,7 +25,10 @@ public class ModuleWD{
 	private final SerialAnalyserController controller = (SerialAnalyserController) Factory.createResource("gate.creole.SerialAnalyserController");
 	
 	/**
-	 * Initialize the module giving it a name. 
+	 * Constructor of the base module called ModuleWD.
+	 * It adds the basic ANNIE PR we will use as a start point.
+	 * 
+	 * @param name name of the module
 	 * @throws Exception
 	 */
 	public ModuleWD(String name) throws Exception{
@@ -81,7 +85,7 @@ public class ModuleWD{
 	 * @return the populated corpus
 	 * @throws Exception
 	 */
-	public Corpus createCorpusAndPupulateIt() throws Exception{
+	public Corpus createCorpusAndPupulateItExample() throws Exception{
 		Corpus corpus = Factory.newCorpus("Tweets"); //Create a corpus name Tweets
 		ExtensionFileFilter filter = new ExtensionFileFilter("XML files", "xml"); //A filter to add XML documents
 		corpus.populate(this.getClass().getResource("/resources/data/input"), filter,"UTF-8", true); //Populate it from /resource/data/input directory
@@ -161,17 +165,6 @@ public class ModuleWD{
 		transducer.setOutputASName("Sentiment"); //Output annotation
 		transducer.init(); //The PR is initialized
 		return transducer;
-	}
-	
-	
-	/**
-	 * Register our own plugin for Count Sentiment PR 
-	 * so we can use it in our controller.
-	 *  
-	 * @throws Exception
-	 */
-	public void registerPrPlugin() throws Exception{
-		Gate.getCreoleRegister().registerDirectories(this.getClass().getResource("/pr/"));
 	}
 
 }

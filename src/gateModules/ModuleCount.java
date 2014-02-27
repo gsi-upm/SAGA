@@ -1,14 +1,47 @@
+/**
+ * This is the base module. It sets the corpus and the basics ANNIE's PR.
+ * @author David Moreno Briz
+ *
+ */
+
 package gateModules;
 
+import gate.Gate;
 import pr.CountSentiment;
 import pr.CountSentimentOfEachWord;
 
-public class ModuleCount {
+public class ModuleCount extends ModuleWD{
 	
 	/**
-	 * Get the configured Count PR, 
+	 * Constructor of the module called ModuleCount based on ModuleWD.
+	 * It adds the CountSentiment and CountSentimentOfEachWord PRs.
+	 * 
+	 * @param name name of the module
+	 * @throws Exception
+	 */
+	public ModuleCount(String name) throws Exception {
+		super(name);
+		this.add(getCountTokens());
+		this.add(getWordsSentimets());
+		
+	}
+	
+	/**
+	 * Used only in the local mode.
+	 * 
+	 * Register our own plugins located in bin/pr/
+	 * so we can use it in our controller.
+	 *  
+	 * @throws Exception
+	 */
+	public void registerPrPlugin() throws Exception{
+		Gate.getCreoleRegister().registerDirectories(this.getClass().getResource("/pr/"));
+	}
+
+	/**
+	 * Get the configured CountSentiment PR, 
 	 * which counts the number of times a sentiment word is said
-	 * in a document according with our dictionaries.
+	 * in a document according with our dictionaries and generates the document value.
 	 * 
 	 * @return the initialized PR.
 	 * @throws Exception
@@ -19,14 +52,19 @@ public class ModuleCount {
 		return count;
 	}
 	
-	public static String[] resultadoAnalisis(){
-		return pr.CountSentiment.resultadoAnalisis();
+	/**
+	 * Used for the web service, where a GET petition only have one document to analyze.
+	 * 
+	 * @return an array with the value and polarity of an analyzed document.
+	 */
+	public static String[] getAnalysisResult(){
+		return pr.CountSentiment.getAnalysisResult();
 	}
 	
 	/**
 	 * Get the configured Count Sentiment For Each WOrd PR, 
-	 * which counts the number of times a sentiment word is said
-	 * in a document according with our dictionaries.
+	 * which analyze each word in a given document.
+	 *
 	 * 
 	 * @return the initialized PR.
 	 * @throws Exception
@@ -37,6 +75,11 @@ public class ModuleCount {
 		return count;
 	}
 	
+	/**
+	 * Used for the web service, where a GET petition only have one document to analyze.
+	 * 
+	 * @return an array with each word in a given document and its associated values. See the PR for more infromation.
+	 */
 	public static String[][] getWordsAndValues(){
 		return pr.CountSentimentOfEachWord.getWordsAndValues();
 	}
