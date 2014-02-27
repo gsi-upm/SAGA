@@ -1,5 +1,6 @@
 /**
- * This is the base module. It sets the corpus and the basics ANNIE's PR.
+ * An example that execute the module called ModuleCount over an example corpus in local/graphic mode.
+ *
  * @author David Moreno Briz
  *
  */

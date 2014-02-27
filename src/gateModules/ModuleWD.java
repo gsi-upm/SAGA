@@ -1,12 +1,12 @@
 /**
- * This is the base module. It sets the corpus and the basics ANNIE's PR.
+ * This is the base module. It sets the basics ANNIE's PR.
+ * 
  * @author David Moreno Briz
  *
  */
 
 package gateModules; //Package for the different modules
 
-//import java.net.URL;
 import java.util.ArrayList;
 
 import gate.*;

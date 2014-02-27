@@ -1,5 +1,7 @@
 /**
- * This is the base module. It sets the corpus and the basics ANNIE's PR.
+ * This is a module that extends the capabilities of the base module.
+ * It adds the CountSentiment and CountSentimetsOfEachWord PRs.
+ * 
  * @author David Moreno Briz
  *
  */

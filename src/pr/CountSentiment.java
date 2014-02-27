@@ -1,5 +1,6 @@
 /**
- * This is the base module. It sets the corpus and the basics ANNIE's PR.
+ * Look at execute() to see what this PR does.
+ * 
  * @author David Moreno Briz
  *
  */
