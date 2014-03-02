@@ -89,6 +89,7 @@ public class Controller extends HttpServlet {
 	      session.setAttribute("textToAnalize", "");
 	      session.setAttribute("value", "");
           session.setAttribute("polarity", "");
+          session.setAttribute("marlVisible", "hidden=\"true\"");
 	    } else if (parameters.containsKey("input")){
 	    	//Check that in not url or the other type
 		  forward = ANALYZE_JSP;
@@ -98,10 +99,10 @@ public class Controller extends HttpServlet {
   			Corpus corpus = Factory.newCorpus("Texto web");
   			Document textoWeb = Factory.newDocument(textToAnalize);
   			corpus.add(textoWeb);
-  			//Create the PR we want to add to ModuleWD module.
   			module.setCorpus(corpus);
   			module.execute();
   			HttpSession session =request.getSession();
+  			session.setAttribute("marlVisible", "");
             session.setAttribute("textToAnalize", textToAnalize);
             session.setAttribute("value", ModuleCount.getAnalysisResult()[0]);
             session.setAttribute("polarity", ModuleCount.getAnalysisResult()[1]);
@@ -111,6 +112,11 @@ public class Controller extends HttpServlet {
   			}
 	    } else {
 	      forward = HOME_JSP;
+	      HttpSession session =request.getSession();
+	      session.setAttribute("textToAnalize", "");
+	      session.setAttribute("value", "");
+          session.setAttribute("polarity", "");
+          session.setAttribute("marlVisible", "hidden=\"true\"");
 	    }
 	    RequestDispatcher view = request.getRequestDispatcher(forward);
 	    view.forward(request, response);

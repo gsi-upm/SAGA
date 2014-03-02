@@ -1,18 +1,5 @@
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<title>GATE Sentiment Analysis Modules</title>
-<style type="text/css">
-body
-{
-background-color: #006699;
-}
-</style>
-</head>
-<header>
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+<footer>
+<nav class="navbar navbar-inverse navbar-static-down" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -41,4 +28,4 @@ background-color: #006699;
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-</header>
+</footer>

@@ -3,17 +3,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 5 Transitional//EN" "http://www.w3.org/TR/html5/loose.dtd">
 <html>
 <jsp:include page="header.jsp" />
-<body>
+<body bgcolor="#E6E6E6">
 
-
-<form method="GET" action='Controller' name="analyze">
-    <input type="text" name="input" value="Introduzca texto para analizar" size="150" style="height: 79px; ">
-    <input type="hidden" name="informat" value="text">
-    <input type="hidden" name="intype" value="direct">
-    <input type="submit" value="Analyze">
-</form>
-<p>
-<pre>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-3">
+  	<form method="GET" action='Controller' name="analyze">
+    	<input type="text" class="form-control" name="input" value="Insert tour text here." style="height: 122px; width: 246px">
+    	<input type="hidden" name="informat" value="text">
+    	<input type="hidden" name="intype" value="direct">
+    	<p>
+    	<p>
+    	<input class="btn btn-success" type="submit" value="Analyze">
+	</form>
+  </div>
+  <div class="col-md-1"></div>
+  <div class="col-md-6">
+  <pre class="alert alert-info" ${marlVisible}>
 "@context": "http://www.gsi.dit.upm.es/ontologies/eurosentiment/context.jsonld",
         "analysis": [
         {
@@ -59,5 +65,7 @@
     ]
 }
 </pre>
+</div>
+</div>
 </body>
 </html> 

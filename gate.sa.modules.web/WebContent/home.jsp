@@ -4,12 +4,14 @@
 <html>
 <jsp:include page="header.jsp" />
 <body>
-Welcome to GATE-SA-modules-WebService
+<center><h1>Welcome to GATE-SA-modules-WebService</h1><p>
+"GATE sentiment analysis modules" is a set of Java modules prepared to run sentiment analysis algorithms over text in plain/XML format.
 
 <form method="GET" action='Controller' name="home">
   <p> 
-  <input type="submit" name="analyze" value="analyze" />&nbsp; 
+  <input class="btn btn-success" type="submit" name="analyze" value="Start analyzing your text!" />&nbsp; 
   </p>
 </form>
+</center>
 </body>
 </html>
