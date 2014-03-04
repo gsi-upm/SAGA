@@ -1,12 +1,12 @@
-[GATE-Sentiment-analysis-modules](https://github.com/gsi-upm/GATE-modules)
+[SAGA](https://github.com/gsi-upm/SAGA)
 =====
 ![GSI Logo](http://gsi.dit.upm.es/templates/jgsi/images/logo.png)
 
 ## Introduction
-GATE-Sentiment-analysis-modules is a set of Java modules prepared to run sentiment analysis algorithms over text in XML format, which use [GATE](http://gate.ac.uk) APIs and environment.
+SAGA is a set of Java modules prepared to run sentiment analysis algorithms over text in XML format, which use [GATE](http://gate.ac.uk) APIs and environment.
 You should have GATE Developer installed on your system in order to execute each module.
 
-Check out our [Wiki](https://github.com/gsi-upm/GATE-modules/wiki) for more information about installation, configuration and the modules that are available.
+Check out our [Wiki](https://github.com/gsi-upm/SAGA/wiki) for more information about installation, configuration and the modules that are available.
 
 ## Licenses
 
