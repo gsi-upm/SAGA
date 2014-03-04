@@ -4,7 +4,7 @@ import gate.Corpus;
 import gate.Document;
 import gate.Factory;
 import gate.Gate;
-import gateModules.ModuleCount;
+import gateModules.DictionaryBasedSentimentAnalyzer;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,7 +64,9 @@ public class Controller extends HttpServlet {
                     ctx.getResource("/WEB-INF/plugins/ANNIE")); 
             
             Gate.getCreoleRegister().registerDirectories( 
-                    ctx.getResource("/WEB-INF/plugins/pr")); 
+                    ctx.getResource("/WEB-INF/plugins/processingResources")); 
+            Gate.getCreoleRegister().registerDirectories( 
+                    ctx.getResource("/WEB-INF/plugins/webProcessingResources")); 
      
             gateInited = true; 
           
@@ -95,7 +97,7 @@ public class Controller extends HttpServlet {
 		  forward = ANALYZE_JSP;
 		  String textToAnalize = request.getParameter("input");
 		  try{
-  			ModuleCount module = new ModuleCount("Easy sentiment count");
+  			DictionaryBasedSentimentAnalyzer module = new DictionaryBasedSentimentAnalyzer("Easy sentiment count",this.getClass().getResource("/resources/gazetteer/finances/lists.def"));
   			Corpus corpus = Factory.newCorpus("Texto web");
   			Document textoWeb = Factory.newDocument(textToAnalize);
   			corpus.add(textoWeb);
@@ -104,9 +106,9 @@ public class Controller extends HttpServlet {
   			HttpSession session =request.getSession();
   			session.setAttribute("marlVisible", "");
             session.setAttribute("textToAnalize", textToAnalize);
-            session.setAttribute("value", ModuleCount.getAnalysisResult()[0]);
-            session.setAttribute("polarity", ModuleCount.getAnalysisResult()[1]);
-            request.setAttribute("words", ModuleCount.getWordsAndValues());
+            session.setAttribute("value", DictionaryBasedSentimentAnalyzer.getAnalysisResult()[0]);
+            session.setAttribute("polarity", DictionaryBasedSentimentAnalyzer.getAnalysisResult()[1]);
+            request.setAttribute("words", DictionaryBasedSentimentAnalyzer.getWordsAndValues());
   			} catch(Exception e){
   				System.out.println("It does not execute.");
   			}
