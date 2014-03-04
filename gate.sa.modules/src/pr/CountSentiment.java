@@ -39,9 +39,9 @@ public class CountSentiment extends AbstractLanguageAnalyser {
 @Override
 public void execute() throws ExecutionException {
 	//Count how many positive annotations are in the Sentiment set of annotations in each document in the corpus
-	int positive = document.getAnnotations("Sentiment").get("positive").size(); 
+	double positive = document.getAnnotations("Sentiment").get("positive").size(); 
 	//Count how many negative annotations are in the Sentiment set of annotations in each document in the corpus
-	int negative = document.getAnnotations("Sentiment").get("negative").size();
+	double negative = document.getAnnotations("Sentiment").get("negative").size();
 	//Calculate the sentiment value (Goes from -1 to 1)
 	double sentiment = 0; 
 	if((positive + negative) != 0){ 

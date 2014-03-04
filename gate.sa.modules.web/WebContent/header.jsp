@@ -22,16 +22,16 @@ background-color: #006699;
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Financial Twitter Tracker & Eurosentiment</a>
+      <a class="navbar-brand" href=""><font face="helvetica" size="5" color="#F8F8F8">sa</font><font face="helvetica" size="5" color="#00CCFF">ga</font></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    
       <ul class="nav navbar-nav">
         <li><a href="home.jsp">About</a></li>
         <li><a type="submit" href="analyze.jsp">Text analysis</a></li>
-        <li><a href="https://github.com/gsi-upm/GATE-modules"><i class="fa fa-github fa-fw fa-lg"></i></a></li>
-        
+        <li><a href="https://github.com/gsi-upm/GATE-modules"><i class="fa fa-github fa-fw fa-lg"></i></a></li>   
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li><a href="http://www.gsi.dit.upm.es/index.php/en.html"><i class="fa fa-laptop fa-fw fa-lg"></i></a></li>

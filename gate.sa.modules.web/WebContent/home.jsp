@@ -4,6 +4,7 @@
 <html>
 <jsp:include page="header.jsp" />
 <body>
+
 <center><h1>Welcome to GATE-SA-modules-WebService</h1><p>
 "GATE sentiment analysis modules" is a set of Java modules prepared to run sentiment analysis algorithms over text in plain/XML format.
 
