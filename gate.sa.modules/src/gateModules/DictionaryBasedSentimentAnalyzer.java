@@ -54,7 +54,7 @@ public class DictionaryBasedSentimentAnalyzer extends DictionaryBasedInformation
 	 */
 	public static TextValueAndPolarityGenerator getCountTokens() throws Exception{
 		TextValueAndPolarityGenerator count = new TextValueAndPolarityGenerator(); //Create the PR
-		count.setName("Count"); //Set its name
+		count.setName("Sentiment analyzer"); //Set its name
 		return count;
 	}
 	
@@ -77,7 +77,7 @@ public class DictionaryBasedSentimentAnalyzer extends DictionaryBasedInformation
 	 */
 	public static WordValueAndPolarityGenerator getWordsSentimets() throws Exception{
 		WordValueAndPolarityGenerator count = new WordValueAndPolarityGenerator(); //Create the PR
-		count.setName("Count"); //Set its name
+		count.setName("Sentiment analyzer"); //Set its name
 		return count;
 	}
 	

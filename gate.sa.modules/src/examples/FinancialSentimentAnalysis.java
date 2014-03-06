@@ -33,7 +33,7 @@ public class FinancialSentimentAnalysis{
 		File aPluginDir = new File(pluginsDir, "ANNIE");
 		// Load the plugin
 		Gate.getCreoleRegister().registerDirectories(aPluginDir.toURI().toURL());
-		//Create DictionaryBasedSentimentAnalyzer and set the gazzeetter that we are goingt to use in this example, which is about finances.
+		//Create DictionaryBasedSentimentAnalyzer and set the gazetteer that we are going to use in this example, which is about Spanish finances.
 		DictionaryBasedSentimentAnalyzer module = new DictionaryBasedSentimentAnalyzer("saga - Financial Sentiment Analyzer", (new FinancialSentimentAnalysis()).getClass().getResource("/resources/gazetteer/finances/lists.def"));
 		//Register our own plugins to use our own PRs located in the package processingResources.
 		module.registerPrPlugin();
