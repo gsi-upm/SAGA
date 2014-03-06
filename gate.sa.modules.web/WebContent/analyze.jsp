@@ -3,8 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 5 Transitional//EN" "http://www.w3.org/TR/html5/loose.dtd">
 <html>
 <jsp:include page="header.jsp" />
-<body bgcolor="#E6E6E6">
-
+<body>
 <div class="row">
   <div class="col-md-1"></div>
   <div class="col-md-3">
@@ -67,5 +66,6 @@
 </pre>
 </div>
 </div>
+<jsp:include page="footer.jsp" />
 </body>
 </html> 
