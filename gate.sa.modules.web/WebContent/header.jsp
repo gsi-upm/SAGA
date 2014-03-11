@@ -3,6 +3,21 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10/jquery.min.js"></script>
+<script type="text/javascript">
+if($(document.body).height() < $(window).height()){
+    $('#footer').css({
+        position: 'absolute',
+        top:  ( $(window).scrollTop() + $(window).height()
+              - $("#footer").height() ) + "px",
+        width: "100%"
+    });
+} else {
+    $('#footer').css({
+        position: 'static'
+    });
+}   
+</script>
 <title>SAGA</title>
 <style type="text/css">
 body
