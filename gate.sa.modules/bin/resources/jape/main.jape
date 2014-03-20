@@ -30,3 +30,31 @@ Rule: CRule
 -->
 :match.cashtags = {rule=CRule}
 
+Rule: UncertaintyRule
+(
+ {Lookup.majorType == "uncertainty"}
+):match
+-->
+:match.uncertainty = {rule=UncertaintyRule}
+
+Rule: LitigiousnessRule
+(
+ {Lookup.majorType == "litigiousness"}
+):match
+-->
+:match.litigiousness = {rule=LitigiousnessRule}
+
+Rule: Weak_modalRule
+(
+ {Lookup.majorType == "weak_modal"}
+):match
+-->
+:match.weak_modal = {rule=Weak_modalRule}
+
+Rule: Strong_modalRule
+(
+ {Lookup.majorType == "strong_modal"}
+):match
+-->
+:match.strong_modal = {rule=Strong_modalRule}
+

@@ -125,7 +125,7 @@ public class DictionaryBasedInformationExtractor{
 		tokeniser.setTokeniserRulesURL(this.getClass().getResource("/resources/tokeniser/DefaultTokeniser.rules"));
 		//And the grammar from /resources/tokeniser/postprocess.jape
 		tokeniser.setTransducerGrammarURL(this.getClass().getResource("/resources/tokeniser/postprocess.jape"));
-		tokeniser.setAnnotationSetName("Entities"); //Set annotation set name for the token annotation.
+		tokeniser.setAnnotationSetName("Annotations"); //Set annotation set name for the token annotation.
 		tokeniser.init(); //The PR is initialized
 		return tokeniser;
 	}
@@ -139,12 +139,12 @@ public class DictionaryBasedInformationExtractor{
 	public DefaultGazetteer getGazetteerPR(URL listsURL) throws Exception{
 		DefaultGazetteer gazetteer = new DefaultGazetteer(); //Create the PR
 		gazetteer.setName("Gazetter"); //Set its name
-		gazetteer.setCaseSensitive(new Boolean(true)); 
+		gazetteer.setCaseSensitive(new Boolean(false)); 
 		gazetteer.setEncoding("UTF-8");
 		//Set the list of the dictionaries that are going to be used by the Gazetteer
 		gazetteer.setListsURL(listsURL);
 		//Set annotation set name for the gazetteer features.
-		gazetteer.setAnnotationSetName("Entities");
+		gazetteer.setAnnotationSetName("Annotations");
 		gazetteer.setLongestMatchOnly(new Boolean(true));
 		gazetteer.setWholeWordsOnly(new Boolean(true));
 		gazetteer.init(); //The PR is initialized
@@ -163,7 +163,7 @@ public class DictionaryBasedInformationExtractor{
 		transducer.setEncoding("UTF-8");
 		//Set the grammar to transduce the features into annotations.
 		transducer.setGrammarURL(this.getClass().getResource("/resources/jape/main.jape"));
-		transducer.setInputASName("Entities"); //Input set of annotations to run the transducer
+		transducer.setInputASName("Annotations"); //Input set of annotations to run the transducer
 		transducer.setOutputASName("Sentiment"); //Output annotation
 		transducer.init(); //The PR is initialized
 		return transducer;

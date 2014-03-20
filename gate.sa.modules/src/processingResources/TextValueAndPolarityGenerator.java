@@ -59,7 +59,7 @@ public void execute() throws ExecutionException {
 		analysisResult[1] = "Neutral";
 	}
 	//Sets the sentiment value and polarity at the end of the document
-	document.setContent(new DocumentContentImpl(document.getContent().toString() + " This text has a " + sentiment + " value and " + analysisResult[1] + " polarity."));
+	document.setContent(new DocumentContentImpl(document.getContent().toString() + "\n\n This text has a " + sentiment + " value and " + analysisResult[1] + " polarity."));
 }
 
 /**
