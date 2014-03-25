@@ -33,9 +33,11 @@ public class MachineLearningTrainingAndTesting{
 		// Load the Annie plugin
 		File aPluginDir = new File(pluginsDir, "ANNIE");
 		File aPluginDir2 = new File(pluginsDir, "Tools");
+		File aPluginDir3 = new File(pluginsDir, "Learning");
 		// Load the plugin
 		Gate.getCreoleRegister().registerDirectories(aPluginDir.toURI().toURL());
 		Gate.getCreoleRegister().registerDirectories(aPluginDir2.toURI().toURL());
+		Gate.getCreoleRegister().registerDirectories(aPluginDir3.toURI().toURL());
 		//Create DictionaryBasedSentimentAnalyzer and set the gazetteer that we are going to use in this example, which is about Spanish finances.
 		MachineLearningBasedSentimentAnalysisModule module = new MachineLearningBasedSentimentAnalysisModule("Training");
 		//Create the corpus and populate it.

@@ -1,0 +1,62 @@
+25-mar-2014 14:48:07: 
+
+*************************
+A new session for NLP learning is starting: 20140325_144807file:/Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/paum.xml (saved 20100506_205228, 122583339secs ago)The initiliased time of NLP learning: Tue Mar 25 14:48:07 CET 2014
+Working directory: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning
+The feature files and models are saved at: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/savedFiles
+Learner name: PAUM
+Learner nick name: PAUM
+Learner parameter settings: PAUM
+Surroud mode (or chunk learning): false
+25-mar-2014 14:48:10: 
+*** A new run starts.
+25-mar-2014 14:48:10: 
+The execution time (pre-processing the first document): Tue Mar 25 14:48:10 CET 2014
+25-mar-2014 14:48:12: The learning start at Tue Mar 25 14:48:12 CET 2014
+25-mar-2014 14:48:12: The number of documents in dataset: 32
+25-mar-2014 14:48:12: ** Training mode:
+25-mar-2014 14:48:12: 
+Training starts.
+
+25-mar-2014 14:48:12: Multi to binary conversion.
+25-mar-2014 14:48:12: The learners: PAUM
+25-mar-2014 14:48:13: The number of classes in dataset: 5
+25-mar-2014 14:48:13: total Number of classes for learning is 5
+25-mar-2014 14:48:13: One against others for multi to binary class conversion.
+25-mar-2014 14:48:13: Training time for class 1: 46ms
+25-mar-2014 14:48:13: Training time for class 2: 24ms
+25-mar-2014 14:48:13: Training time for class 3: 30ms
+25-mar-2014 14:48:13: Training time for class 4: 44ms
+25-mar-2014 14:48:13: Training time for class 5: 27ms
+25-mar-2014 14:48:13: This learning session finished!.
+25-mar-2014 23:51:51: 
+
+*************************
+A new session for NLP learning is starting: 20140325_235151file:/Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/paum.xml (saved 20100506_205228, 122615963secs ago)The initiliased time of NLP learning: Tue Mar 25 23:51:51 CET 2014
+Working directory: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning
+The feature files and models are saved at: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/savedFiles
+Learner name: PAUM
+Learner nick name: PAUM
+Learner parameter settings: PAUM
+Surroud mode (or chunk learning): false
+25-mar-2014 23:51:53: 
+*** A new run starts.
+25-mar-2014 23:51:53: 
+The execution time (pre-processing the first document): Tue Mar 25 23:51:53 CET 2014
+25-mar-2014 23:51:56: The learning start at Tue Mar 25 23:51:56 CET 2014
+25-mar-2014 23:51:56: The number of documents in dataset: 32
+25-mar-2014 23:51:56: ** Training mode:
+25-mar-2014 23:51:57: 
+Training starts.
+
+25-mar-2014 23:51:57: Multi to binary conversion.
+25-mar-2014 23:51:57: The learners: PAUM
+25-mar-2014 23:51:57: The number of classes in dataset: 5
+25-mar-2014 23:51:57: total Number of classes for learning is 5
+25-mar-2014 23:51:57: One against others for multi to binary class conversion.
+25-mar-2014 23:51:57: Training time for class 1: 53ms
+25-mar-2014 23:51:57: Training time for class 2: 34ms
+25-mar-2014 23:51:57: Training time for class 3: 33ms
+25-mar-2014 23:51:57: Training time for class 4: 43ms
+25-mar-2014 23:51:57: Training time for class 5: 30ms
+25-mar-2014 23:51:57: This learning session finished!.

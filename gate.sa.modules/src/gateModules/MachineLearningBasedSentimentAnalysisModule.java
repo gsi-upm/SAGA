@@ -1,6 +1,5 @@
 package gateModules; //Package for the different modules
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -13,8 +12,8 @@ import gate.creole.tokeniser.DefaultTokeniser;
 import gate.util.ExtensionFileFilter;
 import gate.creole.annotdelete.AnnotationDeletePR;
 import gate.creole.annotransfer.AnnotationSetTransfer;
-import gate.creole.gazetteer.DefaultGazetteer;
-import gate.creole.ANNIETransducer;
+import gate.learning.LearningAPIMain;
+import gate.learning.RunMode;
 
 public class MachineLearningBasedSentimentAnalysisModule{
 	
@@ -45,6 +44,7 @@ public class MachineLearningBasedSentimentAnalysisModule{
 		this.add(this.getSentenceSplitterPR());
 		this.add(this.getPOSTaggerPR());
 		this.add(this.getMorphologicalAnalyserPR());
+		this.add(this.getMachineLearningPR());
 	}
 	
 	/**
@@ -220,18 +220,15 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	 * @return the initialized PR.
 	 * @throws Exception
 	 */
-//  public Learning getMachineLearningPR() throws Exception{
-//		File configFile = new File("/home/you/ml_config.xml"); //Wherever it is 
-//		RunMode mode = RunMode.EVALUATION; //or TRAINING, or APPLICATION .. 
-//		//Set up the PR and add it to the pipeline. 
-//		//As with using the PR from GATE Developer, it needs a config file 
-//		//and a mode. 
-//		FeatureMap fm = Factory.newFeatureMap(); 
-//		fm.put("configFileURL", configFile.toURI().toURL()); 
-//		fm.put("learningMode", mode); 
-//		gate.learning.LearningAPIMain learner = 
-//		        (gate.learning.LearningAPIMain) 
-//		        gate.Factory.createResource("gate.learning.LearningAPIMain", fm); 
-//	}
+  public LearningAPIMain getMachineLearningPR() throws Exception{
+	  LearningAPIMain pr = new LearningAPIMain();
+	  pr.setConfigFileURL(this.getClass().getResource("/resources/machineLearning/paum.xml"));
+	  pr.setName("Batch Learning PR");
+	  pr.setInputASName("");
+	  pr.setOutputASName("");
+	  pr.setLearningMode(RunMode.TRAINING);
+	  pr.init();
+	  return pr;
+	}
 
 }
