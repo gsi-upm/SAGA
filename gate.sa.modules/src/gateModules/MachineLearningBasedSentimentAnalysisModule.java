@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import gate.*;
+import gate.creole.ANNIETransducer;
 import gate.creole.POSTagger;
 import gate.creole.SerialAnalyserController;
 import gate.creole.morph.Morph;
@@ -30,7 +31,7 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	 * @param listsURL location of the lists to set the gazetteer. In URL format.
 	 * @throws Exception
 	 */
-	public MachineLearningBasedSentimentAnalysisModule(String name) throws Exception{
+	public MachineLearningBasedSentimentAnalysisModule(String name, String mlConfiguration, RunMode mlMode, String mlOutput, ArrayList<String> list) throws Exception{
 		this.controller.setName(name); // Set the module name
 		//Delete PR.
 		AnnotationDeletePR delete = this.getDeletePR(); 
@@ -39,12 +40,17 @@ public class MachineLearningBasedSentimentAnalysisModule{
 		
 		//Adding the different PR.
 		this.add(delete);
-		this.add(this.getAnnotationSetTransferPR());
+		if(mlMode == RunMode.TRAINING){
+		this.add(this.getAnnotationSetTransferPR(list));
+		}
+		if(mlMode == RunMode.APPLICATION){
+		this.add(this.getTransducerPR());	
+		}
 		this.add(tokeniser);
 		this.add(this.getSentenceSplitterPR());
 		this.add(this.getPOSTaggerPR());
 		this.add(this.getMorphologicalAnalyserPR());
-		this.add(this.getMachineLearningPR());
+		this.add(this.getMachineLearningPR(mlConfiguration, mlMode, mlOutput));
 	}
 	
 	/**
@@ -84,10 +90,10 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	 * @return the populated corpus
 	 * @throws Exception
 	 */
-	public Corpus createCorpusAndPupulateItTraining() throws Exception{
-		Corpus corpus = Factory.newCorpus("Tweets"); //Create a corpus name Tweets
+	public Corpus createCorpusAndPupulateIt(String name, String corpusDir) throws Exception{
+		Corpus corpus = Factory.newCorpus(name); //Create a corpus name Tweets
 		ExtensionFileFilter filter = new ExtensionFileFilter("XML files", "xml"); //A filter to add XML documents
-		corpus.populate(this.getClass().getResource("/resources/machineLearning/corpora/training"), filter,"UTF-8", true); //Populate it from /resource/data/input directory
+		corpus.populate(this.getClass().getResource(corpusDir), filter,"UTF-8", true); //Populate it from /resource/data/input directory
 		return corpus;
 	}
 	
@@ -114,14 +120,12 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	 * @return the initialized PR.
 	 * @throws Exception
 	 */
-	public AnnotationSetTransfer getAnnotationSetTransferPR() throws Exception{
+	public AnnotationSetTransfer getAnnotationSetTransferPR(ArrayList<String> list) throws Exception{
 		AnnotationSetTransfer pr = new AnnotationSetTransfer(); //Create the PR
 		pr.setName("Annotation Set Transfer PR"); //Set its name
 		//Set tonekiser rules from the file in /resources/tokeniser/DefaultTokeniser.rules
 		pr.setCopyAnnotations(true);
 		pr.setTransferAllUnlessFound(true);
-		ArrayList<String> list = new ArrayList<String>(); //List of sets to keep
-		list.add("comment"); //Keeps Key set.
 		pr.setAnnotationTypes(list);
 		pr.setInputASName("Key");
 		pr.setOutputASName("");
@@ -130,6 +134,18 @@ public class MachineLearningBasedSentimentAnalysisModule{
 		pr.init();
 		return pr;
 	}
+	
+	public ANNIETransducer getTransducerPR() throws Exception{
+		ANNIETransducer transducer = new ANNIETransducer(); //Create the PR
+		transducer.setName("NE Transducer"); //Set its name
+		transducer.setEncoding("UTF-8");
+		//Set the grammar to transduce the features into annotations.
+		transducer.setGrammarURL(this.getClass().getResource("/resources/machineLearning/copy_comment_spans.jape"));
+		transducer.setInputASName("Key"); //Input set of annotations to run the transducer
+		transducer.setOutputASName(""); //Output annotation
+		transducer.init(); //The PR is initialized
+		return transducer;
+	} 
 	
 	/**
 	 * Get the configured ANNIE Tokeniser PR.
@@ -220,13 +236,13 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	 * @return the initialized PR.
 	 * @throws Exception
 	 */
-  public LearningAPIMain getMachineLearningPR() throws Exception{
+  public LearningAPIMain getMachineLearningPR(String configuration, RunMode mode, String output) throws Exception{
 	  LearningAPIMain pr = new LearningAPIMain();
-	  pr.setConfigFileURL(this.getClass().getResource("/resources/machineLearning/paum.xml"));
+	  pr.setConfigFileURL(this.getClass().getResource(configuration));
 	  pr.setName("Batch Learning PR");
 	  pr.setInputASName("");
-	  pr.setOutputASName("");
-	  pr.setLearningMode(RunMode.TRAINING);
+	  pr.setOutputASName(output);
+	  pr.setLearningMode(mode);
 	  pr.init();
 	  return pr;
 	}

@@ -8,11 +8,13 @@
 package examples;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import gate.Corpus;
 import gate.Factory;
 import gate.Gate;
 import gate.gui.MainFrame;
+import gate.learning.RunMode;
 import gateModules.MachineLearningBasedSentimentAnalysisModule;
 
 public class MachineLearningTrainingAndTesting{
@@ -39,11 +41,19 @@ public class MachineLearningTrainingAndTesting{
 		Gate.getCreoleRegister().registerDirectories(aPluginDir2.toURI().toURL());
 		Gate.getCreoleRegister().registerDirectories(aPluginDir3.toURI().toURL());
 		//Create DictionaryBasedSentimentAnalyzer and set the gazetteer that we are going to use in this example, which is about Spanish finances.
-		MachineLearningBasedSentimentAnalysisModule module = new MachineLearningBasedSentimentAnalysisModule("Training");
+		ArrayList<String> list = new ArrayList<String>(); //List of sets to keep
+		list.add("comment"); //Keeps Key set.
+		MachineLearningBasedSentimentAnalysisModule trainingModule = new MachineLearningBasedSentimentAnalysisModule("Training","/resources/machineLearning/paum.xml", RunMode.TRAINING, "", list);
 		//Create the corpus and populate it.
 	    //Corpus corpus = module.createCorpusAndPupulateItExample();
-		Corpus corpus = module.createCorpusAndPupulateItTraining();
-	    module.setCorpus(corpus); // Set corpus into the controller. 
-		module.execute();
+		Corpus corpus = trainingModule.createCorpusAndPupulateIt("Training", "/resources/machineLearning/corpora/training");
+		trainingModule.setCorpus(corpus); // Set corpus into the controller. 
+		trainingModule.execute();
+		MachineLearningBasedSentimentAnalysisModule applicationModule = new MachineLearningBasedSentimentAnalysisModule("Testing","/resources/machineLearning/paum.xml", RunMode.APPLICATION, "output", list);
+		//Create the corpus and populate it.
+	    //Corpus corpus = module.createCorpusAndPupulateItExample();
+		Corpus corpus2 = applicationModule.createCorpusAndPupulateIt("Testing", "/resources/machineLearning/corpora/testing");
+		applicationModule.setCorpus(corpus2); // Set corpus into the controller. 
+		applicationModule.execute();
 	}
 }

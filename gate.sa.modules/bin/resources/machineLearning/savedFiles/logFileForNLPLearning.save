@@ -60,3 +60,322 @@ Training starts.
 25-mar-2014 23:51:57: Training time for class 4: 43ms
 25-mar-2014 23:51:57: Training time for class 5: 30ms
 25-mar-2014 23:51:57: This learning session finished!.
+26-mar-2014 11:46:37: 
+
+*************************
+A new session for NLP learning is starting: 20140326_114637file:/Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/paum.xml (saved 20100506_205228, 122658849secs ago)The initiliased time of NLP learning: Wed Mar 26 11:46:37 CET 2014
+Working directory: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning
+The feature files and models are saved at: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/savedFiles
+Learner name: PAUM
+Learner nick name: PAUM
+Learner parameter settings: PAUM
+Surroud mode (or chunk learning): false
+26-mar-2014 11:46:40: 
+*** A new run starts.
+26-mar-2014 11:46:40: 
+The execution time (pre-processing the first document): Wed Mar 26 11:46:40 CET 2014
+26-mar-2014 11:46:42: The learning start at Wed Mar 26 11:46:42 CET 2014
+26-mar-2014 11:46:42: The number of documents in dataset: 32
+26-mar-2014 11:46:42: ** Training mode:
+26-mar-2014 11:46:43: 
+Training starts.
+
+26-mar-2014 11:46:43: Multi to binary conversion.
+26-mar-2014 11:46:43: The learners: PAUM
+26-mar-2014 11:46:43: The number of classes in dataset: 5
+26-mar-2014 11:46:43: total Number of classes for learning is 5
+26-mar-2014 11:46:43: One against others for multi to binary class conversion.
+26-mar-2014 11:46:43: Training time for class 1: 47ms
+26-mar-2014 11:46:43: Training time for class 2: 23ms
+26-mar-2014 11:46:43: Training time for class 3: 42ms
+26-mar-2014 11:46:43: Training time for class 4: 53ms
+26-mar-2014 11:46:43: Training time for class 5: 34ms
+26-mar-2014 11:46:43: This learning session finished!.
+26-mar-2014 11:55:20: 
+
+*************************
+A new session for NLP learning is starting: 20140326_115520file:/Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/paum.xml (saved 20100506_205228, 122659372secs ago)The initiliased time of NLP learning: Wed Mar 26 11:55:20 CET 2014
+Working directory: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning
+The feature files and models are saved at: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/savedFiles
+Learner name: PAUM
+Learner nick name: PAUM
+Learner parameter settings: PAUM
+Surroud mode (or chunk learning): false
+26-mar-2014 11:55:22: 
+*** A new run starts.
+26-mar-2014 11:55:22: 
+The execution time (pre-processing the first document): Wed Mar 26 11:55:22 CET 2014
+26-mar-2014 11:55:24: The learning start at Wed Mar 26 11:55:24 CET 2014
+26-mar-2014 11:55:24: The number of documents in dataset: 32
+26-mar-2014 11:55:25: ** Training mode:
+26-mar-2014 11:55:25: 
+Training starts.
+
+26-mar-2014 11:55:25: Multi to binary conversion.
+26-mar-2014 11:55:25: The learners: PAUM
+26-mar-2014 11:55:25: The number of classes in dataset: 5
+26-mar-2014 11:55:25: total Number of classes for learning is 5
+26-mar-2014 11:55:25: One against others for multi to binary class conversion.
+26-mar-2014 11:55:25: Training time for class 1: 50ms
+26-mar-2014 11:55:25: Training time for class 2: 38ms
+26-mar-2014 11:55:25: Training time for class 3: 44ms
+26-mar-2014 11:55:25: Training time for class 4: 35ms
+26-mar-2014 11:55:25: Training time for class 5: 30ms
+26-mar-2014 11:55:25: This learning session finished!.
+26-mar-2014 12:04:29: 
+
+*************************
+A new session for NLP learning is starting: 20140326_120429file:/Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/paum.xml (saved 20100506_205228, 122659921secs ago)The initiliased time of NLP learning: Wed Mar 26 12:04:29 CET 2014
+Working directory: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning
+The feature files and models are saved at: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/savedFiles
+Learner name: PAUM
+Learner nick name: PAUM
+Learner parameter settings: PAUM
+Surroud mode (or chunk learning): false
+26-mar-2014 12:04:32: 
+*** A new run starts.
+26-mar-2014 12:04:32: 
+The execution time (pre-processing the first document): Wed Mar 26 12:04:32 CET 2014
+26-mar-2014 12:04:34: The learning start at Wed Mar 26 12:04:34 CET 2014
+26-mar-2014 12:04:34: The number of documents in dataset: 32
+26-mar-2014 12:04:34: ** Training mode:
+26-mar-2014 12:04:35: 
+Training starts.
+
+26-mar-2014 12:04:35: Multi to binary conversion.
+26-mar-2014 12:04:35: The learners: PAUM
+26-mar-2014 12:04:35: The number of classes in dataset: 5
+26-mar-2014 12:04:35: total Number of classes for learning is 5
+26-mar-2014 12:04:35: One against others for multi to binary class conversion.
+26-mar-2014 12:04:35: Training time for class 1: 49ms
+26-mar-2014 12:04:35: Training time for class 2: 31ms
+26-mar-2014 12:04:35: Training time for class 3: 32ms
+26-mar-2014 12:04:35: Training time for class 4: 43ms
+26-mar-2014 12:04:35: Training time for class 5: 29ms
+26-mar-2014 12:04:35: This learning session finished!.
+26-mar-2014 12:45:04: 
+
+*************************
+A new session for NLP learning is starting: 20140326_124504file:/Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/paum.xml (saved 20100506_205228, 122662356secs ago)The initiliased time of NLP learning: Wed Mar 26 12:45:04 CET 2014
+Working directory: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning
+The feature files and models are saved at: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/savedFiles
+Learner name: PAUM
+Learner nick name: PAUM
+Learner parameter settings: PAUM
+Surroud mode (or chunk learning): false
+26-mar-2014 12:45:06: 
+*** A new run starts.
+26-mar-2014 12:45:06: 
+The execution time (pre-processing the first document): Wed Mar 26 12:45:06 CET 2014
+26-mar-2014 12:45:09: The learning start at Wed Mar 26 12:45:09 CET 2014
+26-mar-2014 12:45:09: The number of documents in dataset: 32
+26-mar-2014 12:45:09: ** Training mode:
+26-mar-2014 12:45:10: 
+Training starts.
+
+26-mar-2014 12:45:10: Multi to binary conversion.
+26-mar-2014 12:45:10: The learners: PAUM
+26-mar-2014 12:45:10: The number of classes in dataset: 5
+26-mar-2014 12:45:10: total Number of classes for learning is 5
+26-mar-2014 12:45:10: One against others for multi to binary class conversion.
+26-mar-2014 12:45:10: Training time for class 1: 56ms
+26-mar-2014 12:45:10: Training time for class 2: 28ms
+26-mar-2014 12:45:10: Training time for class 3: 29ms
+26-mar-2014 12:45:10: Training time for class 4: 39ms
+26-mar-2014 12:45:10: Training time for class 5: 28ms
+26-mar-2014 12:45:10: This learning session finished!.
+26-mar-2014 12:45:11: 
+
+*************************
+A new session for NLP learning is starting: 20140326_124511file:/Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/paum.xml (saved 20100506_205228, 122662363secs ago)The initiliased time of NLP learning: Wed Mar 26 12:45:11 CET 2014
+Working directory: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning
+The feature files and models are saved at: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/savedFiles
+Learner name: PAUM
+Learner nick name: PAUM
+Learner parameter settings: PAUM
+Surroud mode (or chunk learning): false
+26-mar-2014 12:45:11: 
+*** A new run starts.
+26-mar-2014 12:45:11: 
+The execution time (pre-processing the first document): Wed Mar 26 12:45:11 CET 2014
+26-mar-2014 12:45:11: ** Application mode for document from 0 to 1(not included):
+26-mar-2014 12:45:11: Creating temp directory for application-mode files
+26-mar-2014 12:45:11: 
+Application starts.
+26-mar-2014 12:45:11: Multi to binary conversion.
+26-mar-2014 12:45:11: The learners: PAUM
+26-mar-2014 12:45:11: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 12:45:11: Application time for class: 23ms
+26-mar-2014 12:45:11: ** Application mode for document from 1 to 2(not included):
+26-mar-2014 12:45:11: 
+Application starts.
+26-mar-2014 12:45:11: Multi to binary conversion.
+26-mar-2014 12:45:11: The learners: PAUM
+26-mar-2014 12:45:11: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 12:45:11: Application time for class: 19ms
+26-mar-2014 12:45:11: ** Application mode for document from 2 to 3(not included):
+26-mar-2014 12:45:11: 
+Application starts.
+26-mar-2014 12:45:11: Multi to binary conversion.
+26-mar-2014 12:45:11: The learners: PAUM
+26-mar-2014 12:45:11: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 12:45:11: Application time for class: 14ms
+26-mar-2014 12:45:12: ** Application mode for document from 3 to 4(not included):
+26-mar-2014 12:45:12: 
+Application starts.
+26-mar-2014 12:45:12: Multi to binary conversion.
+26-mar-2014 12:45:12: The learners: PAUM
+26-mar-2014 12:45:12: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 12:45:12: Application time for class: 15ms
+26-mar-2014 12:45:12: ** Application mode for document from 4 to 5(not included):
+26-mar-2014 12:45:12: 
+Application starts.
+26-mar-2014 12:45:12: Multi to binary conversion.
+26-mar-2014 12:45:12: The learners: PAUM
+26-mar-2014 12:45:12: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 12:45:12: Application time for class: 17ms
+26-mar-2014 12:45:12: ** Application mode for document from 5 to 6(not included):
+26-mar-2014 12:45:12: 
+Application starts.
+26-mar-2014 12:45:12: Multi to binary conversion.
+26-mar-2014 12:45:12: The learners: PAUM
+26-mar-2014 12:45:12: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 12:45:12: Application time for class: 15ms
+26-mar-2014 12:45:12: ** Application mode for document from 6 to 7(not included):
+26-mar-2014 12:45:12: 
+Application starts.
+26-mar-2014 12:45:12: Multi to binary conversion.
+26-mar-2014 12:45:12: The learners: PAUM
+26-mar-2014 12:45:12: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 12:45:12: Application time for class: 21ms
+26-mar-2014 12:45:12: ** Application mode for document from 7 to 8(not included):
+26-mar-2014 12:45:12: 
+Application starts.
+26-mar-2014 12:45:12: Multi to binary conversion.
+26-mar-2014 12:45:12: The learners: PAUM
+26-mar-2014 12:45:12: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 12:45:12: Application time for class: 16ms
+26-mar-2014 12:45:12: The learning start at Wed Mar 26 12:45:12 CET 2014
+26-mar-2014 12:45:12: The number of documents in dataset: 8
+26-mar-2014 12:45:12: This learning session finished!.
+26-mar-2014 13:03:34: 
+
+*************************
+A new session for NLP learning is starting: 20140326_130334file:/Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/paum.xml (saved 20100506_205228, 122663466secs ago)The initiliased time of NLP learning: Wed Mar 26 13:03:34 CET 2014
+Working directory: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning
+The feature files and models are saved at: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/savedFiles
+Learner name: PAUM
+Learner nick name: PAUM
+Learner parameter settings: PAUM
+Surroud mode (or chunk learning): false
+26-mar-2014 13:03:36: 
+*** A new run starts.
+26-mar-2014 13:03:36: 
+The execution time (pre-processing the first document): Wed Mar 26 13:03:36 CET 2014
+26-mar-2014 13:03:38: The learning start at Wed Mar 26 13:03:38 CET 2014
+26-mar-2014 13:03:38: The number of documents in dataset: 32
+26-mar-2014 13:03:39: ** Training mode:
+26-mar-2014 13:03:39: 
+Training starts.
+
+26-mar-2014 13:03:39: Multi to binary conversion.
+26-mar-2014 13:03:39: The learners: PAUM
+26-mar-2014 13:03:39: The number of classes in dataset: 5
+26-mar-2014 13:03:39: total Number of classes for learning is 5
+26-mar-2014 13:03:39: One against others for multi to binary class conversion.
+26-mar-2014 13:03:39: Training time for class 1: 48ms
+26-mar-2014 13:03:39: Training time for class 2: 20ms
+26-mar-2014 13:03:39: Training time for class 3: 27ms
+26-mar-2014 13:03:39: Training time for class 4: 39ms
+26-mar-2014 13:03:39: Training time for class 5: 29ms
+26-mar-2014 13:03:39: This learning session finished!.
+26-mar-2014 13:03:40: 
+
+*************************
+A new session for NLP learning is starting: 20140326_130340file:/Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/paum.xml (saved 20100506_205228, 122663472secs ago)The initiliased time of NLP learning: Wed Mar 26 13:03:40 CET 2014
+Working directory: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning
+The feature files and models are saved at: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/savedFiles
+Learner name: PAUM
+Learner nick name: PAUM
+Learner parameter settings: PAUM
+Surroud mode (or chunk learning): false
+26-mar-2014 13:03:41: 
+*** A new run starts.
+26-mar-2014 13:03:41: 
+The execution time (pre-processing the first document): Wed Mar 26 13:03:41 CET 2014
+26-mar-2014 13:03:41: ** Application mode for document from 0 to 1(not included):
+26-mar-2014 13:03:41: Creating temp directory for application-mode files
+26-mar-2014 13:03:41: 
+Application starts.
+26-mar-2014 13:03:41: Multi to binary conversion.
+26-mar-2014 13:03:41: The learners: PAUM
+26-mar-2014 13:03:41: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 13:03:41: Application time for class: 25ms
+26-mar-2014 13:03:41: ** Application mode for document from 1 to 2(not included):
+26-mar-2014 13:03:41: 
+Application starts.
+26-mar-2014 13:03:41: Multi to binary conversion.
+26-mar-2014 13:03:41: The learners: PAUM
+26-mar-2014 13:03:41: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 13:03:41: Application time for class: 46ms
+26-mar-2014 13:03:41: ** Application mode for document from 2 to 3(not included):
+26-mar-2014 13:03:41: 
+Application starts.
+26-mar-2014 13:03:41: Multi to binary conversion.
+26-mar-2014 13:03:41: The learners: PAUM
+26-mar-2014 13:03:41: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 13:03:41: Application time for class: 12ms
+26-mar-2014 13:03:41: ** Application mode for document from 3 to 4(not included):
+26-mar-2014 13:03:41: 
+Application starts.
+26-mar-2014 13:03:41: Multi to binary conversion.
+26-mar-2014 13:03:41: The learners: PAUM
+26-mar-2014 13:03:41: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 13:03:41: Application time for class: 13ms
+26-mar-2014 13:03:41: ** Application mode for document from 4 to 5(not included):
+26-mar-2014 13:03:41: 
+Application starts.
+26-mar-2014 13:03:41: Multi to binary conversion.
+26-mar-2014 13:03:41: The learners: PAUM
+26-mar-2014 13:03:41: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 13:03:41: Application time for class: 20ms
+26-mar-2014 13:03:41: ** Application mode for document from 5 to 6(not included):
+26-mar-2014 13:03:41: 
+Application starts.
+26-mar-2014 13:03:41: Multi to binary conversion.
+26-mar-2014 13:03:41: The learners: PAUM
+26-mar-2014 13:03:41: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 13:03:41: Application time for class: 24ms
+26-mar-2014 13:03:41: ** Application mode for document from 6 to 7(not included):
+26-mar-2014 13:03:41: 
+Application starts.
+26-mar-2014 13:03:41: Multi to binary conversion.
+26-mar-2014 13:03:41: The learners: PAUM
+26-mar-2014 13:03:41: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 13:03:41: Application time for class: 33ms
+26-mar-2014 13:03:42: ** Application mode for document from 7 to 8(not included):
+26-mar-2014 13:03:42: 
+Application starts.
+26-mar-2014 13:03:42: Multi to binary conversion.
+26-mar-2014 13:03:42: The learners: PAUM
+26-mar-2014 13:03:42: One against others for multi to binary class conversion.
+Number of classes in model: 5
+26-mar-2014 13:03:42: Application time for class: 7ms
+26-mar-2014 13:03:42: The learning start at Wed Mar 26 13:03:42 CET 2014
+26-mar-2014 13:03:42: The number of documents in dataset: 8
+26-mar-2014 13:03:42: This learning session finished!.
