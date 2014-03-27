@@ -1,6 +1,5 @@
 package gateModules; //Package for the different modules
 
-import java.net.URL;
 import java.util.ArrayList;
 
 import gate.*;
@@ -13,6 +12,7 @@ import gate.creole.tokeniser.DefaultTokeniser;
 import gate.util.ExtensionFileFilter;
 import gate.creole.annotdelete.AnnotationDeletePR;
 import gate.creole.annotransfer.AnnotationSetTransfer;
+import gate.learning.EvaluationBasedOnDocs;
 import gate.learning.LearningAPIMain;
 import gate.learning.RunMode;
 
@@ -23,34 +23,47 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	 */
 	private final SerialAnalyserController controller = (SerialAnalyserController) Factory.createResource("gate.creole.SerialAnalyserController");
 	
+	private LearningAPIMain batchLearningPR;
+	
+	private RunMode mlMode;
+
 	/**
 	 * Constructor of the base module called MachineLearningBasedSentimentAnalysisModule.
 	 * 
 	 * 
 	 * @param name name of the module
+	 * @param mlConfiguration Location of paum.xml
+	 * @param mlMode Learning mode
+	 * @param mlOutput output annotation set
+	 * @param list list of annotations to transfer
 	 * @param listsURL location of the lists to set the gazetteer. In URL format.
 	 * @throws Exception
 	 */
 	public MachineLearningBasedSentimentAnalysisModule(String name, String mlConfiguration, RunMode mlMode, String mlOutput, ArrayList<String> list) throws Exception{
 		this.controller.setName(name); // Set the module name
+		this.mlMode = mlMode;
 		//Delete PR.
 		AnnotationDeletePR delete = this.getDeletePR(); 
 		//Annie Tokeniser. 
 		DefaultTokeniser tokeniser = this.getTokeniserPR();
-		
 		//Adding the different PR.
 		this.add(delete);
-		if(mlMode == RunMode.TRAINING){
+		if(mlMode == RunMode.TRAINING  || this.mlMode == RunMode.EVALUATION){
 		this.add(this.getAnnotationSetTransferPR(list));
 		}
-		if(mlMode == RunMode.APPLICATION){
+		if(this.mlMode == RunMode.APPLICATION){
 		this.add(this.getTransducerPR());	
 		}
 		this.add(tokeniser);
 		this.add(this.getSentenceSplitterPR());
 		this.add(this.getPOSTaggerPR());
 		this.add(this.getMorphologicalAnalyserPR());
-		this.add(this.getMachineLearningPR(mlConfiguration, mlMode, mlOutput));
+		this.batchLearningPR = this.getMachineLearningPR(mlConfiguration, mlMode, mlOutput);
+		this.add(batchLearningPR);
+	}
+	
+	public LearningAPIMain getBatchLearningPR() {
+		return batchLearningPR;
 	}
 	
 	/**
@@ -71,6 +84,16 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	 */
 	public void execute() throws Exception{
 		this.controller.execute();
+		if(this.mlMode == RunMode.EVALUATION){
+			EvaluationBasedOnDocs crossValidation = this.batchLearningPR.getEvaluation(); 
+			System.out.println( 
+					crossValidation.macroMeasuresOfResults.precision + "," + 
+					crossValidation.macroMeasuresOfResults.recall + "," + 
+					crossValidation.macroMeasuresOfResults.f1 + "," + 
+					crossValidation.macroMeasuresOfResults.precisionLenient + "," + 
+					crossValidation.macroMeasuresOfResults.recallLenient + "," + 
+					crossValidation.macroMeasuresOfResults.f1Lenient + "\n");
+		}
 	}
 	
 	/**
@@ -86,6 +109,9 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	/**
 	 * Create a corpus and populate it with the XML documents 
 	 * in the directory /resources/machineLearning/corpora/training.
+	 * 
+	 * @param name Name of the corpus
+	 * @param corpusDir location of the corpus
 	 * 
 	 * @return the populated corpus
 	 * @throws Exception
@@ -116,6 +142,8 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	
 	/**
 	 * Get the configured Annotation Set Transfer PR.
+	 * 
+	 * @param list List of annotations to transfer from one annotation set to another.
 	 * 
 	 * @return the initialized PR.
 	 * @throws Exception
@@ -177,10 +205,8 @@ public class MachineLearningBasedSentimentAnalysisModule{
 		SentenceSplitter pr = new SentenceSplitter(); //Create the PR
 		pr.setName("Sentence Splitter PR"); //Set its name 
 		pr.setEncoding("UTF-8");
-		//Set the list of the dictionaries that are going to be used by the Gazetteer
 		pr.setTransducerURL(this.getClass().getResource("/resources/sentenceSplitter/grammar/main.jape"));
 		pr.setGazetteerListsURL(this.getClass().getResource("/resources/sentenceSplitter/gazetteer/lists.def"));
-		//Set annotation set name for the gazetteer features.
 		pr.init(); //The PR is initialized
 		return pr;
 	}
@@ -195,7 +221,6 @@ public class MachineLearningBasedSentimentAnalysisModule{
 		POSTagger pr = new POSTagger(); //Create the PR
 		pr.setName("POS Tagger PR"); //Set its name
 		pr.setEncoding("UTF-8");
-		//Set the grammar to transduce the features into annotations.
 		pr.setLexiconURL(this.getClass().getResource("/resources/sentenceSplitter/gazetteer/lists.def"));
 		pr.setRulesURL(this.getClass().getResource("/resources/heptag/ruleset"));
 		pr.setBaseSentenceAnnotationType("Sentence");
@@ -218,7 +243,6 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	public Morph getMorphologicalAnalyserPR() throws Exception{
 		Morph pr = new Morph(); //Create the PR
 		pr.setName("MorphologicalAnalyser PR"); //Set its name
-		//Set the grammar to transduce the features into annotations.
 		pr.setRulesFile(this.getClass().getResource("/resources/morph/default.rul"));
 		pr.setCaseSensitive(false);
 		pr.setAffixFeatureName("affix");
@@ -232,6 +256,10 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	
 	/**
 	 * Get the configured GATE Batch PR.
+	 * 
+	 * @param congiguration Location of the paum.xml
+	 * @param mode Learning mode
+	 * @param output Name of the output annotation set
 	 * 
 	 * @return the initialized PR.
 	 * @throws Exception
