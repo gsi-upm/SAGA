@@ -9,6 +9,7 @@
 package gateModules;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 import gate.Gate;
 import processingResources.TextValueAndPolarityGenerator;
@@ -24,7 +25,7 @@ public class DictionaryBasedSentimentAnalyzer extends DictionaryBasedInformation
 	 * @param listsURL location of the lists to set the gazetteer. In URL format.
 	 * @throws Exception
 	 */
-	public DictionaryBasedSentimentAnalyzer(String name, URL listsURL) throws Exception {
+	public DictionaryBasedSentimentAnalyzer(String name, ArrayList<URL> listsURL) throws Exception {
 		super(name,listsURL);
 		this.add(getCountTokens());
 		this.add(getWordsSentimets());

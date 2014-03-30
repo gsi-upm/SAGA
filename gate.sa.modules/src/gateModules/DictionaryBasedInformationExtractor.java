@@ -33,20 +33,21 @@ public class DictionaryBasedInformationExtractor{
 	 * @param listsURL location of the lists to set the gazetteer. In URL format.
 	 * @throws Exception
 	 */
-	public DictionaryBasedInformationExtractor(String name, URL listsURL) throws Exception{
+	public DictionaryBasedInformationExtractor(String name, ArrayList<URL> listsURL) throws Exception{
 		this.controller.setName(name); // Set the module name
 		//Delete PR.
 		AnnotationDeletePR delete = this.getDeletePR(); 
+		this.add(delete);
 		//Annie Tokeniser. 
 		DefaultTokeniser tokeniser = this.getTokeniserPR();
+		this.add(tokeniser);
 		//Annie Gazetter.
-		DefaultGazetteer gazetteer = this.getGazetteerPR(listsURL);
+		for(URL list : listsURL){
+		DefaultGazetteer gazetteer = this.getGazetteerPR(list);
+		this.add(gazetteer);
+		}
 		//Annie NE Transducer.
 		ANNIETransducer transducer = this.getTransducerPR();
-		//Adding the different PR.
-		this.add(delete);
-		this.add(tokeniser);
-		this.add(gazetteer);
 		this.add(transducer);
 	}
 	

@@ -16,6 +16,13 @@ Rule: PositiveRule
 -->
 :match.positive = {rule=PositiveRule}
 
+Rule: NeutralRule
+(
+ {Lookup.majorType == "neutral"}
+):match
+-->
+:match.neutral = {rule=NeutralRule}
+
 Rule: LocationRule
 (
  {Lookup.majorType == "location"}
