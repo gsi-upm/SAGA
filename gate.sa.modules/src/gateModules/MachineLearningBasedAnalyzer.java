@@ -16,7 +16,7 @@ import gate.learning.EvaluationBasedOnDocs;
 import gate.learning.LearningAPIMain;
 import gate.learning.RunMode;
 
-public class MachineLearningBasedSentimentAnalysisModule{
+public class MachineLearningBasedAnalyzer{
 	
 	/**
 	 * This is the analyser controler where we will add all the Processing Resources for this module. 
@@ -28,7 +28,7 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	private RunMode mlMode;
 
 	/**
-	 * Constructor of the base module called MachineLearningBasedSentimentAnalysisModule.
+	 * Constructor of the base module called MachineLearningBasedAnalyzer.
 	 * 
 	 * 
 	 * @param name name of the module
@@ -39,7 +39,7 @@ public class MachineLearningBasedSentimentAnalysisModule{
 	 * @param listsURL location of the lists to set the gazetteer. In URL format.
 	 * @throws Exception
 	 */
-	public MachineLearningBasedSentimentAnalysisModule(String name, String mlConfiguration, RunMode mlMode, String mlOutput, ArrayList<String> list) throws Exception{
+	public MachineLearningBasedAnalyzer(String name, String mlConfiguration, RunMode mlMode, String mlOutput, ArrayList<String> list) throws Exception{
 		this.controller.setName(name); // Set the module name
 		this.mlMode = mlMode;
 		//Delete PR.

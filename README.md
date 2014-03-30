@@ -17,6 +17,8 @@ If you are a developer, you should know that in order to develop our own process
 ## SAGA using GATE Developer
 If you are not familiar with java coding and want to test our processing resources without touching a line of code, please read the following step by step guide of how to make a [Financial Sentiment Analyzer using GATE](https://github.com/gsi-upm/SAGA/wiki/Financial-Sentiment-Analyzer-using-GATE).
 
+![Example](https://dl.dropboxusercontent.com/u/21681328/emoticonAndFinancial.png)
+
 If you are a developer and want to explore how these processing resources work or make your own, please go to [IDE Configuration for gate.sa.modules](https://github.com/gsi-upm/SAGA/wiki/IDE-Configuration-for-gate.sa.modules)
 
 ## SAGA as a Web Service

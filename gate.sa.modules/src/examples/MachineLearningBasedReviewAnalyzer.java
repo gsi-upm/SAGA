@@ -1,5 +1,5 @@
 /**
- * An example that execute the module called MachineLearningBasedSentimentAnalysisModule over an example corpus in local/graphic mode.
+ * An example that execute the module called MachineLearningBasedAnalyzer over an example corpus in local/graphic mode.
  *
  * @author David Moreno Briz
  *
@@ -14,12 +14,12 @@ import gate.Corpus;
 import gate.Gate;
 import gate.gui.MainFrame;
 import gate.learning.RunMode;
-import gateModules.MachineLearningBasedSentimentAnalysisModule;
+import gateModules.MachineLearningBasedAnalyzer;
 
 public class MachineLearningBasedReviewAnalyzer{
 	
 	/**
-	 * Execute "MachineLearningBasedSentimentAnalysisModule" module in GATE graphic/local mode.
+	 * Execute "MachineLearningBasedAnalyzer" module in GATE graphic/local mode.
 	 * 
 	 * @param args not used
 	 * @throws Exception
@@ -47,21 +47,21 @@ public class MachineLearningBasedReviewAnalyzer{
 		list.add("comment");
 		
 		//Training module
-		MachineLearningBasedSentimentAnalysisModule trainingModule = new MachineLearningBasedSentimentAnalysisModule("Training","/resources/machineLearning/reviews/paum.xml", RunMode.TRAINING, "", list);
+		MachineLearningBasedAnalyzer trainingModule = new MachineLearningBasedAnalyzer("Training","/resources/machineLearning/reviews/paum.xml", RunMode.TRAINING, "", list);
 		//Create the corpus and populate it
 		Corpus corpus = trainingModule.createCorpusAndPupulateIt("Training", "/resources/machineLearning/reviews/corpora/training");
 		trainingModule.setCorpus(corpus); // Set corpus into the controller. 
 		trainingModule.execute();
 		
 		//Application module
-		MachineLearningBasedSentimentAnalysisModule applicationModule = new MachineLearningBasedSentimentAnalysisModule("Testing","/resources/machineLearning/reviews/paum.xml", RunMode.APPLICATION, "output", list);
+		MachineLearningBasedAnalyzer applicationModule = new MachineLearningBasedAnalyzer("Testing","/resources/machineLearning/reviews/paum.xml", RunMode.APPLICATION, "output", list);
 		//Create the corpus and populate it.
 		Corpus corpus2 = applicationModule.createCorpusAndPupulateIt("Testing", "/resources/machineLearning/reviews/corpora/testing");
 		applicationModule.setCorpus(corpus2); // Set corpus into the controller. 
 		applicationModule.execute();
 		
 		//Evaluation module
-		MachineLearningBasedSentimentAnalysisModule evaluationModule = new MachineLearningBasedSentimentAnalysisModule("Cross-validation","/resources/machineLearning/reviews/paum.xml", RunMode.EVALUATION, "", list);
+		MachineLearningBasedAnalyzer evaluationModule = new MachineLearningBasedAnalyzer("Cross-validation","/resources/machineLearning/reviews/paum.xml", RunMode.EVALUATION, "", list);
 		//Create the corpus and populate it.
 		Corpus corpus3 = evaluationModule.createCorpusAndPupulateIt("All", "/resources/machineLearning/reviews/corpora/all");
 		evaluationModule.setCorpus(corpus3); // Set corpus into the controller. 
