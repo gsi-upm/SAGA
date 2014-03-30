@@ -168,7 +168,7 @@ public class MachineLearningBasedAnalyzer{
 		transducer.setName("NE Transducer"); //Set its name
 		transducer.setEncoding("UTF-8");
 		//Set the grammar to transduce the features into annotations.
-		transducer.setGrammarURL(this.getClass().getResource("/resources/machineLearning/copy_comment_spans.jape"));
+		transducer.setGrammarURL(this.getClass().getResource("/resources/machineLearning/reviews/copy_comment_spans.jape"));
 		transducer.setInputASName("Key"); //Input set of annotations to run the transducer
 		transducer.setOutputASName(""); //Output annotation
 		transducer.init(); //The PR is initialized
