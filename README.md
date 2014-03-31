@@ -64,3 +64,4 @@ language governing permissions and limitations under the License.
 This work has been partialy funded by the Ministry of Industry, Energy and Tourism through the R&D project Financial Twitter Tracker (TSI-090100-2011-114)
 ![Financial Twitter Tracker](http://demos.gsi.dit.upm.es/ftt/img/ftt_header.png)
 
+
