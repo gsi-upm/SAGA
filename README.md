@@ -61,6 +61,6 @@ language governing permissions and limitations under the License.
 ```
 
 
-In collaboration with Paradigma Tecnologico:
-![Paradigma Logo](https://dl.dropboxusercontent.com/u/21681328/paradigma.png)
+This work has been partialy funded by the Ministry of Industry, Energy and Tourism through the R&D project Financial Twitter Tracker (TSI-090100-2011-114)
+![Financial Twitter Tracker](http://demos.gsi.dit.upm.es/ftt/img/ftt_header.png)
 
