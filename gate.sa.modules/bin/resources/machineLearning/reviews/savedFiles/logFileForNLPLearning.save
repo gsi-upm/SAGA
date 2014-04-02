@@ -626,3 +626,33 @@ Overall results as:
   (correct, partialCorrect, spurious, missing)= (77.2, 0.0, 33.2, 33.2);  (precision, recall, F1)= (0.6995673, 0.6995673, 0.6995673);  Lenient: (0.6995673, 0.6995673, 0.6995673)
 
 30-mar-2014 20:52:37: This learning session finished!.
+01-abr-2014 13:22:09: 
+
+*************************
+A new session for NLP learning is starting: 20140401_132209file:/Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/reviews/paum.xml (saved 20100506_205228, 123179381secs ago)The initiliased time of NLP learning: Tue Apr 01 13:22:09 CEST 2014
+Working directory: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/reviews
+The feature files and models are saved at: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/reviews/savedFiles
+Learner name: PAUM
+Learner nick name: PAUM
+Learner parameter settings: PAUM
+Surroud mode (or chunk learning): false
+01-abr-2014 13:22:12: 
+
+*************************
+A new session for NLP learning is starting: 20140401_132212file:/Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/reviews/paum.xml (saved 20100506_205228, 123179384secs ago)The initiliased time of NLP learning: Tue Apr 01 13:22:12 CEST 2014
+Working directory: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/reviews
+The feature files and models are saved at: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/reviews/savedFiles
+Learner name: PAUM
+Learner nick name: PAUM
+Learner parameter settings: PAUM
+Surroud mode (or chunk learning): false
+01-abr-2014 13:22:13: 
+
+*************************
+A new session for NLP learning is starting: 20140401_132213file:/Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/reviews/paum.xml (saved 20100506_205228, 123179385secs ago)The initiliased time of NLP learning: Tue Apr 01 13:22:13 CEST 2014
+Working directory: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/reviews
+The feature files and models are saved at: /Users/David/Documents/workspace/gate.sa.modules/bin/resources/machineLearning/reviews/savedFiles
+Learner name: PAUM
+Learner nick name: PAUM
+Learner parameter settings: PAUM
+Surroud mode (or chunk learning): false
