@@ -3,7 +3,7 @@
 ![GSI Logo](http://gsi.dit.upm.es/templates/jgsi/images/logo.png)
 
 ## Introduction
-SAGA is a set of processing and linguistic resources, written in java, developed to run sentiment analysis over text using [GATE](http://gate.ac.uk) plataform.
+SAGA (Sentiment and Emotion Analysis integrated in GATE)  is a set of processing and linguistic resources, written in Java, developed to run sentimentand emotion analysis over text using [GATE](http://gate.ac.uk) plataform.
 Because of the nature of GATE, the text format should be plain or XML.
 
 The sentiment analysis modules can be executed in two ways: in local mode using [GATE Developer](https://gate.ac.uk/family/developer.html) (project gate.sa.modules) or as a web service (project gate.sa.modules.web). 
@@ -61,6 +61,7 @@ language governing permissions and limitations under the License.
 ```
 
 
-In collaboration with Paradigma Tecnologico:
-![Paradigma Logo](https://dl.dropboxusercontent.com/u/21681328/paradigma.png)
+This work has been partialy funded by the Ministry of Industry, Energy and Tourism through the R&D project Financial Twitter Tracker (TSI-090100-2011-114)
+![Financial Twitter Tracker](http://demos.gsi.dit.upm.es/ftt/img/ftt_header.png)
+
 
