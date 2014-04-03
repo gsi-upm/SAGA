@@ -18,8 +18,13 @@ import gate.Factory;
 import gate.Gate;
 import gateModules.DictionaryBasedSentimentAnalyzer;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -30,6 +35,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+
 
 
 /**
@@ -103,24 +117,79 @@ public class Controller extends HttpServlet {
 	      session.setAttribute("textToAnalize", "");
 	      session.setAttribute("value", "");
           session.setAttribute("polarity", "");
+          session.setAttribute("eurosentiment", "");
           session.setAttribute("marlVisible", "hidden=\"true\"");
 	    } else if (parameters.containsKey("input")){
 	    	//Check that in not url or the other type
 		  forward = ANALYZE_JSP;
 		  String textToAnalize = request.getParameter("input");
 		  try{
-  			DictionaryBasedSentimentAnalyzer module = new DictionaryBasedSentimentAnalyzer("Easy sentiment count",this.getClass().getResource("/resources/gazetteer/finances/lists.def"));
+			ArrayList<URL> dictionaries = new ArrayList<URL>();
+			dictionaries.add((new Controller()).getClass().getResource("/resources/gazetteer/emoticon/lists.def"));
+			dictionaries.add((new Controller()).getClass().getResource("/resources/gazetteer/finances/spanish/paradigma/lists.def"));
+			DictionaryBasedSentimentAnalyzer module = new DictionaryBasedSentimentAnalyzer("SAGA - Emoticon Sentiment Analyzer", dictionaries);
   			Corpus corpus = Factory.newCorpus("Texto web");
   			Document textoWeb = Factory.newDocument(textToAnalize);
   			corpus.add(textoWeb);
   			module.setCorpus(corpus);
   			module.execute();
-  			HttpSession session =request.getSession();
-  			session.setAttribute("marlVisible", "");
-            session.setAttribute("textToAnalize", textToAnalize);
-            session.setAttribute("value", DictionaryBasedSentimentAnalyzer.getAnalysisResult()[0]);
-            session.setAttribute("polarity", DictionaryBasedSentimentAnalyzer.getAnalysisResult()[1]);
-            request.setAttribute("words", DictionaryBasedSentimentAnalyzer.getWordsAndValues());
+            //Calling MARL generator
+            HttpClient httpclient = HttpClients.createDefault();
+            HttpPost httppost = new HttpPost("http://demos.gsi.dit.upm.es/eurosentiment/marlgenerator/process");
+
+            // Request parameters and other properties.
+            ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(4);
+            params.add(new BasicNameValuePair("intype", "direct"));
+            params.add(new BasicNameValuePair("informat", "GALA"));
+            params.add(new BasicNameValuePair("outformat", "jsonld"));
+            StringBuffer input = new StringBuffer();
+            input.append(textToAnalize);
+            input.append("	");
+            input.append(DictionaryBasedSentimentAnalyzer.getAnalysisResult()[1]);
+            input.append("	");
+            input.append(DictionaryBasedSentimentAnalyzer.getAnalysisResult()[0]);
+            String[][] words = DictionaryBasedSentimentAnalyzer.getWordsAndValues();
+            for(int i = 0; i < words.length; i++){
+            	if(words[i][4].equals("Neutral") == false){
+            		input.append("	");
+            		input.append(words[i][0]);
+            		input.append("	");
+            		input.append(words[i][1]);
+            		input.append("	");
+            		input.append(words[i][2]);
+            		input.append("	");
+            		input.append(words[i][4]);
+            		input.append("	");
+            		input.append(words[i][3]);
+            	}
+            }
+            params.add(new BasicNameValuePair("input", input.toString()));
+            httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+
+            //Execute and get the response.
+            HttpResponse responseMARL = httpclient.execute(httppost);
+            HttpEntity entity = responseMARL.getEntity();
+
+            if (entity != null) {
+                InputStream instream = entity.getContent();
+                try {
+                	BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+            		String inputLine;
+            		StringBuffer marl = new StringBuffer();
+             
+            		while ((inputLine = in.readLine()) != null) {
+            			marl.append(inputLine);
+            			marl.append("\n");
+            		}
+            		in.close();
+             
+            		HttpSession session =request.getSession();
+            		session.setAttribute("marlVisible", "");
+            		session.setAttribute("eurosentiment", marl.toString());
+                } finally {
+                    instream.close();
+                }
+            }
   			} catch(Exception e){
   				System.out.println("It does not execute.");
   			}
