@@ -145,10 +145,10 @@ public class Controller extends HttpServlet {
             StringBuffer input = new StringBuffer();
             input.append(textToAnalize);
             input.append("	");
-            input.append(DictionaryBasedSentimentAnalyzer.getAnalysisResult()[1]);
+            input.append(module.getAnalysisResult()[1]);
             input.append("	");
-            input.append(DictionaryBasedSentimentAnalyzer.getAnalysisResult()[0]);
-            String[][] words = DictionaryBasedSentimentAnalyzer.getWordsAndValues();
+            input.append(module.getAnalysisResult()[0]);
+            String[][] words = module.getWordsAndValues();
             for(int i = 0; i < words.length; i++){
             	if(words[i][4].equals("Neutral") == false){
             		input.append("	");
@@ -209,6 +209,76 @@ public class Controller extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try{
+		ArrayList<URL> dictionaries = new ArrayList<URL>();
+		dictionaries.add((new Controller()).getClass().getResource("/resources/gazetteer/emoticon/lists.def"));
+		dictionaries.add((new Controller()).getClass().getResource("/resources/gazetteer/finances/spanish/paradigma/lists.def"));
+		DictionaryBasedSentimentAnalyzer module = new DictionaryBasedSentimentAnalyzer("SAGA - Emoticon Sentiment Analyzer", dictionaries);
+			Corpus corpus = Factory.newCorpus("Texto web");
+			Document textoWeb = Factory.newDocument("Todo sube y baja");
+			corpus.add(textoWeb);
+			module.setCorpus(corpus);
+			module.execute();
+        //Calling MARL generator
+        HttpClient httpclient = HttpClients.createDefault();
+        HttpPost httppost = new HttpPost("http://demos.gsi.dit.upm.es/eurosentiment/marlgenerator/process");
+
+        // Request parameters and other properties.
+        ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(4);
+        params.add(new BasicNameValuePair("intype", "direct"));
+        params.add(new BasicNameValuePair("informat", "GALA"));
+        params.add(new BasicNameValuePair("outformat", "jsonld"));
+        StringBuffer input = new StringBuffer();
+        input.append("Todo sube y baja");
+        input.append("	");
+        input.append(module.getAnalysisResult()[1]);
+        input.append("	");
+        input.append(module.getAnalysisResult()[0]);
+        String[][] words = module.getWordsAndValues();
+        for(int i = 0; i < words.length; i++){
+        	if(words[i][4].equals("Neutral") == false){
+        		input.append("	");
+        		input.append(words[i][0]);
+        		input.append("	");
+        		input.append(words[i][1]);
+        		input.append("	");
+        		input.append(words[i][2]);
+        		input.append("	");
+        		input.append(words[i][4]);
+        		input.append("	");
+        		input.append(words[i][3]);
+        	}
+        }
+        params.add(new BasicNameValuePair("input", input.toString()));
+        httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+
+        //Execute and get the response.
+        HttpResponse responseMARL = httpclient.execute(httppost);
+        HttpEntity entity = responseMARL.getEntity();
+
+        if (entity != null) {
+            InputStream instream = entity.getContent();
+            try {
+            	BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+        		String inputLine;
+        		StringBuffer marl = new StringBuffer();
+         
+        		while ((inputLine = in.readLine()) != null) {
+        			marl.append(inputLine);
+        			marl.append("\n");
+        		}
+        		in.close();
+         
+        		HttpSession session =request.getSession();
+        		session.setAttribute("marlVisible", "");
+        		session.setAttribute("eurosentiment", marl.toString());
+            } finally {
+                instream.close();
+            }
+        }
+			} catch(Exception e){
+				System.out.println("It does not execute.");
+			}
 	}
 
 }

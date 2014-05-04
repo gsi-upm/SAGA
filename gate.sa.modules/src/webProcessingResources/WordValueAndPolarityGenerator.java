@@ -37,7 +37,7 @@ public class WordValueAndPolarityGenerator extends AbstractLanguageAnalyser {
 	 * If at some point GET petitions include a set of documents,
 	 * this variable will be of the type String[numberOfDocuments][][].
 	 */
-	private static String[][] wordAndValues;
+	private String[][] wordAndValues;
 
 	/**
 	 * In local mode: 
@@ -83,7 +83,7 @@ public Resource init() throws ResourceInstantiationException {
 	return this;
 	}
 
-public static String[][] getWordsAndValues(){
+public String[][] getWordsAndValues(){
 	return wordAndValues;
 }
 }

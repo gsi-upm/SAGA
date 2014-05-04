@@ -26,7 +26,6 @@ import gate.creole.AbstractLanguageAnalyser;
 import gate.creole.ExecutionException;
 import gate.creole.ResourceInstantiationException;
 
-
 public class TextValueAndPolarityGenerator extends AbstractLanguageAnalyser {
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +37,7 @@ public class TextValueAndPolarityGenerator extends AbstractLanguageAnalyser {
 	 * If at some point GET petitions include a set of documents,
 	 * this variable will be of the type String[numberOfDocuments][2].
 	 */
-	private static String[] analysisResult;
+	private String[] analysisResult;
 	
 
 /**
@@ -86,7 +85,7 @@ public Resource init() throws ResourceInstantiationException {
 /**
  * @return analysisResult
  */
-public static String[] getAnalysisResult(){
+public String[] getAnalysisResult(){
 	return analysisResult;
 }
 }

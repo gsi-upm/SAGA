@@ -30,6 +30,13 @@ import webProcessingResources.WordValueAndPolarityGenerator;
 public class DictionaryBasedSentimentAnalyzer extends DictionaryBasedInformationExtractor{
 	
 	/**
+	 * The new processing resources.
+	 */
+	
+	TextValueAndPolarityGenerator textAnalizer;
+	WordValueAndPolarityGenerator wordAnalizer;
+	
+	/**
 	 * Constructor of the module called DictionaryBasedSentimentAnalyzer based on DictionaryBasedInformationExtractor.
 	 * It adds the TextValueAndPolarityGenerator and WordValueAndPolarityGenerator PRs.
 	 * 
@@ -39,8 +46,10 @@ public class DictionaryBasedSentimentAnalyzer extends DictionaryBasedInformation
 	 */
 	public DictionaryBasedSentimentAnalyzer(String name, ArrayList<URL> listsURL) throws Exception {
 		super(name,listsURL);
-		this.add(getCountTokens());
-		this.add(getWordsSentimets());
+		this.textAnalizer = getCountTokens();
+		this.add(this.textAnalizer);
+		this.wordAnalizer = getWordsSentimets();
+		this.add(this.wordAnalizer);
 		
 	}
 	
@@ -76,8 +85,8 @@ public class DictionaryBasedSentimentAnalyzer extends DictionaryBasedInformation
 	 * 
 	 * @return an array with the value and polarity of an analyzed document.
 	 */
-	public static String[] getAnalysisResult(){
-		return processingResources.TextValueAndPolarityGenerator.getAnalysisResult();
+	public String[] getAnalysisResult(){
+		return this.textAnalizer.getAnalysisResult();
 	}
 	
 	/**
@@ -99,7 +108,7 @@ public class DictionaryBasedSentimentAnalyzer extends DictionaryBasedInformation
 	 * 
 	 * @return an array with each word in a given document and its associated values. See the PR for more infromation.
 	 */
-	public static String[][] getWordsAndValues(){
-		return webProcessingResources.WordValueAndPolarityGenerator.getWordsAndValues();
+	public String[][] getWordsAndValues(){
+		return this.wordAnalizer.getWordsAndValues();
 	}
 }
