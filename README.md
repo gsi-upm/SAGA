@@ -64,4 +64,11 @@ language governing permissions and limitations under the License.
 This work has been partialy funded by the Ministry of Industry, Energy and Tourism through the R&D project Financial Twitter Tracker (TSI-090100-2011-114)
 ![Financial Twitter Tracker](http://demos.gsi.dit.upm.es/ftt/img/ftt_header.png)
 
+EUROSENTIMENT PROJECT
+Grant Agreement no: 296277
+Starting date: 01/09/2012
+Project duration: 24 months
+
+![Eurosentiment Logo](logo_grande.png)
+![FP7 logo](logo_fp7.gif)
 
