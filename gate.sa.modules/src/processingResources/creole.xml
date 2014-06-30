@@ -15,4 +15,5 @@
 <NAME>Text Value And Polarity Generator PR</NAME>
 <CLASS>processingResources.TextValueAndPolarityGenerator</CLASS>
 </RESOURCE>
+<JAR SCAN="true">SentimentAnalysisCallingSEAS.jar</JAR>
 </CREOLE></CREOLE-DIRECTORY>

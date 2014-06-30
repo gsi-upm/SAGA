@@ -51,9 +51,9 @@ public class DictionaryBasedEmoticonAndFinancialSentimentAnalysis{
 		//Create the corpus and populate it.
 	    //Corpus corpus = module.createCorpusAndPupulateItExample();
 		Corpus corpus = Factory.newCorpus("Tweets");
-		corpus.add(Factory.newDocument("El valor de BBVA sube en bolsa. :)"));
-		corpus.add(Factory.newDocument("El valor de BBVA cae en bolsa. :("));
-		corpus.add(Factory.newDocument("El valor de BBVA ni sube ni cae en bolsa. -.-"));
+		corpus.add(Factory.newDocument("El valor de BBVA sube en bolsa :)"));
+		corpus.add(Factory.newDocument("El valor de BBVA cae en bolsa :("));
+		corpus.add(Factory.newDocument("El valor de BBVA ni sube ni cae en bolsa -.-"));
 	    module.setCorpus(corpus); // Set corpus into the controller. 
 		module.execute();
 	}

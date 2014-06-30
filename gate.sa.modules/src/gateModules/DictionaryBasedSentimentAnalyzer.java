@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import gate.Gate;
+import processingResources.SentimentAnalysisCallingSEAS;
 import processingResources.TextValueAndPolarityGenerator;
 import webProcessingResources.WordValueAndPolarityGenerator;
 
@@ -35,6 +36,7 @@ public class DictionaryBasedSentimentAnalyzer extends DictionaryBasedInformation
 	
 	TextValueAndPolarityGenerator textAnalizer;
 	WordValueAndPolarityGenerator wordAnalizer;
+	SentimentAnalysisCallingSEAS seas;
 	
 	/**
 	 * Constructor of the module called DictionaryBasedSentimentAnalyzer based on DictionaryBasedInformationExtractor.
@@ -46,11 +48,14 @@ public class DictionaryBasedSentimentAnalyzer extends DictionaryBasedInformation
 	 */
 	public DictionaryBasedSentimentAnalyzer(String name, ArrayList<URL> listsURL) throws Exception {
 		super(name,listsURL);
-		this.textAnalizer = getCountTokens();
-		this.add(this.textAnalizer);
-		this.wordAnalizer = getWordsSentimets();
-		this.add(this.wordAnalizer);
-		
+//		this.textAnalizer = getCountTokens();
+//		this.add(this.textAnalizer);
+//		this.wordAnalizer = getWordsSentimets();
+//		this.add(this.wordAnalizer);
+		this.seas = new SentimentAnalysisCallingSEAS();
+		seas.setName("SEAS");
+		seas.init();
+		this.add(this.seas);
 	}
 	
 	/**
