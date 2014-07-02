@@ -53,21 +53,13 @@ public class SentimentAnalysisCallingSEAS extends AbstractLanguageAnalyser {
 
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * Only used in the Web Service, 
-	 * because every GET petition will contain only one document (text) to analyze.
-	 * 
-	 * If at some point GET petitions include a set of documents,
-	 * this variable will be of the type String[numberOfDocuments][2].
-	 */
-	private String[] analysisResult;
+	protected SentimentAlgorithm sentimentAlgorithm = SentimentAlgorithm.auto;
 	
-	protected Algorithm algorithm = Algorithm.spFinancialEmoticon;
-
-	protected URL src;
-
-	protected String content;
+	protected EmotionAlgorithm emotionAlgorithm = EmotionAlgorithm.auto;
 	
+	protected Boolean sentimentAnalysis = false;
+	
+	protected Boolean emotionAnalysis = false;
 
 /**
  * In local mode: 
@@ -78,29 +70,137 @@ public class SentimentAnalysisCallingSEAS extends AbstractLanguageAnalyser {
  */
 @Override
 public void execute() throws ExecutionException{
+	if(this.getSentimentAnalysis() == true){
+		this.callSentimentSEAS();
+	}
+	if(this.getEmotionAnalysis() == true){
+		this.callEmotionSEAS();
+	}
+	
+}
+
+/**
+ * Initialize the Count Sentiment Language Analyser. 
+ */
+@Override
+public Resource init() throws ResourceInstantiationException {
+	System.out.println(getClass().getName() + " is added to the controller.");
+	return this;
+	}
+
+public void callSentimentSEAS(){
 	String eurosentiment=""; // The result of the service will be here
+	String algo = this.getSentimentAlgorithm().toString();
 	String input = document.getContent().toString();
 	HttpEntity entity = null;
 	HttpClient httpclient = HttpClients.createDefault();
     HttpPost httppost = new HttpPost("http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service"); // Default service to be call.
     // Request parameters and other properties.
-    	//String algo = request.getParameter("algo"); // Get the algorithm name.
+    	//String algo = request.getParameter("algo"); // Get the sentimentAlgorithm name.
+    
+    if(algo.equalsIgnoreCase("auto")){
+    	algo = "emoticon";
+    }
+    
     	ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(4); // Prepare the request to the selected service.
     	params.add(new BasicNameValuePair("input", input));
     	params.add(new BasicNameValuePair("intype", "direct"));
     	params.add(new BasicNameValuePair("informat", "text"));
     	params.add(new BasicNameValuePair("outformat", "json-ld"));
-    	params.add(new BasicNameValuePair("algo", this.getAlgorithm().toString()));
+    	params.add(new BasicNameValuePair("algo", algo));
     	// Choose the selected service.
     	try{
-    	String algo = this.getAlgorithm().toString();
     	if (algo.equalsIgnoreCase("spFinancial") || algo.equalsIgnoreCase("spFinancialEmoticon") || algo.equalsIgnoreCase("Emoticon")){
     		httppost = new HttpPost("http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service");
     		httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
         	//Execute and get the response.
         	HttpResponse responseService = httpclient.execute(httppost);
         	entity = responseService.getEntity();
-    	} else if (algo.equalsIgnoreCase("enFinancial") || algo.equalsIgnoreCase("enFinancialEmoticon") || algo.equalsIgnoreCase("ANEW2010All") || algo.equalsIgnoreCase("ANEW2010Men") || algo.equalsIgnoreCase("ANEW2010Women")){
+    	} else if (algo.equalsIgnoreCase("enFinancial") || algo.equalsIgnoreCase("enFinancialEmoticon")){
+    		httppost = new HttpPost("http://demos.gsi.dit.upm.es/tomcat/RestrictedToNIF/RestrictedService");
+    		httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+        	//Execute and get the response.
+        	HttpResponse responseService = httpclient.execute(httppost);
+        	entity = responseService.getEntity();
+    	}
+    	}catch(Exception e){
+    		System.err.println(e);
+    	}
+    	
+    	// Parse the response
+    	try{
+    	if (entity != null) {
+    		InputStream instream = entity.getContent();
+    		try{
+        	BufferedReader in = new BufferedReader(new InputStreamReader(instream));
+    		String inputLine;
+    		StringBuffer marl = new StringBuffer();
+    		boolean knowPolarity = false; 
+    		// Parse the service response into a String
+    		while ((inputLine = in.readLine()) != null) {
+    			marl.append(inputLine);
+    			marl.append("\n");
+    			// Change the color of the response box depending on the polarity of the analysis.
+    			// The first "marl:Polarity" in the response will be the polarity of the text.
+    			if(inputLine.contains("marl:Positive") && !knowPolarity){
+    				knowPolarity = true;
+    			}else if(inputLine.contains("marl:Negative") && !knowPolarity){
+    				knowPolarity = true;
+    			}else if(inputLine.contains("marl:Neutral") && !knowPolarity){
+    				knowPolarity = true;
+    			}
+    			
+    		}
+    		in.close();
+    		eurosentiment = marl.toString(); // Set the response.
+    		}catch(Exception e){
+        		System.err.println(e);
+        	}finally{
+        		try{
+        			instream.close();
+        		}catch(Exception e){
+            		System.err.println(e);
+            	}
+    		}
+    	}
+    	}catch(Exception e){
+    		System.err.println(e);
+    	}
+    	
+    	//document.setContent(new DocumentContentImpl(document.getContent().toString() + "\n\n" + ((eurosentiment.replace("&quot;", "\"")).replace("</p></body></html>", "")).replace("<html><body><p>","")));
+        try {
+        	gate.Document doc = Factory.newDocument(((eurosentiment.replace("&quot;", "\"")).replace("</p></body></html>", "")).replace("<html><body><p>",""));
+        	doc.setName(document.getName() + "_SentimentAnalysis");
+        	//corpus.add(doc);
+    	} catch (ResourceInstantiationException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+}
+
+public void callEmotionSEAS(){
+	String eurosentiment=""; // The result of the service will be here
+	String algo = this.getEmotionAlgorithm().toString();
+	String input = document.getContent().toString();
+	HttpEntity entity = null;
+	HttpClient httpclient = HttpClients.createDefault();
+    HttpPost httppost = new HttpPost("http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service"); // Default service to be call.
+    // Request parameters and other properties.
+    
+    if(algo.equalsIgnoreCase("auto")){
+    	algo = "onyx";
+    }
+    
+    	//String algo = request.getParameter("algo"); // Get the sentimentAlgorithm name.
+    	ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(4); // Prepare the request to the selected service.
+    	params.add(new BasicNameValuePair("input", input));
+    	params.add(new BasicNameValuePair("intype", "direct"));
+    	params.add(new BasicNameValuePair("informat", "text"));
+    	params.add(new BasicNameValuePair("outformat", "json-ld"));
+    	params.add(new BasicNameValuePair("algo", algo));
+    	// Choose the selected service.
+    	try{
+    	if (algo.equalsIgnoreCase("ANEW2010All") || algo.equalsIgnoreCase("ANEW2010Men") || algo.equalsIgnoreCase("ANEW2010Women")){
     		httppost = new HttpPost("http://demos.gsi.dit.upm.es/tomcat/RestrictedToNIF/RestrictedService");
     		httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
         	//Execute and get the response.
@@ -156,43 +256,63 @@ public void execute() throws ExecutionException{
     		System.err.println(e);
     	}
     	
-    //document.setContent(new DocumentContentImpl(document.getContent().toString() + "\n\n" + ((eurosentiment.replace("&quot;", "\"")).replace("</p></body></html>", "")).replace("<html><body><p>","")));
-    try {
-		Factory.newDocument(document.getContent().toString() + "\n\n" + ((eurosentiment.replace("&quot;", "\"")).replace("</p></body></html>", "")).replace("<html><body><p>",""));
-		//corpus.add(doc);
-	} catch (ResourceInstantiationException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+    	//document.setContent(new DocumentContentImpl(document.getContent().toString() + "\n\n" + ((eurosentiment.replace("&quot;", "\"")).replace("</p></body></html>", "")).replace("<html><body><p>","")));
+        try {
+    		gate.Document doc = Factory.newDocument(((eurosentiment)));
+    		doc.setName(document.getName() + "_EmotionAnalysis");
+    		//corpus.add(doc);
+    	} catch (ResourceInstantiationException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
 }
-
-/**
- * Initialize the Count Sentiment Language Analyser. 
- */
-@Override
-public Resource init() throws ResourceInstantiationException {
-	System.out.println(getClass().getName() + " is added to the controller.");
-	return this;
-	}
-
-/**
- * @return analysisResult
- */
-public String[] getAnalysisResult(){
-	return analysisResult;
-}
-
 
 @Optional
 @RunTime
 @CreoleParameter(comment = "The location of the list of abbreviations")
-public void setAlgorithm(Algorithm algorithm) {
-	this.algorithm = algorithm;
+public void setSentimentAlgorithm(SentimentAlgorithm sentimentAlgorithm) {
+	this.sentimentAlgorithm = sentimentAlgorithm;
 }
 
-public Algorithm getAlgorithm(){
-	return this.algorithm;
+public SentimentAlgorithm getSentimentAlgorithm(){
+	return this.sentimentAlgorithm;
 }
+
+public EmotionAlgorithm getEmotionAlgorithm() {
+	return emotionAlgorithm;
+}
+
+@Optional
+@RunTime
+@CreoleParameter(comment = "The location of the list of abbreviations")
+public void setEmotionAlgorithm(EmotionAlgorithm emotionAlgorithm) {
+	this.emotionAlgorithm = emotionAlgorithm;
+}
+
+
+public Boolean getSentimentAnalysis() {
+	return sentimentAnalysis;
+}
+
+@Optional
+@RunTime
+@CreoleParameter(comment = "The location of the list of abbreviations")
+public void setSentimentAnalysis(Boolean sentimentAnalysis) {
+	this.sentimentAnalysis = sentimentAnalysis;
+}
+
+public Boolean getEmotionAnalysis() {
+	return emotionAnalysis;
+}
+
+@Optional
+@RunTime
+@CreoleParameter(comment = "The location of the list of abbreviations")
+public void setEmotionAnalysis(Boolean emotionAnalysis) {
+	this.emotionAnalysis = emotionAnalysis;
+}
+
+
 
 }
 
