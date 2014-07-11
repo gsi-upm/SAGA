@@ -23,8 +23,8 @@ package processingResources; //Package for the Processing Resources made by us.
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -34,14 +34,15 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import gate.Factory;
 import gate.Resource;
-import gate.corpora.DocumentContentImpl;
 import gate.creole.AbstractLanguageAnalyser;
 import gate.creole.ExecutionException;
 import gate.creole.ResourceInstantiationException;
-import gate.creole.annic.apache.lucene.document.Document;
 import gate.creole.metadata.CreoleParameter;
 import gate.creole.metadata.CreoleResource;
 import gate.creole.metadata.Optional;
@@ -53,34 +54,44 @@ public class SentimentAnalysisCallingSEAS extends AbstractLanguageAnalyser {
 
 	private static final long serialVersionUID = 1L;
 	
+	
+	/**
+	 * Runtime parameter that sets the sentiment algorithm that the service is going to use.
+	 */
 	protected SentimentAlgorithm sentimentAlgorithm = SentimentAlgorithm.auto;
 	
+	/**
+	 * Runtime parameter that sets the emotion algorithm that the service is going to use.
+	 */
 	protected EmotionAlgorithm emotionAlgorithm = EmotionAlgorithm.auto;
 	
+	/**
+	 * Runtime parameter that sets if the PR is going to perform sentiment analysis with the chosen algorithm.
+	 */
 	protected Boolean sentimentAnalysis = false;
 	
+	/**
+	 * Runtime parameter that sets if the PR is going to perform emotion analysis with the chosen algorithm.
+	 */
 	protected Boolean emotionAnalysis = false;
 
 /**
- * In local mode: 
- * it adds to a given document its numeric sentiment value and polarity.
- * 
- * In web service mode:
- * it saves in analysisResult the numeric sentiment value and the polarity of a given document.
+ * This PR perfoms sentiment and/or emotion analysis over a documents or a set of Annotations
+ * by calling a web service developed by GSI called SEAS.
  */
 @Override
 public void execute() throws ExecutionException{
-	if(this.getSentimentAnalysis() == true){
-		this.callSentimentSEAS();
+	if(this.getSentimentAnalysis() == true){ //If sentiment analysis is set to true
+		this.callSentimentSEAS(); //The PR performs sentiment analysis calling SEAS.
 	}
-	if(this.getEmotionAnalysis() == true){
-		this.callEmotionSEAS();
+	if(this.getEmotionAnalysis() == true){ //If emotions analysis is set to true
+		this.callEmotionSEAS(); //The PR performs emotion analysis calling SEAS.
 	}
 	
 }
 
 /**
- * Initialize the Count Sentiment Language Analyser. 
+ * Initialize the PR. 
  */
 @Override
 public Resource init() throws ResourceInstantiationException {
@@ -89,26 +100,25 @@ public Resource init() throws ResourceInstantiationException {
 	}
 
 public void callSentimentSEAS(){
-	String eurosentiment=""; // The result of the service will be here
-	String algo = this.getSentimentAlgorithm().toString();
-	String input = document.getContent().toString();
+	String eurosentiment=""; // The JSON result of the service (parsed as a String) will be here
+	String algo = this.getSentimentAlgorithm().toString(); // Which sentiment algorithm are going to use.
+	String input = document.getContent().toString(); // We get the content to analyze
+	// We prepare the HTTP call to SEAS
 	HttpEntity entity = null;
 	HttpClient httpclient = HttpClients.createDefault();
     HttpPost httppost = new HttpPost("http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service"); // Default service to be call.
-    // Request parameters and other properties.
-    	//String algo = request.getParameter("algo"); // Get the sentimentAlgorithm name.
-    
+    // If the algorithm is AUTO we try to detect the language and select the most apropiate 
     if(algo.equalsIgnoreCase("auto")){
     	algo = "emoticon";
     }
-    
+    	// NIF parameters.
     	ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(4); // Prepare the request to the selected service.
     	params.add(new BasicNameValuePair("input", input));
     	params.add(new BasicNameValuePair("intype", "direct"));
     	params.add(new BasicNameValuePair("informat", "text"));
     	params.add(new BasicNameValuePair("outformat", "json-ld"));
     	params.add(new BasicNameValuePair("algo", algo));
-    	// Choose the selected service.
+    	// Choose the selected service to make the HTTP call to SEAS.
     	try{
     	if (algo.equalsIgnoreCase("spFinancial") || algo.equalsIgnoreCase("spFinancialEmoticon") || algo.equalsIgnoreCase("Emoticon")){
     		httppost = new HttpPost("http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service");
@@ -127,7 +137,7 @@ public void callSentimentSEAS(){
     		System.err.println(e);
     	}
     	
-    	// Parse the response
+    	// Parse the JSON response into a String
     	try{
     	if (entity != null) {
     		InputStream instream = entity.getContent();
@@ -167,9 +177,56 @@ public void callSentimentSEAS(){
     		System.err.println(e);
     	}
     	
-    	//document.setContent(new DocumentContentImpl(document.getContent().toString() + "\n\n" + ((eurosentiment.replace("&quot;", "\"")).replace("</p></body></html>", "")).replace("<html><body><p>","")));
+    	// We parse the JSON
         try {
-        	gate.Document doc = Factory.newDocument(((eurosentiment.replace("&quot;", "\"")).replace("</p></body></html>", "")).replace("<html><body><p>",""));
+        	JSONParser parser = new JSONParser();
+        	String docContent = "";
+        	
+        	try{
+        		Object obj = parser.parse(eurosentiment); //Parse SEAS response.
+        		JSONObject jsonObject = (JSONObject) obj; //Cast into JSON.
+        		
+        		JSONArray entries = (JSONArray) jsonObject.get("entries");
+        		Iterator<JSONObject> iterator = entries.iterator();
+        		while (iterator.hasNext()) {
+        			JSONObject entrie = iterator.next();
+        			
+        			String context = (String) entrie.get("nif:isString");
+            		docContent = context;
+        			
+        			JSONArray opinions = (JSONArray) entrie.get("opinions");
+            		Iterator<JSONObject> iteratorOpinions = opinions.iterator();
+            		while (iteratorOpinions.hasNext()) {
+            			JSONObject opinion = iteratorOpinions.next();
+            			
+            			Double textPolarityValue= (Double) opinion.get("marl:polarityValue");
+            			String textHasPolarity = (String) opinion.get("marl:hasPolarity");
+            			
+            			docContent += "	" + textHasPolarity + "	" + Double.toString(textPolarityValue);
+            		}
+            		
+            		JSONArray strings = (JSONArray) entrie.get("strings");
+            		Iterator<JSONObject> iteratorStrings = strings.iterator();
+            		while (iteratorStrings.hasNext()) {
+            			JSONObject string = iteratorStrings.next();
+            			
+            			String word= (String) string.get("nif:anchorOf");
+            			Long beginIndex = (Long) string.get("nif:beginIndex");
+            			Long endIndex = (Long) string.get("nif:endIndex");
+            			JSONObject stringOpinion = (JSONObject) string.get("opinions");
+            			Double stringPolarityValue= (Double) stringOpinion.get("marl:polarityValue");
+            			String stringHasPolarity = (String) stringOpinion.get("marl:hasPolarity");
+            			
+            			docContent += "\n" + word + "	" + Long.toString(beginIndex) + "	" + Long.toString(endIndex) + "	" + stringHasPolarity + "	" + Double.toString(stringPolarityValue) + "\n";
+            		}
+            		
+        		}
+        	
+        	}catch(Exception e){
+        		e.printStackTrace();
+        	}
+        	
+        	gate.Document doc = Factory.newDocument(docContent);
         	doc.setName(document.getName() + "_SentimentAnalysis");
         	//corpus.add(doc);
     	} catch (ResourceInstantiationException e) {
@@ -258,6 +315,8 @@ public void callEmotionSEAS(){
     	
     	//document.setContent(new DocumentContentImpl(document.getContent().toString() + "\n\n" + ((eurosentiment.replace("&quot;", "\"")).replace("</p></body></html>", "")).replace("<html><body><p>","")));
         try {
+        	
+        	
     		gate.Document doc = Factory.newDocument(((eurosentiment)));
     		doc.setName(document.getName() + "_EmotionAnalysis");
     		//corpus.add(doc);
