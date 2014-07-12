@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -38,6 +39,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import gate.Annotation;
+import gate.AnnotationSet;
 import gate.Factory;
 import gate.Resource;
 import gate.creole.AbstractLanguageAnalyser;
@@ -47,6 +50,7 @@ import gate.creole.metadata.CreoleParameter;
 import gate.creole.metadata.CreoleResource;
 import gate.creole.metadata.Optional;
 import gate.creole.metadata.RunTime;
+import gate.util.InvalidOffsetException;
 
 @CreoleResource(name = "Sentiment and emotion analysis calling SEAS", 
                 comment = "Sentiment and emotion analysis calling SEAS") 
@@ -74,6 +78,16 @@ public class SentimentAnalysisCallingSEAS extends AbstractLanguageAnalyser {
 	 * Runtime parameter that sets if the PR is going to perform emotion analysis with the chosen algorithm.
 	 */
 	protected Boolean emotionAnalysis = false;
+	
+	/**
+	 * 
+	 */
+	private String inputASname;
+	
+	/**
+	 * 
+	 */
+	private String annotationType;
 
 /**
  * This PR perfoms sentiment and/or emotion analysis over a documents or a set of Annotations
@@ -94,7 +108,7 @@ public void execute() throws ExecutionException{
  * Initialize the PR. 
  */
 @Override
-public Resource init() throws ResourceInstantiationException {
+public Resource init() throws ResourceInstantiationException{
 	System.out.println(getClass().getName() + " is added to the controller.");
 	return this;
 	}
@@ -102,7 +116,25 @@ public Resource init() throws ResourceInstantiationException {
 public void callSentimentSEAS(){
 	String eurosentiment=""; // The JSON result of the service (parsed as a String) will be here
 	String algo = this.getSentimentAlgorithm().toString(); // Which sentiment algorithm are going to use.
-	String input = document.getContent().toString(); // We get the content to analyze
+	
+	AnnotationSet annotationSet = document.getAnnotations(this.getInputASname());
+	AnnotationSet annotationSetByType = annotationSet.get(this.getAnnotationTypes());
+	Iterator<Annotation> iteratorA = annotationSetByType.iterator();
+	String input = "";
+	if(iteratorA.hasNext()){
+		Annotation annotation = iteratorA.next();
+		try{
+			System.out.println("\n\n Paso por aqui \n\n");
+			input = document.getContent().getContent(annotation.getStartNode().getOffset(), annotation.getEndNode().getOffset()).toString();
+		}catch(InvalidOffsetException e){
+			System.out.println(e);
+			input = document.getContent().toString(); // We get the content to analyze
+		}	
+	}else{
+		input = document.getContent().toString(); // We get the content to analyze
+	}
+	
+	
 	// We prepare the HTTP call to SEAS
 	HttpEntity entity = null;
 	HttpClient httpclient = HttpClients.createDefault();
@@ -185,29 +217,29 @@ public void callSentimentSEAS(){
         	try{
         		Object obj = parser.parse(eurosentiment); //Parse SEAS response.
         		JSONObject jsonObject = (JSONObject) obj; //Cast into JSON.
-        		
+        		// We take entries
         		JSONArray entries = (JSONArray) jsonObject.get("entries");
         		Iterator<JSONObject> iterator = entries.iterator();
-        		while (iterator.hasNext()) {
+        		while (iterator.hasNext()) { // For each entry
         			JSONObject entrie = iterator.next();
-        			
+        			// We take the text
         			String context = (String) entrie.get("nif:isString");
             		docContent = context;
-        			
+        			// We parse the opinions of the text
         			JSONArray opinions = (JSONArray) entrie.get("opinions");
             		Iterator<JSONObject> iteratorOpinions = opinions.iterator();
             		while (iteratorOpinions.hasNext()) {
             			JSONObject opinion = iteratorOpinions.next();
-            			
+            			// We take the polarity and the value of the text
             			Double textPolarityValue= (Double) opinion.get("marl:polarityValue");
             			String textHasPolarity = (String) opinion.get("marl:hasPolarity");
             			
             			docContent += "	" + textHasPolarity + "	" + Double.toString(textPolarityValue);
             		}
-            		
+            		// We take the words in the text with a sentiment value and polarity
             		JSONArray strings = (JSONArray) entrie.get("strings");
             		Iterator<JSONObject> iteratorStrings = strings.iterator();
-            		while (iteratorStrings.hasNext()) {
+            		while (iteratorStrings.hasNext()) { // For each word we take its values.
             			JSONObject string = iteratorStrings.next();
             			
             			String word= (String) string.get("nif:anchorOf");
@@ -230,7 +262,6 @@ public void callSentimentSEAS(){
         	doc.setName(document.getName() + "_SentimentAnalysis");
         	//corpus.add(doc);
     	} catch (ResourceInstantiationException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
 }
@@ -321,14 +352,13 @@ public void callEmotionSEAS(){
     		doc.setName(document.getName() + "_EmotionAnalysis");
     		//corpus.add(doc);
     	} catch (ResourceInstantiationException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
 }
 
 @Optional
 @RunTime
-@CreoleParameter(comment = "The location of the list of abbreviations")
+@CreoleParameter(comment = "")
 public void setSentimentAlgorithm(SentimentAlgorithm sentimentAlgorithm) {
 	this.sentimentAlgorithm = sentimentAlgorithm;
 }
@@ -343,7 +373,7 @@ public EmotionAlgorithm getEmotionAlgorithm() {
 
 @Optional
 @RunTime
-@CreoleParameter(comment = "The location of the list of abbreviations")
+@CreoleParameter(comment = "")
 public void setEmotionAlgorithm(EmotionAlgorithm emotionAlgorithm) {
 	this.emotionAlgorithm = emotionAlgorithm;
 }
@@ -355,7 +385,7 @@ public Boolean getSentimentAnalysis() {
 
 @Optional
 @RunTime
-@CreoleParameter(comment = "The location of the list of abbreviations")
+@CreoleParameter(comment = "")
 public void setSentimentAnalysis(Boolean sentimentAnalysis) {
 	this.sentimentAnalysis = sentimentAnalysis;
 }
@@ -366,9 +396,31 @@ public Boolean getEmotionAnalysis() {
 
 @Optional
 @RunTime
-@CreoleParameter(comment = "The location of the list of abbreviations")
+@CreoleParameter(comment = "")
 public void setEmotionAnalysis(Boolean emotionAnalysis) {
 	this.emotionAnalysis = emotionAnalysis;
+}
+
+public String getInputASname() {
+	return inputASname;
+}
+
+@Optional
+@RunTime
+@CreoleParameter(comment = "")
+public void setInputASname(String inputASname) {
+	this.inputASname = inputASname;
+}
+
+public String getAnnotationTypes() {
+	return annotationType;
+}
+
+@Optional
+@RunTime
+@CreoleParameter(comment = "")
+public void setAnnotationTypes(String annotationType) {
+	this.annotationType = annotationType;
 }
 
 
