@@ -42,6 +42,7 @@ import org.json.simple.parser.JSONParser;
 import gate.Annotation;
 import gate.AnnotationSet;
 import gate.Factory;
+import gate.FeatureMap;
 import gate.Resource;
 import gate.creole.AbstractLanguageAnalyser;
 import gate.creole.ExecutionException;
@@ -113,36 +114,66 @@ public Resource init() throws ResourceInstantiationException{
 	return this;
 	}
 
+/**
+ * 
+ */
 public void callSentimentSEAS(){
-	String eurosentiment=""; // The JSON result of the service (parsed as a String) will be here
-	String algo = this.getSentimentAlgorithm().toString(); // Which sentiment algorithm are going to use.
-	
+	// We get the annotation set and the annotation type to we processed.
 	AnnotationSet annotationSet = document.getAnnotations(this.getInputASname());
 	AnnotationSet annotationSetByType = annotationSet.get(this.getAnnotationTypes());
+	// Iterator whit all the annotation that matches our type.
 	Iterator<Annotation> iteratorA = annotationSetByType.iterator();
+	// The input to be analyzed.
 	String input = "";
-	if(iteratorA.hasNext()){
-		Annotation annotation = iteratorA.next();
-		try{
-			System.out.println("\n\n Paso por aqui \n\n");
-			input = document.getContent().getContent(annotation.getStartNode().getOffset(), annotation.getEndNode().getOffset()).toString();
-		}catch(InvalidOffsetException e){
-			System.out.println(e);
-			input = document.getContent().toString(); // We get the content to analyze
-		}	
-	}else{
+	// It there is no Annotation Set or Type that matches we process the whole document.
+	if(annotationSet.isEmpty() || annotationSetByType.size() == 0){
 		input = document.getContent().toString(); // We get the content to analyze
+		this.processSentimentInput(input, null);
+	}else{ // If not.
+		while(iteratorA.hasNext()){ // We process each annotation.
+			Annotation annotation = iteratorA.next();
+			try{
+				input = document.getContent().getContent(annotation.getStartNode().getOffset(), annotation.getEndNode().getOffset()).toString();
+				this.processSentimentInput(input, annotation);
+			}catch(InvalidOffsetException e){
+				System.out.println(e);
+				//input = document.getContent().toString(); // We get the content to analyze
+			}	
+		}
 	}
 	
+}
+
+/**
+ * @param input
+ */
+public void processSentimentInput(String input, Annotation annotation){
+	String eurosentiment=""; // The JSON result of the service (parsed as a String) will be here
+	String algo = this.getSentimentAlgorithm().toString(); // Which sentiment algorithm are going to use.
 	
 	// We prepare the HTTP call to SEAS
 	HttpEntity entity = null;
 	HttpClient httpclient = HttpClients.createDefault();
     HttpPost httppost = new HttpPost("http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service"); // Default service to be call.
+   
     // If the algorithm is AUTO we try to detect the language and select the most apropiate 
     if(algo.equalsIgnoreCase("auto")){
-    	algo = "emoticon";
+    	FeatureMap languageFeatures = document.getFeatures();
+    	String language = "";
+    	try{
+    		language = (String) languageFeatures.get("lang");
+    	}catch(Exception e){
+    		System.out.println(e);
+    	}
+    	if(language.equalsIgnoreCase("spanish")){
+    		algo = "spFinancialEmoticon";
+    	} else if(language.equalsIgnoreCase("english")){
+    		algo = "enFinancialEmoticon";
+    	}else{
+    		algo = "emoticon";
+    	}
     }
+    
     	// NIF parameters.
     	ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>(4); // Prepare the request to the selected service.
     	params.add(new BasicNameValuePair("input", input));
@@ -223,8 +254,8 @@ public void callSentimentSEAS(){
         		while (iterator.hasNext()) { // For each entry
         			JSONObject entrie = iterator.next();
         			// We take the text
-        			String context = (String) entrie.get("nif:isString");
-            		docContent = context;
+        			//String context = (String) entrie.get("nif:isString");
+            		//docContent = context;
         			// We parse the opinions of the text
         			JSONArray opinions = (JSONArray) entrie.get("opinions");
             		Iterator<JSONObject> iteratorOpinions = opinions.iterator();
@@ -233,8 +264,18 @@ public void callSentimentSEAS(){
             			// We take the polarity and the value of the text
             			Double textPolarityValue= (Double) opinion.get("marl:polarityValue");
             			String textHasPolarity = (String) opinion.get("marl:hasPolarity");
+            			// We create the features for the processed input.
+            			FeatureMap sentimentFeatures = Factory.newFeatureMap();
+            			sentimentFeatures.put("hasPolarity", textHasPolarity);
+            			sentimentFeatures.put("polarityValue", textPolarityValue);
+            			// We put the features in the annotation or in the document.
+            			if(annotation != null){
+            				annotation.setFeatures(sentimentFeatures);
+            			}else{
+            				document.setFeatures(sentimentFeatures);
+            			}
             			
-            			docContent += "	" + textHasPolarity + "	" + Double.toString(textPolarityValue);
+            			//docContent += "	" + textHasPolarity + "	" + Double.toString(textPolarityValue);
             		}
             		// We take the words in the text with a sentiment value and polarity
             		JSONArray strings = (JSONArray) entrie.get("strings");
@@ -249,7 +290,7 @@ public void callSentimentSEAS(){
             			Double stringPolarityValue= (Double) stringOpinion.get("marl:polarityValue");
             			String stringHasPolarity = (String) stringOpinion.get("marl:hasPolarity");
             			
-            			docContent += "\n" + word + "	" + Long.toString(beginIndex) + "	" + Long.toString(endIndex) + "	" + stringHasPolarity + "	" + Double.toString(stringPolarityValue) + "\n";
+            			//docContent += "\n" + word + "	" + Long.toString(beginIndex) + "	" + Long.toString(endIndex) + "	" + stringHasPolarity + "	" + Double.toString(stringPolarityValue) + "\n";
             		}
             		
         		}
@@ -258,10 +299,10 @@ public void callSentimentSEAS(){
         		e.printStackTrace();
         	}
         	
-        	gate.Document doc = Factory.newDocument(docContent);
-        	doc.setName(document.getName() + "_SentimentAnalysis");
+        	//gate.Document doc = Factory.newDocument(docContent);
+        	//doc.setName(document.getName() + "_SentimentAnalysis");
         	//corpus.add(doc);
-    	} catch (ResourceInstantiationException e) {
+    	} catch (Exception e) {
     		e.printStackTrace();
     	}
 }
