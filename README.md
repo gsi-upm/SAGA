@@ -3,30 +3,100 @@
 ![GSI Logo](http://gsi.dit.upm.es/templates/jgsi/images/logo.png)
 
 ## Introduction
-SAGA (Sentiment and Emotion Analysis integrated in GATE)  is a set of processing and linguistic resources, written in Java, developed to run sentimentand emotion analysis over text using [GATE](http://gate.ac.uk) plataform.
-Because of the nature of GATE, the text format should be plain or XML.
-
-The sentiment analysis modules can be executed in two ways: in local mode using [GATE Developer](https://gate.ac.uk/family/developer.html) (project gate.sa.modules) or as a web service (project gate.sa.modules.web). 
+SAGA (Sentiment and Emotion Analysis integrated in GATE)  is a set of processing and linguistic resources, written in Java, developed to run sentiment and emotion analysis over text using [GATE](http://gate.ac.uk) platform.
+SAGA is distributed as a GATE plugin.
 
 ## Getting started
 Whether you intend to use this repository as an user or as a developer, you should download the last release of [GATE Developer](https://gate.ac.uk/family/developer.html) in order to run the graphic mode of this tool. You can find it in its [download page](https://gate.ac.uk/download/#latest). This download will include GATE Developer and Embedded and requires at least Java 6 update 10, 1.6.0_10, in order to be run.
 If you are not familiar with GATE, check out these [training modules](https://gate.ac.uk/conferences/training-modules.html) to understand what GATE can do.
 
-If you are a developer, you should know that in order to develop our own processing resources using GATE Embedded (GATE APIs), a suitable Java Development Environment is required. We strongly recommend using [Eclipse IDE for Java EE developers](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/keplersr1), because it's going to make easier the next configuration tasks.
+If you are a developer, you should know that in order to develop your own processing resources using GATE Embedded (GATE APIs), a suitable Java Development Environment is required. We strongly recommend using [Eclipse IDE for Java EE developers](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/keplersr1), because it's going to make easier the next configuration tasks.
 
-## SAGA using GATE Developer
-If you are not familiar with java coding and want to test our processing resources without touching a line of code, please read the following step by step guide of how to make a [Financial Sentiment Analyzer using GATE](https://github.com/gsi-upm/SAGA/wiki/Financial-Sentiment-Analyzer-using-GATE).
+## Installation
+The installation process couldn't be easier:
 
-![Example](https://dl.dropboxusercontent.com/u/21681328/emoticonAndFinancial.png)
+1. Download or clone this repository.
+2. Copy the folder called _saga_ into the folder called _plugins_ that is inside your GATE installation.
+3. Open GATE. The new plugin should be available.
 
-If you are a developer and want to explore how these processing resources work or make your own, please go to [IDE Configuration for gate.sa.modules](https://github.com/gsi-upm/SAGA/wiki/IDE-Configuration-for-gate.sa.modules)
+![Plugin installed](imgs/plugin_installed.png)
 
-## SAGA as a Web Service
-We also offer our sentiment analyzers as a web service, in which you can input the text you want to be analyzed and receive the analysis results in marl format.
+## How to use the plugin
+This plugin contains only one PR that offers a variety of sentiment and emotion analysis services. To load it, right click on Processing Resources -> New -> Sentiment and emotion analysis calling SEAS and Eurosentiment -> Name it -> OK.
 
+![New PR](imgs/new_pr.png)
 
+Then, add this new PR to your current application or create a new one so you can configure its runtime parameters:
 
-For more information about the processing and linguistic resources, sentiment analysis modules and examples, please check out our [Wiki](https://github.com/gsi-upm/SAGA/wiki) or contact us through: [http://gsi.dit.upm.es](http://gsi.dit.upm.es)
+![Runtime parameter example](imgs/runtime_example.png)
+
+These parameters can be explained as follows:
+
+    inputASName:
+        The Annotation Set that contains the annotation type to be analyzed
+    annotationType:
+        The annotation type to be analyzed
+    sentimentAnalysis:
+        Runtime parameter that sets if the PR is going to perform sentiment analysis with the chosen algorithm.
+    emotionAnalysis:
+        Runtime parameter that sets if the PR is going to perform emotion analysis with the chosen algorithm.
+    SentimentServiceURL:
+        The endpoint of the sentiment analysis service
+    EmotionServiceURL:
+        The endpoint of the emotion analysis service, you can use:
+        http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service
+        http://demos.gsi.dit.upm.es/tomcat/RestrictedToNIF/RestrictedService
+        For more endpoints visit the [Eurosentiment portal](https://portal.eurosentiment.eu)
+    EuroSentimentToken:
+        Eurosentiment token to use their services or other similar services that require an API KEY
+    sentimentAlgorithm:
+        Runtime parameter that sets the sentiment algorithm that the service is going to use. At the moment, you can use dictionary based algorithms.
+    sentimentDictionary:
+        Runtime parameter that sets the sentiment dictionary that the service is going to use (in case that sentimentAlgorithm has been chosen). You can use:
+        AUTO (Detects language)
+        Spanish_finances_Paradigma (SentimentServiceURL = http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service)
+        English_finances_Loughran_McDonald (SentimentServiceURL = http://demos.gsi.dit.upm.es/tomcat/RestrictedToNIF/RestrictedService)
+        Emoticon (SentimentServiceURL = http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service)
+        Spanish_finances_and_Emoticon (SentimentServiceURL = http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service)
+        English_finances_and_Emoticon (SentimentServiceURL = http://demos.gsi.dit.upm.es/tomcat/RestrictedToNIF/RestrictedService)
+    emotionAlgorithm:
+        Runtime parameter that sets the emotion algorithm that the service is going to use. You can use:
+        AUTO (Detects language)
+        onyx (no endpoint needed)
+        ANEW2010All (EmotionServiceURL = http://demos.gsi.dit.upm.es/tomcat/RestrictedToNIF/RestrictedService)
+        ANEW2010Men (EmotionServiceURL = http://demos.gsi.dit.upm.es/tomcat/RestrictedToNIF/RestrictedService)
+        ANEW2010Woman (EmotionServiceURL = http://demos.gsi.dit.upm.es/tomcat/RestrictedToNIF/RestrictedService)
+    SentimentPolarityName:
+        The name of the sentiment polarity feature
+    SentimentValueName:
+        The name of the sentiment value feature
+    EmotionCategoryName:
+        The name of the emotion category feature
+    EmotionValueName:
+        The name of the emotion value feature
+        
+## Example of use - Sentiment analysis over a finances domain
+This plugin contains little corpus to test the PR:
+
+1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Chose _en_ -> OK
+2. Configure the runtime parameters as follows (Be careful, the features inside the annotationType you choose to analyze will be substituted with the results of the analysis.):
+
+![Runtime parameter financial example](imgs/financial_runtime_example.png)
+![Runtime parameter financial example2](imgs/financial_runtime_example2.png)
+
+3. Run this application.
+4. Check the results:
+
+![Result eng finances](imgs/result_en_finances.png)
+
+## Example of use - Eurosentiment services
+TO DO
+
+## Accuracy of the algorithms over an already annotated corpus
+TO DO
+
+## How to add new NIF's services, algorithms or dictionaries?
+Check out [SEAS's project](https://github.com/gsi-upm/SAGA)
 
 ## Licenses
 
@@ -69,6 +139,6 @@ Grant Agreement no: 296277
 Starting date: 01/09/2012
 Project duration: 24 months
 
-![Eurosentiment Logo](logo_grande.png)
-![FP7 logo](logo_fp7.gif)
+![Eurosentiment Logo](imgs/logo_grande.png)
+![FP7 logo](imgs/logo_fp7.gif)
 
