@@ -1,0 +1,25 @@
+<!-- creole.xml saga -->
+<!--  David, 1/7/2014 -->
+
+<!--
+This file just references the JAR file that contains the compiled resource.
+Configuration is contained in the @CreoleResource annotation on 
+seas.SentimenAndEmotiontAnalysisCallingSEAS.
+-->
+
+<CREOLE-DIRECTORY>
+  <JAR SCAN="true">saga.jar</JAR>
+  <JAR>lib/commons-logging-1.1.3-javadoc.jar</JAR>
+  <JAR>lib/commons-logging-1.1.3-sources.jar</JAR>
+  <JAR>lib/commons-logging-1.1.3-test-sources.jar</JAR>
+  <JAR>lib/commons-logging-1.1.3-tests.jar</JAR>
+  <JAR>lib/commons-logging-1.1.3.jar</JAR>
+  <JAR>lib/commons-logging-adapters-1.1.3.jar</JAR>
+  <JAR>lib/commons-logging-api-1.1.3.jar</JAR>
+  <JAR>lib/commons-logging-tests.jar</JAR>
+  <JAR>lib/httpclient-4.3.3.jar</JAR>
+  <JAR>lib/httpclient-cache-4.3.3.jar</JAR>
+  <JAR>lib/httpcore-4.3.2.jar</JAR>
+  <JAR>lib/httpmime-4.3.3.jar</JAR>
+  <JAR>lib/json-simple-1.1.1.jar</JAR>
+</CREOLE-DIRECTORY>
