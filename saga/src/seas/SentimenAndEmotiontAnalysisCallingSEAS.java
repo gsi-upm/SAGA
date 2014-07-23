@@ -53,8 +53,8 @@ import gate.creole.metadata.Optional;
 import gate.creole.metadata.RunTime;
 import gate.util.InvalidOffsetException;
 
-@CreoleResource(name = "Sentiment and emotion analysis calling SEAS",
-comment = "Sentiment and emotion analysis calling SEAS")
+@CreoleResource(name = "Sentiment and emotion analysis calling SEAS and Eurosentiment",
+comment = "Sentiment and emotion analysis calling SEAS and Eurosentiment")
 public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnalyser {
     
 	private static final long serialVersionUID = 1L;
@@ -490,8 +490,8 @@ public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnal
             JSONObject intensity = (JSONObject) emotions.get("onyx:hasEmotionIntensity");
             String value = (String) intensity.get("@value");
             // We create the features for the processed input.
-            sentimentFeatures.put("emotion_" + i, id);
-            sentimentFeatures.put("value_" + i, value);
+            sentimentFeatures.put(this.getEmotionCategoryName(), id);
+            sentimentFeatures.put(this.getEmotionValueName(), value);
         }else if(emotionSet.get("onyx:hasEmotion") instanceof JSONArray){
             JSONArray emotions = (JSONArray) emotionSet.get("onyx:hasEmotion");
             Iterator<JSONObject> iteratorEmotions = emotions.iterator();
@@ -503,8 +503,8 @@ public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnal
                 JSONObject intensity = (JSONObject) emotion.get("onyx:hasEmotionIntensity");
                 String value = (String) intensity.get("@value");
                 // We create the features for the processed input.
-                sentimentFeatures.put(this.getEmotionCategoryName() + i, id);
-                sentimentFeatures.put(this.getEmotionValueName() + i, value);
+                sentimentFeatures.put(this.getEmotionCategoryName(), id);
+                sentimentFeatures.put(this.getEmotionValueName(), value);
                 i++;
             }
         }

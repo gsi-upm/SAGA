@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tweet><text>ENTITY goes good :)</text></tweet>
+<tweet><text>ENTITY goes good :)</text>
+<text>ENTITY goes bad :(</text>
+<text>ENTITY goes :|</text></tweet>

@@ -7,7 +7,7 @@ SAGA (Sentiment and Emotion Analysis integrated in GATE)  is a set of processing
 SAGA is distributed as a GATE plugin.
 
 ## Getting started
-Whether you intend to use this repository as an user or as a developer, you should download the last release of [GATE Developer](https://gate.ac.uk/family/developer.html) in order to run the graphic mode of this tool. You can find it in its [download page](https://gate.ac.uk/download/#latest). This download will include GATE Developer and Embedded and requires at least Java 6 update 10, 1.6.0_10, in order to be run.
+Whether you intend to use this repository as an user or as a developer, you should download the last release of [GATE Developer](https://gate.ac.uk/family/developer.html) in order to run the graphic mode of this tool. You can find it in its [download page](https://gate.ac.uk/download/#latest). This download will include GATE Developer and Embedded and requires at least Java 7 in order to be run.
 If you are not familiar with GATE, check out these [training modules](https://gate.ac.uk/conferences/training-modules.html) to understand what GATE can do.
 
 If you are a developer, you should know that in order to develop your own processing resources using GATE Embedded (GATE APIs), a suitable Java Development Environment is required. We strongly recommend using [Eclipse IDE for Java EE developers](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/keplersr1), because it's going to make easier the next configuration tasks.
@@ -79,7 +79,8 @@ These parameters can be explained as follows:
 This plugin contains little corpus to test the PR:
 
 1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Chose _en_ -> OK
-2. Configure the runtime parameters as follows (Be careful, the features inside the annotationType you choose to analyze will be substituted with the results of the analysis.):
+2. Set _emotionAnalysis_ parameter to _false_
+3. Configure the runtime parameters as follows (Be careful, the features inside the annotationType you choose to analyze will be substituted with the results of the analysis.):
 
 ![Runtime parameter financial example](imgs/financial_runtime_example.png)
 ![Runtime parameter financial example2](imgs/financial_runtime_example2.png)
@@ -89,8 +90,24 @@ This plugin contains little corpus to test the PR:
 
 ![Result eng finances](imgs/result_en_finances.png)
 
+## Example of use - Emotion analysis using Onyxemote
+
+1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Chose _en_ -> OK
+2. Set _sentimentAnalysis_ parameter to _false_
+3. Configure the runtime parameters as follows (Be careful, the features inside the annotationType you choose to analyze will be substituted with the results of the analysis.):
+
+![Runtime parameter emotion onyx example](imgs/emotion_runtime_example.png)
+
+3. Run this application.
+4. Check the results:
+
+![Result eng finances](imgs/results_emotion.png)
+
 ## Example of use - Eurosentiment services
+
 TO DO
+
+![Result eng finances](imgs/results_emotion.png)
 
 ## Accuracy of the algorithms over an already annotated corpus
 TO DO
