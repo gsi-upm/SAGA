@@ -54,7 +54,9 @@ import gate.creole.metadata.RunTime;
 import gate.util.InvalidOffsetException;
 
 @CreoleResource(name = "Sentiment and emotion analysis calling SEAS and Eurosentiment",
-comment = "Sentiment and emotion analysis calling SEAS and Eurosentiment")
+comment = "Sentiment and emotion analysis calling SEAS and Eurosentiment",
+helpURL = "https://github.com/gsi-upm/SAGA/",
+icon = "/seas/logo_gsi.png")
 public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnalyser {
     
 	private static final long serialVersionUID = 1L;
@@ -78,7 +80,7 @@ public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnal
 	/**
 	 * Runtime parameter that sets if the PR is going to perform sentiment analysis with the chosen algorithm.
 	 */
-	protected Boolean sentimentAnalysis = false;
+	protected Boolean sentimentAnalysis = true;
 	
 	/**
 	 * Runtime parameter that sets if the PR is going to perform emotion analysis with the chosen algorithm.
@@ -98,17 +100,22 @@ public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnal
 	/**
 	 * The endpoint of the sentiment analysis service.
 	 */
-	private String SentimentServiceURL = "http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service";
+	private String SentimentServiceURL = "";
 	
 	/**
 	 * The endpoint of the emotion analysis service.
 	 */
-	private String EmotionServiceURL = "http://demos.gsi.dit.upm.es/onyxemote/emote.php?i=";
+	private String EmotionServiceURL = "";
 	
 	/**
 	 * Eurosentiment token to use their services
 	 */
-	private String EuroSentimentToken = "";
+	private String APIKey = "";
+	
+	/**
+	 * Eurosentiment token name to use their services
+	 */
+	private String ApiKeyName = "x-eurosentiment-token";
 	
 	/**
 	 * The name of the sentiment polarity feature
@@ -137,7 +144,7 @@ public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnal
 	 */
 	@Override
 	public Resource init() throws ResourceInstantiationException{
-		System.out.println(getClass().getName() + " is added to the controller.");
+		System.out.println(getClass().getName() + " has been inited");
 		dictionaries.put("Spanish_finances_Paradigma", "spFinancial");
 		dictionaries.put("English_finances_Loughran_McDonald", "enFinancial");
 		dictionaries.put("Emoticon", "emoticon");
@@ -148,16 +155,20 @@ public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnal
 	
 	
     /**
-     * This PR perfoms sentiment and/or emotion analysis over a documents or a set of Annotations
+     * This PR performs sentiment and/or emotion analysis over documents or a set of Annotations
      * by calling a web service developed by GSI called SEAS.
      */
     @Override
     public void execute() throws ExecutionException{
-        if(this.getSentimentAnalysis() == true){ //If sentiment analysis is set to true
-            this.callSentimentService(); //The PR performs sentiment analysis calling SEAS.
+        if(this.getSentimentAlgorithm() != null){
+            if(this.getSentimentAnalysis() == true){ //If sentiment analysis is set to true
+                this.callSentimentService(); //The PR performs sentiment analysis calling SEAS.
+            }
         }
-        if(this.getEmotionAnalysis() == true){ //If emotions analysis is set to true
-            this.callEmotionService(); //The PR performs emotion analysis calling SEAS.
+        if(this.getEmotionAlgorithm() != null){
+            if(this.getEmotionAnalysis() == true){ //If emotions analysis is set to true
+                this.callEmotionService(); //The PR performs emotion analysis calling SEAS.
+            }
         }
         
     }
@@ -200,7 +211,11 @@ public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnal
         String eurosentiment=""; // The JSON result of the service (parsed as a String) will be here
         String algo = "";
         if(this.getSentimentAlgorithm().toString().equalsIgnoreCase("Dictionary")){
-            algo = this.dictionaries.get(this.getSentimentDictionary().toString());
+            if(this.getSentimentDictionary() != null){
+                algo = this.dictionaries.get(this.getSentimentDictionary().toString());
+            }else{
+                algo = "auto";
+            }
 			// If the algorithm is AUTO we try to detect the language and select the most apropiate
 		    if(algo.equalsIgnoreCase("auto")){
 		    	FeatureMap languageFeatures = document.getFeatures();
@@ -242,11 +257,12 @@ public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnal
         params.add(new BasicNameValuePair("informat", "text"));
         params.add(new BasicNameValuePair("outformat", "json-ld"));
         params.add(new BasicNameValuePair("algo", algo));
+        params.add(new BasicNameValuePair(this.getApiKeyName(),this.getAPIKey()));
         // Choose the selected service to make the HTTP call to SEAS.
         try{
             HttpPost httppost = new HttpPost(ServiceURL);
             httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-            httppost.setHeader("x-eurosentiment-token", this.getEuroSentimentToken());
+            httppost.setHeader(this.getApiKeyName(), this.getAPIKey());
             //Execute and get the response.
             HttpResponse responseService = httpclient.execute(httppost);
             entity = responseService.getEntity();
@@ -614,18 +630,6 @@ public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnal
     }
     
     
-    public String getEuroSentimentToken() {
-        return EuroSentimentToken;
-    }
-    
-    @Optional
-    @RunTime
-    @CreoleParameter(comment = "")
-    public void setEuroSentimentToken(String euroSentimentToken) {
-        EuroSentimentToken = euroSentimentToken;
-    }
-    
-    
     public String getSentimentPolarityName() {
         return SentimentPolarityName;
     }
@@ -674,6 +678,28 @@ public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnal
     }
     
     
+    public String getAPIKey() {
+        return APIKey;
+    }
+    
+    @Optional
+    @RunTime
+    @CreoleParameter(comment = "")
+    public void setAPIKey(String aPIKey) {
+        APIKey = aPIKey;
+    }
+    
+    
+    public String getApiKeyName() {
+        return ApiKeyName;
+    }
+    
+    @Optional
+    @RunTime
+    @CreoleParameter(comment = "a")
+    public void setApiKeyName(String apiKeyName) {
+        ApiKeyName = apiKeyName;
+    }
     
 }
 

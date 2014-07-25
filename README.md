@@ -21,6 +21,8 @@ The installation process couldn't be easier:
 
 ![Plugin installed](imgs/plugin_installed.png)
 
+It is recommended to deploy [SEAS's project](https://github.com/gsi-upm/SAGA) as a local service in your computer to use this plugin.
+
 ## How to use the plugin
 This plugin contains only one PR that offers a variety of sentiment and emotion analysis services. To load it, right click on Processing Resources -> New -> Sentiment and emotion analysis calling SEAS and Eurosentiment -> Name it -> OK.
 
@@ -44,11 +46,17 @@ These parameters can be explained as follows:
         The endpoint of the sentiment analysis service
     EmotionServiceURL:
         The endpoint of the emotion analysis service, you can use:
-        http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service
-        http://demos.gsi.dit.upm.es/tomcat/RestrictedToNIF/RestrictedService
-        For more endpoints visit the [Eurosentiment portal](https://portal.eurosentiment.eu)
-    EuroSentimentToken:
+            If you deploy SEAS as a local service in your computer (Recommended):
+                http://localhost:8080/SAGAtoNIF/Service
+                http://localhost:8080/RestrictedToNIF/RestrictedService
+            ONLY FOR LITTLE TESTS:
+                http://demos.gsi.dit.upm.es/tomcat/SAGAtoNIF/Service
+                http://demos.gsi.dit.upm.es/tomcat/RestrictedToNIF/RestrictedService
+        For more endpoints visit the Eurosentiment portal - https://portal.eurosentiment.eu
+    APIKey:
         Eurosentiment token to use their services or other similar services that require an API KEY
+    ApiKeyName:
+        Eurosentiment (or other similar services) token name to use their services
     sentimentAlgorithm:
         Runtime parameter that sets the sentiment algorithm that the service is going to use. At the moment, you can use dictionary based algorithms.
     sentimentDictionary:
@@ -105,12 +113,29 @@ This plugin contains little corpus to test the PR:
 
 ## Example of use - Eurosentiment services
 
-TO DO
+1. Sign up in the [EUROSENTIMENT portal](https://portal.eurosentiment.eu).
+2. Get your token an put it in the runtime parameter called _APIKey_.
+3. Set the runtime parameter called _ApiKeyName_ as _x-eurosentiment-token_.
+4. Set the runtime parameters called _SentimentServiceURL_ or _EmotionServiceURL_ whith the ones offered in the [EUROSENTIMENT portal](https://portal.eurosentiment.eu).
+5. Load your corpus and run the application.
 
 ![Result eng finances](imgs/results_emotion.png)
 
 ## Accuracy of the algorithms over an already annotated corpus
-TO DO
+You can test our services over an already classified corpus to see how good this analysis tool works. In this project we include a set of positive and negative text from an article called "Extracting Investor Sentiment from Weblog Texts: A Knowledge-based Approach" by Klein, A; Altuntas, O; Hausser, T. and Kessler, W.
+To do so, and in order to only make a little test because of time processing, we have reduced this corpus to one positive and one negative text:
+
+1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> _siple_ -> Chose _pos_ -> OK
+2. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> _siple_ -> Chose _neg_ -> OK
+3. Load ANNIE with defaults.
+4. Add the PR at the end of the ANNIE application.
+5. Configure the runtime parameters as follows and ignore the rest of them:
+
+![Test 1](imgs/test1.png)
+![Test 2](imgs/test2.png)
+![Test 3](imgs/test3.png)
+
+Run the application over each corpus and check out the resoults.
 
 ## How to add new NIF's services, algorithms or dictionaries?
 Check out [SEAS's project](https://github.com/gsi-upm/SAGA)
