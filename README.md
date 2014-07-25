@@ -86,7 +86,7 @@ These parameters can be explained as follows:
 ## Example of use - Sentiment analysis over a finances domain
 This plugin contains little corpus to test the PR:
 
-1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Chose _en_ -> OK
+1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Choose _en_ -> OK
 2. Set _emotionAnalysis_ parameter to _false_
 3. Configure the runtime parameters as follows (Be careful, the features inside the annotationType you choose to analyze will be substituted with the results of the analysis.):
 
@@ -100,7 +100,7 @@ This plugin contains little corpus to test the PR:
 
 ## Example of use - Emotion analysis using Onyxemote
 
-1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Chose _en_ -> OK
+1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Choose _en_ -> OK
 2. Set _sentimentAnalysis_ parameter to _false_
 3. Configure the runtime parameters as follows (Be careful, the features inside the annotationType you choose to analyze will be substituted with the results of the analysis.):
 
@@ -123,8 +123,8 @@ This plugin contains little corpus to test the PR:
 You can test our services over an already classified corpus to see how good this analysis tool works. In this project we include a set of positive and negative text from an article called "Extracting Investor Sentiment from Weblog Texts: A Knowledge-based Approach" by Klein, A; Altuntas, O; Hausser, T. and Kessler, W.
 To do so, and in order to only make a little test because of time processing, we have reduced this corpus to one positive and one negative text:
 
-1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> _siple_ -> Chose _pos_ -> OK
-2. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> _siple_ -> Chose _neg_ -> OK
+1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> _siple_ -> Choose _pos_ -> OK
+2. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> _siple_ -> Choose _neg_ -> OK
 3. Load ANNIE with defaults.
 4. Add the PR at the end of the ANNIE application.
 5. Configure the runtime parameters as follows and ignore the rest of them:
