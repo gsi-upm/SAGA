@@ -119,8 +119,6 @@ This plugin contains little corpus to test the PR:
 4. Set the runtime parameters called _SentimentServiceURL_ or _EmotionServiceURL_ whith the ones offered in the [EUROSENTIMENT portal](https://portal.eurosentiment.eu).
 5. Load your corpus and run the application.
 
-![Result eng finances](imgs/results_emotion.png)
-
 ## Accuracy of the algorithms over an already annotated corpus
 You can test our services over an already classified corpus to see how good this analysis tool works. In this project we include a set of positive and negative text from an article called "Extracting Investor Sentiment from Weblog Texts: A Knowledge-based Approach" by Klein, A; Altuntas, O; Hausser, T. and Kessler, W.
 To do so, and in order to only make a little test because of time processing, we have reduced this corpus to one positive and one negative text:
