@@ -15,13 +15,15 @@ If you are a developer, you should know that in order to develop your own proces
 ## Installation
 The installation process couldn't be easier:
 
-1. Download or clone this repository.
+1. Download this [zip](http://demos.gsi.dit.upm.es/SAGA/saga-1.0.zip).
 2. Copy the folder called _saga_ into the folder called _plugins_ that is inside your GATE installation.
 3. Open GATE. The new plugin should be available.
 
 ![Plugin installed](imgs/plugin_installed.png)
 
-It is recommended to deploy [SEAS's project](https://github.com/gsi-upm/SAGA) as a local service in your computer to use this plugin.
+Another way to install it is to open GATE -> File -> Manage CREOLE Plugins -> Configuration tab -> Click on the + symbol -> add the url http://demos.gsi.dit.upm.es/SAGA/gate-update-site.xml -> Apply all -> Available to install tab -> Mark the SAGA plugin to install it -> Apply all -> Go to the Installed Plugins tab. There it is.
+
+It is recommended to deploy [SEAS's project](https://github.com/gsi-upm/SEAS) as a local service in your computer to use this plugin.
 
 ## How to use the plugin
 This plugin contains only one PR that offers a variety of sentiment and emotion analysis services. To load it, right click on Processing Resources -> New -> Sentiment and emotion analysis calling SEAS and Eurosentiment -> Name it -> OK.
