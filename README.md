@@ -21,7 +21,7 @@ The installation process couldn't be easier:
 
 ![Plugin installed](imgs/plugin_installed.png)
 
-Another way to install it is to open GATE -> File -> Manage CREOLE Plugins -> Configuration tab -> Click on the + symbol -> add the url http://demos.gsi.dit.upm.es/SAGA/gate-update-site.xml -> Apply all -> Available to install tab -> Mark the SAGA plugin to install it -> Apply all -> Go to the Installed Plugins tab. There it is.
+Another way to install it is to open GATE -> File -> Manage CREOLE Plugins -> Configuration tab -> Click on the + symbol -> add the repository name: GSI UPM  url,  http://demos.gsi.dit.upm.es/SAGA/gate-update-site.xml -> Apply all -> Available to install tab -> Mark the SAGA plugin to install it -> Apply all -> Go to the Installed Plugins tab. There it is.
 
 It is recommended to deploy [SEAS's project](https://github.com/gsi-upm/SEAS) as a local service in your computer to use this plugin.
 
