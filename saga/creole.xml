@@ -1,5 +1,5 @@
 <!-- creole.xml saga -->
-<!--  David, 1/7/2014 -->
+<!--  David, 29/7/2014 -->
 
 <!--
 This file just references the JAR file that contains the compiled resource.
@@ -7,7 +7,7 @@ Configuration is contained in the @CreoleResource annotation on
 seas.SentimenAndEmotiontAnalysisCallingSEAS.
 -->
 
-<CREOLE-DIRECTORY>
+<CREOLE-DIRECTORY ID="es.upm.dit.gsi.SAGA" VERSION="1.1" DESCRIPTION="Sentiment and emotion analysis plugin for the GATE platform" HELPURL="http://github.com/gsi-upm/SAGA">
   <JAR SCAN="true">saga.jar</JAR>
   <JAR>lib/commons-logging-1.1.3-javadoc.jar</JAR>
   <JAR>lib/commons-logging-1.1.3-sources.jar</JAR>

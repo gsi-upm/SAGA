@@ -17,8 +17,7 @@
  *
  */
 
-
-package processingResources; //Package for the Processing Resources made by us.
+package es.upm.dit.gsi.seas;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -56,7 +55,7 @@ import gate.util.InvalidOffsetException;
 @CreoleResource(name = "Sentiment and emotion analysis calling SEAS and Eurosentiment",
 comment = "Sentiment and emotion analysis calling SEAS and Eurosentiment",
 helpURL = "https://github.com/gsi-upm/SAGA/",
-icon = "/seas/logo_gsi.png")
+icon = "/es/upm/dit/gsi/seas/logo_gsi.png")
 public class SentimenAndEmotiontAnalysisCallingSEAS extends AbstractLanguageAnalyser {
     
 	private static final long serialVersionUID = 1L;
