@@ -15,8 +15,8 @@ If you are a developer, you should know that in order to develop your own proces
 ## Installation
 The installation process couldn't be easier:
 
-1. Download this [zip](http://demos.gsi.dit.upm.es/SAGA/saga-1.0.zip).
-2. Copy the folder called _saga_ into the folder called _plugins_ that is inside your GATE installation.
+1. Download this [zip](http://demos.gsi.dit.upm.es/SAGA/saga.zip).
+2. Unzip the folder called _saga_ into the folder called _plugins_ that is inside your GATE installation.
 3. Open GATE. The new plugin should be available.
 
 ![Plugin installed](imgs/plugin_installed.png)
