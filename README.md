@@ -122,7 +122,7 @@ This plugin contains little corpus to test the PR:
 5. Load your corpus and run the application.
 
 ## Accuracy of the algorithms over an already annotated corpus
-You can test our services over an already classified corpus to see how good this analysis tool works. In this project we include a set of positive and negative text from an article called "Extracting Investor Sentiment from Weblog Texts: A Knowledge-based Approach" by Klein, A; Altuntas, O; Hausser, T. and Kessler, W.
+You can test our services over a sentiment annotated corpus to see how good this analysis tool works. In this project we include a set of positive and negative texts from an article called "Extracting Investor Sentiment from Weblog Texts: A Knowledge-based Approach" by Klein, A; Altuntas, O; Hausser, T. and Kessler, W.
 To do so, and in order to only make a little test because of time processing, we have reduced this corpus to one positive and one negative text:
 
 1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> _siple_ -> Choose _pos_ -> OK
@@ -135,7 +135,7 @@ To do so, and in order to only make a little test because of time processing, we
 ![Test 2](imgs/test2.png)
 ![Test 3](imgs/test3.png)
 
-Run the application over each corpus and check out the resoults.
+Run the application over each corpus and check out the results.
 
 ## How to add new NIF's services, algorithms or dictionaries?
 Check out [SEAS's project](https://github.com/gsi-upm/SAGA)
