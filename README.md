@@ -30,7 +30,7 @@ This plugin contains only one PR that offers a variety of sentiment and emotion 
 
 ![New PR](imgs/new_pr.png)
 
-Then, add this new PR to your current application or create a new one so you can configure its runtime parameters:
+Then, add this new PR to your current application or create a new one (Right click on Applications -> Create new application -> Corpus Pipeline -> Name it -> OK) so you can configure its runtime parameters:
 
 ![Runtime parameter example](imgs/runtime_example.png)
 
@@ -88,7 +88,7 @@ These parameters can be explained as follows:
 ## Example of use - Sentiment analysis over a finances domain
 This plugin contains little corpus to test the PR:
 
-1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Choose _en_ -> OK
+1. Create a new corpus and populate it. Right click on Language resources -> New -> Gate Corpus -> Name it -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Choose _en_ -> OK
 2. Set _emotionAnalysis_ parameter to _false_
 3. Configure the runtime parameters as follows (Be careful, the features inside the annotationType you choose to analyze will be substituted with the results of the analysis.):
 
@@ -102,7 +102,7 @@ This plugin contains little corpus to test the PR:
 
 ## Example of use - Emotion analysis using Onyxemote
 
-1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Choose _en_ -> OK
+1. Create a new corpus and populate it. Right click on Language resource -> New -> Gate Corpus -> Name it -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Choose _en_ -> OK
 2. Set _sentimentAnalysis_ parameter to _false_
 3. Configure the runtime parameters as follows (Be careful, the features inside the annotationType you choose to analyze will be substituted with the results of the analysis.):
 
@@ -121,21 +121,31 @@ This plugin contains little corpus to test the PR:
 4. Set the runtime parameters called _SentimentServiceURL_ or _EmotionServiceURL_ whith the ones offered in the [EUROSENTIMENT portal](https://portal.eurosentiment.eu).
 5. Load your corpus and run the application.
 
-## Accuracy of the algorithms over an already annotated corpus
+## Sentiment Annotation QA
 You can test our services over a sentiment annotated corpus to see how good this analysis tool works. In this project we include a set of positive and negative texts from an article called "Extracting Investor Sentiment from Weblog Texts: A Knowledge-based Approach" by Klein, A; Altuntas, O; Hausser, T. and Kessler, W.
-To do so, and in order to only make a little test because of time processing, we have reduced this corpus to one positive and one negative text:
+To do so:
 
-1. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> _siple_ -> Choose _pos_ -> OK
-2. Create a new corpus and populate it. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> _siple_ -> Choose _neg_ -> OK
-3. Load ANNIE with defaults.
-4. Add the PR at the end of the ANNIE application.
-5. Configure the runtime parameters as follows and ignore the rest of them:
+1. Create a new corpus and populate it. Right click on Language resource -> New -> Gate Corpus -> Name it _pos_ -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> TXT_Corpus_165_Texts_posneg_3majvote -> Choose _pos_ -> OK
+2. Create a new corpus and populate it. Right click on Language resource -> New -> Gate Corpus -> Name it _neg_ -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> TXT_Corpus_165_Texts_posneg_3majvote -> Choose _neg_ -> OK
+3. Load the plugin called _Tools_ and then load the _Annotation Transfer PR_. Also load the SAGA's PR called _Predefined Sentiment Annotation PR_.
+4. Create a new Pipeline, configure it as follows (example for negative corpus) and run it:
+
+![AA 1](imgs/AUTOannotate1.png)
+![AA 2](imgs/AUTOannotate2.png)
+
+1. Create a new Pipeline.
+2. Configure the runtime parameters as follows and ignore the rest of them. Run it:
 
 ![Test 1](imgs/test1.png)
 ![Test 2](imgs/test2.png)
 ![Test 3](imgs/test3.png)
 
-Run the application over each corpus and check out the results.
+Run the application over each corpus and check out the results. Select a corpus, for example the negatice one. Go to Corpus Quality Assurance and configure the options as follows to get the Confusion Matrix:
+
+![QA 1](imgs/QA1.png)
+![QA 2](imgs/QA2.png)
+
+You can observe that 78 out of 102 negative messages are classified as negative. Only 2 of them are classified as neutral and 8 as positive.
 
 ## How to add new NIF's services, algorithms or dictionaries?
 Check out [SEAS's project](https://github.com/gsi-upm/SAGA)
