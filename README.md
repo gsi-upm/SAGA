@@ -85,8 +85,8 @@ These parameters can be explained as follows:
     EmotionValueName:
         The name of the emotion value feature
         
-## Example of use - Sentiment analysis over a finances domain
-This plugin contains little corpus to test the PR:
+## Example of use - Sentiment analysis over a finance domain
+This plugin contains a little corpus to test the PR:
 
 1. Create a new corpus and populate it. Right click on Language resources -> New -> Gate Corpus -> Name it -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Choose _en_ -> OK
 2. Set _emotionAnalysis_ parameter to _false_
