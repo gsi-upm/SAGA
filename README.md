@@ -118,12 +118,12 @@ This plugin contains a little corpus to test the PR:
 1. Sign up in the [EUROSENTIMENT portal](https://portal.eurosentiment.eu/accounts/signup/). Register yourself as a _Service Developer_.
 2. You will recieve an access token in your mail. Put it in the runtime parameter called _APIKey_.
 3. Set the runtime parameter called _ApiKeyName_ as _x-eurosentiment-token_.
-4. Set the runtime parameters called _SentimentServiceURL_ or _EmotionServiceURL_ whith the ones offered in the [EUROSENTIMENT portal](https://portal.eurosentiment.eu/service/list#) that performs sentiment or emotion analysis.
+4. Set the runtime parameters called _SentimentServiceURL_ or _EmotionServiceURL_ whith the ones offered in the [EUROSENTIMENT portal](https://portal.eurosentiment.eu/service/list#) that perform sentiment or emotion analysis.
 ![Eurosentiment services](imgs/eurosenttimenServices.png)
 
 The PR configuration should look like this:
-![Runtime parameter emotion Eurosentiment example](imgs/eu1.png)
 ![Runtime parameter emotion Eurosentiment example](imgs/eu2.png)
+![Runtime parameter emotion Eurosentiment example](imgs/eu1.png)
 
 1. Load your corpus: to do so, right click on Language resource -> New -> Gate Corpus -> Name it -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Choose _eurosentiment_ -> OK
 2. Set _sentimentAnalysis_ parameter to _true_
