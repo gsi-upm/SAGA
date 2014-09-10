@@ -86,9 +86,9 @@ These parameters can be explained as follows:
         The name of the emotion value feature
         
 ## Example of use - Sentiment analysis over a finance domain
-This plugin contains a little corpus to test the PR:
+In this example we are going to see how to create a corpus inside GATE, how to populate it and then we are going to set the corresponding runtime parameters of this processing resource to perform sentiment analysis over a finance domain.
 
-1. Create a new corpus and populate it: to do so, right click on Language resources -> New -> Gate Corpus -> Name it -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Choose _en_ -> OK
+1. Create a new corpus and populate it: to do so, right click on Language resources -> New -> Gate Corpus -> Name it -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> Choose _service_ -> OK
 2. Set _emotionAnalysis_ parameter to _false_
 3. Configure the runtime parameters as follows (Be careful, the features inside the annotationType you choose to analyze will be substituted with the results of the analysis.):
 
@@ -101,8 +101,9 @@ This plugin contains a little corpus to test the PR:
 ![Result eng finances](imgs/result_en_finances.png)
 
 ## Example of use - Emotion analysis using Onyxemote
+In this example we are going to see how to create a corpus inside \ac{GATE}, how to populate it and then we are going to set the corresponding runtime parameters of this processing resource to perform emotion analysis calling Onyxemote service.
 
-1. Create a new corpus and populate it: to do so, right click on Language resource -> New -> Gate Corpus -> Name it -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> Choose _en_ -> OK
+1. Create a new corpus and populate it: to do so, right click on Language resource -> New -> Gate Corpus -> Name it -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> Choose _emotion_ -> OK
 2. Set _sentimentAnalysis_ parameter to _false_
 3. Configure the runtime parameters as follows (Be careful, the features inside the annotationType you choose to analyze will be substituted with the results of the analysis.):
 
@@ -111,9 +112,10 @@ This plugin contains a little corpus to test the PR:
 3. Run this application.
 4. Check the results:
 
-![Result eng finances](imgs/results_emotion.png)
+![Result eng finances](imgs/emotionAnalyzed.png)
 
 ## Example of use - Eurosentiment services
+In this example we are going to see how to create a corpus inside \ac{GATE}, how to populate it and then we are going to set the corresponding runtime parameters of this processing resource to perform sentiment analysis calling one of the services available at Eurosentiment Portal.
 
 1. Sign up in the [EUROSENTIMENT portal](https://portal.eurosentiment.eu/accounts/signup/). Register yourself as a _Service Developer_.
 2. You will recieve an access token in your mail. Put it in the runtime parameter called _APIKey_.
@@ -136,8 +138,8 @@ The PR configuration should look like this:
 You can test our services over a sentiment annotated corpus to see how good this analysis tool works. In this project we include a set of positive and negative texts from an article called "Extracting Investor Sentiment from Weblog Texts: A Knowledge-based Approach" by Klein, A; Altuntas, O; Hausser, T. and Kessler, W.
 To do so:
 
-1. Create a new corpus and populate it: to do so, right click on Language resource -> New -> Gate Corpus -> Name it _pos_ -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> TXT_Corpus_165_Texts_posneg_3majvote -> Choose _pos_ -> OK
-2. Create a new corpus and populate it: to do so, right click on Language resource -> New -> Gate Corpus -> Name it _neg_ -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _input_ -> TXT_Corpus_165_Texts_posneg_3majvote -> Choose _neg_ -> OK
+1. Create a new corpus and populate it: to do so, right click on Language resource -> New -> Gate Corpus -> Name it _pos_ -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _positivenegatice_ -> Choose _pos_ -> OK
+2. Create a new corpus and populate it: to do so, right click on Language resource -> New -> Gate Corpus -> Name it _neg_ -> OK. Right click on the corpus -> Populate -> Go to the _saga_ plugin folder -> _resources_ -> _example_ -> _positivenegatice_ -> Choose _neg_ -> OK
 3. Load the plugin called _Tools_ and then load the _Annotation Transfer PR_. Also load the SAGA's PR called _Predefined Sentiment Annotation PR_.
 4. Create a new Pipeline, configure it as follows (example for negative corpus) and run it:
 
