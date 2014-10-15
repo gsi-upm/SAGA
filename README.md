@@ -15,7 +15,7 @@ If you are a developer, you should know that in order to develop your own proces
 ## Installation
 The installation process couldn't be easier:
 
-1. Download this [zip](http://demos.gsi.dit.upm.es/SAGA/saga.zip).
+1. Download this [zip](https://github.com/gsi-upm/SAGA/zipball/master/).
 2. Unzip the folder called _saga_ into the folder called _plugins_ that is inside your GATE installation.
 3. Open GATE. The new plugin should be available.
 
@@ -26,7 +26,7 @@ Another way to install it is to open GATE -> File -> Manage CREOLE Plugins -> Co
 It is recommended to deploy [SEAS's project](https://github.com/gsi-upm/SEAS) as a local service in your computer to use this plugin.
 
 ## How to use the plugin
-This plugin contains only one PR that offers a variety of sentiment and emotion analysis services. To load it, right click on Processing Resources -> New -> Sentiment and emotion analysis calling SEAS and Eurosentiment -> Name it -> OK.
+This plugin contains only PRs that offer a variety of sentiment and emotion analysis services. To load it, right click on Processing Resources -> New -> Sentiment and emotion analysis calling SEAS and Eurosentiment -> Name it -> OK.
 
 ![New PR](imgs/new_pr.png)
 
@@ -85,6 +85,25 @@ These parameters can be explained as follows:
     EmotionValueName:
         The name of the emotion value feature
         
+## Example of use - Loading corpora in TSV format
+To load sentiment corpora we are going to use the PR called TSV Sentiment Parser. It contains different runtime parameters in order to configure how we want to load the corpora:
+
+1. TSVPath is the path to the corpus in TSV format.
+2. negativeSentimentPolarity is how we are going to annotate the negative polarity.
+3. positiveSentimentPolarity is how we are going to annotate the positive polarity.
+4. sentimentPolarityName is how we are going to annotate the polarity of a document.
+
+![TSV Sentiment Parser](imgs/TSVSentimentParser.png)
+
+To load emotion corpora we are going to use the PR called TSV Emotion Parser. It contains different runtime parameters in order to configure how we want to load the corpora:
+
+1. TSVPath is the path to the corpus in TSV format.
+2. emotionCategoryName is how we are going to annotate emotion categories.
+
+![TSV Emotion Parser](imgs/TSVEmotionParser.png)
+
+In both cases, we only need to set the path to the corpus in TSV format and then run the application. As a result, we will obtain the corpus populated with the generated documents parsed from the TSV and each document will have its original polarity or category annotated.
+
 ## Example of use - Sentiment analysis over a finance domain
 In this example we are going to see how to create a corpus inside GATE, how to populate it and then we are going to set the corresponding runtime parameters of this processing resource to perform sentiment analysis over a finance domain.
 
