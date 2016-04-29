@@ -1,6 +1,6 @@
 [SAGA](https://github.com/gsi-upm/SAGA)
 =====
-![GSI Logo](http://gsi.dit.upm.es/templates/jgsi/images/logo.png)
+![GSI Logo](http://www.gsi.dit.upm.es/images/stories/logos/gsi.png)
 
 ## Introduction
 SAGA (Sentiment and Emotion Analysis integrated in GATE)  is a set of processing and linguistic resources, written in Java, developed to run sentiment and emotion analysis over text using [GATE](http://gate.ac.uk) platform.
